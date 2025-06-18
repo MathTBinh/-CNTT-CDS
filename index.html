@@ -9,7 +9,7 @@
         body {
             font-family: 'Roboto', Arial, sans-serif;
             margin: 0;
-            background-color: #f4f4f9;
+            background-color: #85f19a;
             color: #333;
         }
         .header {
@@ -33,6 +33,17 @@
             font-weight: 700;
             color: #ff6200;
         }
+        .nav-bar {
+    position: sticky;
+    top: 0;
+    background-color: #c62828; /* Đỏ đậm */
+    color: #fff176; /* Vàng nhạt */
+    padding: 4px 10px;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
         .header .course a {
             text-decoration: none;
             background-color: #ff0000;
@@ -105,7 +116,7 @@
             top: 60px;
             left: 0;
             width: 100%;
-            background-color: #fff;
+            background-color: #1c035b;
             border-bottom: 1px solid #ddd;
             padding: 5px 15px;
             display: flex;
@@ -115,6 +126,20 @@
             box-sizing: border-box;
             height: 40px;
         }
+        .nav-tabs a {
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav-tabs a.nav-link-red {
+    color: #ffeb3b; /* vàng */
+}
+
+.nav-tabs a:hover {
+    background-color: #b71c1c;
+}
         .nav-tabs .dropdown {
             position: relative;
             display: inline-block;
@@ -268,11 +293,13 @@
         .sidebar ul li.highlight a {
             color: #fff;
         }
+        
         .main-content {
             width: 90%;
             margin-left: 25%;
             padding: 15px;
         }
+        
         .main-content h1 {
             font-size: 20px;
             font-weight: 700;
@@ -300,7 +327,7 @@
             font-size: 18px;
             font-weight: 700;
             margin-bottom: 8px;
-            color: #fff;
+            color: #f7e605;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
         .main-banner p {
@@ -541,6 +568,49 @@
 }
 
     </style>
+    <style>
+.image-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  margin: 20px 0;
+}
+.image-gallery img {
+  max-width: 300px;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  cursor: zoom-in;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  transition: transform 0.3s;
+}
+.image-gallery img:hover {
+  transform: scale(1.03);
+}
+</style>
+<style>
+.card-tieuchi {
+  background-color: #0b3a2e;     /* nền xanh đậm */
+  color: white;                  /* mặc định chữ trắng */
+  padding: 20px 30px;            /* lùi vào 30px bên trái */
+  margin-left: 10px;             /* tránh bị che bởi sidebar */
+  border-radius: 10px;           /* bo góc */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* bóng đổ nhẹ */
+  margin-bottom: 20px;
+}
+
+.card-tieuchi h2 {
+  color: #facc15;                /* vàng sáng */
+  margin-top: 0;
+}
+
+.card-tieuchi p {
+  color: #ffffff;
+}
+</style>
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
 </head>
 <body>
@@ -560,20 +630,17 @@
         </div>
     </div>
     <div class="nav-tabs"> 
-    <div class="dropdown">
-        <span class="dropdown-btn">LINK MINH CHỨNG THEO HƯỚNG DẪN CỦA SỞ ▼</span>
-        <div class="dropdown-content" id="examDropdown">
-            <a href="https://drive.google.com/drive/folders/1u3YWgbsrSRTWFyIPknOoxAoibG6QuOu-?usp=sharing" target="_blank">LINK HỒ SƠ TỰ ĐÁNH GIÁ</a>
-        </div>
-    </div>
-
-    <div class="home-box">
-        <a href="indexCDS.html">Trang chủ</a>
-        
-    </div>
+        <div class="nav-tabs">
+    <a href="index.html">Trang chủ</a>
+    <!-- thêm các mục khác -->
+     <a href="https://drive.google.com/drive/folders/1t0EP4Cz2leH3d1292NHmkb45ar0Jdvmh?usp=sharing"
+       target="_blank" class="nav-link-red">
+       LINK MINH CHỨNG THEO HƯỚNG DẪN CỦA SỞ
+    </a>
 </div>
 
-
+    
+</div>
     <div class="dynamic-marquee" id="dynamicMarquee" aria-label="Thông báo động">
         <div class="marquee-content" id="marqueeContent">
             <span onclick="selectExam(1)">BÁO CÁO TỰ ĐÁNH GIÁ MỨC ĐỘ TỰ CHUYỂN ĐỔI SỐ NĂM HỌC 2024-2025</span>
@@ -590,6 +657,7 @@
             <div class="category">
                 <h3>HỒ SƠ TỰ ĐÁNH GIÁ</h3>
                 <ul>
+                    <li><a href="#" onclick="showSection('introSection')">Giới thiệu</a></li>
                     <li><a href="#" onclick="loadContent('QĐ THÀNH LẬP HỘI ĐỒNG TỰ ĐÁNH GIÁ CHUYỂN ĐỔI SỐ.pdf')">Quyết định thành lập Hội đồng</a></li>
                     <li><a href="#" onclick="loadContent('35. KẾ HOẠCH ĐÁNH GIÁ MỨC ĐỘ CHUYỂN ĐỔI SỐ.pdf')">Kế hoạch tự đánh giá</a></li>
                     <li><a href="#" onclick="loadContent('BaoCaoChuyenDoiSo_2024-2025.pdf')">Báo cáo tự đánh giá</a></li>
@@ -602,36 +670,212 @@
                 <ul>
                     <li><a href="#" onclick="loadContent('117.KẾ HOẠCH TỔ CHỨC DẠY HỌC KIỂM TRA TRỰC TUYẾN .pdf')">Minh chứng 1.1</a></li>
                     <li><a href="#" onclick="loadContent('QUYẾT ĐỊNH BAN HÀNH QUY CHẾ DẠY HỌC TRỤC TUYẾN.pdf')">Minh chứng 1.2</a></li>
-                    <li><a href="#" onclick="loadContent('QUYẾT ĐỊNH BAN HÀNH QUY CHẾ DẠY HỌC TRỤC TUYẾN.pdf')">Minh chứng 1.3</a></li>
-                    <li><a href="#" onclick="loadContent('QUYẾT ĐỊNH BAN HÀNH QUY CHẾ DẠY HỌC TRỤC TUYẾN.pdf')">Minh chứng 1.4</a></li>
-                    <li><a href="#" onclick="loadContent('QUYẾT ĐỊNH BAN HÀNH QUY CHẾ DẠY HỌC TRỤC TUYẾN.pdf')">Minh chứng 1.5</a></li>
-                    <li><a href="#" onclick="loadContent('QUYẾT ĐỊNH BAN HÀNH QUY CHẾ DẠY HỌC TRỤC TUYẾN.pdf')">Minh chứng 1.6</a></li>
-                    <li><a href="#" onclick="loadContent('QUYẾT ĐỊNH BAN HÀNH QUY CHẾ DẠY HỌC TRỤC TUYẾN.pdf')">Minh chứng 1.7</a></li>
-                 </ul>
+                     <li><a href="#" onclick="showSection('tieuchi1-3')">Tiêu chí 1.3</a></li>
+                      <li><a href="#" onclick="showSection('tieuchi1-4')">Tiêu chí 1.4</a></li>
+                       <li><a href="#" onclick="showSection('tieuchi1-5')">Tiêu chí 1.5</a></li>
+                        <li><a href="#" onclick="showSection('tieuchi1-6')">Tiêu chí 1.6</a></li>
+                         <li><a href="#" onclick="showSection('tieuchi1-7')">Tiêu chí 1.7</a></li>
+                     </ul>
             </div>
             <div class="category">
                 <h3>MINH CHỨNG TIÊU CHÍ O2</h3>
                 <ul>
+                    
                      <li><a href="#" onclick="loadContent('128. KẾ HOẠCH CHUYỂN ĐỔI ỨNG DỤNG CNTT.pdf')">Minnh chứng 2.1-Mục II.3.5 của kế hoạch</a></li>
                      <li><a href="#" onclick="loadContent('128. KẾ HOẠCH CHUYỂN ĐỔI ỨNG DỤNG CNTT.pdf')">Minnh chứng 2.2</a></li>
-                    <li><a href="#" onclick="loadContent('QUYẾT ĐỊNH BAN HÀNH QUY CHẾ DẠY HỌC TRỤC TUYẾN.pdf')">Minh chứng 2.3</a></li>
-                    <li><a href="#" onclick="loadContent('QUYẾT ĐỊNH BAN HÀNH QUY CHẾ DẠY HỌC TRỤC TUYẾN.pdf')">Minh chứng 2.4</a></li>
-                    <li><a href="#" onclick="loadContent('QUYẾT ĐỊNH BAN HÀNH QUY CHẾ DẠY HỌC TRỤC TUYẾN.pdf')">Minh chứng 2.5</a></li>
+                    <li><a href="#" onclick="showSection('tieuchi2-3')">Tiêu chí 2.3</a></li>
+                    <li><a href="#" onclick="showSection('tieuchi2-4')">Tiêu chí 2.4</a></li>
                 </ul>
             </div>
         </div>
         <div class="main-content" id="contentArea">
-             <div class="main-banner">
-                <div class="banner-content">
-                    <h2>CHUYỂN ĐỔI SỐ TRONG GIÁO DỤC</h2>
-                    <p>Trong bối cảnh cuộc Cách mạng công nghiệp lần thứ tư đang diễn ra mạnh mẽ, chuyển đổi số trong giáo dục đã trở thành xu thế tất yếu và là nhiệm vụ cấp bách nhằm nâng cao chất lượng, hiệu quả công tác giảng dạy và quản lý giáo dục. Các văn bản chỉ đạo của Chính phủ và Bộ Giáo dục và Đào tạo như Quyết định số 131/QĐ-TTg, Thông tư số 09/2021/TT-BGDĐT, Kế hoạch số 2889/KH-UBND của UBND tỉnh Bến Tre đều nhấn mạnh yêu cầu phải triển khai đồng bộ chuyển đổi số tại các cơ sở giáo dục, trong đó chú trọng phát triển nền tảng dạy học trực tuyến, xây dựng học liệu số, ứng dụng công nghệ trong quản trị trường học, và xây dựng cơ sở dữ liệu ngành "sống – sạch – đúng – đủ". Thực tiễn cũng cho thấy sau đại dịch COVID-19, việc ứng dụng công nghệ vào dạy học không còn là giải pháp tình thế, mà đã trở thành nền tảng lâu dài cho giáo dục linh hoạt và hiện đại. Trường THPT Trần Trường Sinh đã chủ động ban hành kế hoạch chuyển đổi số phù hợp với định hướng của ngành, triển khai hiệu quả hệ thống dạy học trực tuyến, xây dựng học liệu số, tổ chức kiểm tra đánh giá bằng máy tính, và áp dụng phần mềm quản trị nhà trường toàn diện. Những kết quả đạt được cho thấy sự quyết tâm, linh hoạt và năng động của nhà trường trong việc hiện thực hóa nhiệm vụ chuyển đổi số, góp phần từng bước hiện đại hóa giáo dục và hội nhập xu thế phát triển chung của ngành.</p>
-                    
-                </div>
-            </div>
             
-        </div>
+    <div id="introSection" class="content-section">
+    <div class="main-banner">
+      <div class="banner-content">
+        <h2>CHUYỂN ĐỔI SỐ TRONG GIÁO DỤC</h2>
+        <p>Trong bối cảnh cuộc Cách mạng công nghiệp lần thứ tư đang diễn ra mạnh mẽ, chuyển đổi số trong giáo dục đã trở thành xu thế tất yếu và là nhiệm vụ cấp bách nhằm nâng cao chất lượng, hiệu quả công tác giảng dạy và quản lý giáo dục. Các văn bản chỉ đạo của Chính phủ và Bộ Giáo dục và Đào tạo như Quyết định số 131/QĐ-TTg, Thông tư số 09/2021/TT-BGDĐT, Kế hoạch số 2889/KH-UBND của UBND tỉnh Bến Tre đều nhấn mạnh yêu cầu phải triển khai đồng bộ chuyển đổi số tại các cơ sở giáo dục, trong đó chú trọng phát triển nền tảng dạy học trực tuyến, xây dựng học liệu số, ứng dụng công nghệ trong quản trị trường học, và xây dựng cơ sở dữ liệu ngành "sống – sạch – đúng – đủ". Thực tiễn cũng cho thấy sau đại dịch COVID-19, việc ứng dụng công nghệ vào dạy học không còn là giải pháp tình thế, mà đã trở thành nền tảng lâu dài cho giáo dục linh hoạt và hiện đại. Trường THPT Trần Trường Sinh đã chủ động ban hành kế hoạch chuyển đổi số phù hợp với định hướng của ngành, triển khai hiệu quả hệ thống dạy học trực tuyến, xây dựng học liệu số, tổ chức kiểm tra đánh giá bằng máy tính, và áp dụng phần mềm quản trị nhà trường toàn diện. Những kết quả đạt được cho thấy sự quyết tâm, linh hoạt và năng động của nhà trường trong việc hiện thực hóa nhiệm vụ chuyển đổi số, góp phần từng bước hiện đại hóa giáo dục và hội nhập xu thế phát triển chung của ngành.</p>
+      </div>
     </div>
+  </div>
+ <!-- Tiêu chí 1.3 -->
+<div id="tieuchi1-3" class="content-section" style="display: none;">
+  <div class="card-tieuchi">
+    <h2>Tiêu chí 1.3a</h2>
+    <p>Có triển khai các phần mềm, website  dạy học trực tuyến .</p>
+  </div>
+  <div class="image-gallery">
+    <img src="img/1.3.0a.png" alt="Ảnh 1" class="zoomable" />
+    <img src="img/1.3.0b.png" alt="Ảnh 1" class="zoomable" />
+    <img src="img/1.3.0c.png" alt="Ảnh 1" class="zoomable" />
+    <img src="img/1.3.0d.png" alt="Ảnh 1" class="zoomable" />
+    <img src="img/1.3.0e.png" alt="Ảnh 1" class="zoomable" />
+      </div>
+<div class="card-tieuchi">
+<h2>Tiêu chí 1.3b</h2>
+      <p>Có triển khai hệ thống quản lý học tập trực tuyến LMS (tổng cộng hơn 80 khóa học).</p>
+</div>    
+<div class="image-gallery">
+  <img src="img/1.3.1.png" alt="Ảnh 1" class="zoomable" />
+  <img src="img/1.3.2.png" alt="Ảnh 1" class="zoomable" />
+  <img src="img/1.3.3.png" alt="Ảnh 1" class="zoomable" />
+  <img src="img/1.3.4.png" alt="Ảnh 1" class="zoomable" />
+  <img src="img/1.3.5.png" alt="Ảnh 1" class="zoomable" />
+  <img src="img/1.3.6.png" alt="Ảnh 1" class="zoomable" />
+  <img src="img/1.3.7.png" alt="Ảnh 1" class="zoomable" />
+  <img src="img/1.3.8.png" alt="Ảnh 1" class="zoomable" />
+</div>
+<div class="card-tieuchi">
+<h2>Tiêu chí 1.3c</h2>
+      <p>Hệ thống LMS/LCMS có triển khai các chức năng (hơn 70 bài test):
+        (1) Giáo viên giao bài cho học sinh tự học;
+        (2) Giáo viên trả lời (giải đáp) các câu hỏi của học sinh;
+        (3) Tổ chức kiểm tra, đánh giá thường xuyên;</p>
+</div>    
+<div class="image-gallery">
+  <img src="img/1.3.9.png" alt="Ảnh 1" class="zoomable" />
+  <img src="img/1.3.10.png" alt="Ảnh 1" class="zoomable" />
+  <img src="img/1.3.11.png" alt="Ảnh 1" class="zoomable" />
+  <img src="img/1.3.12.png" alt="Ảnh 1" class="zoomable" />
+  
+</div>
+
+</div>
+
+<!-- Tiêu chí 1.4 -->
+<div id="tieuchi1-4" class="content-section" style="display: none;">
+  <div class="card-tieuchi">
+    <h2>Tiêu chí 1.4</h2>
+    <p>Xây dựng hơn 36 học liệu trên LMS và còn nhiều học liệu trên các nền tảng khác như website, goole drive.</p>
+  </div>
+  <div class="image-gallery">
+    <img src="img/1.4.1.png" alt="Ảnh 1" class="zoomable" />
+    <img src="img/1.4.2.png" alt="Ảnh 2" class="zoomable" />
+    <img src="img/1.4.3.png" alt="Ảnh 1" class="zoomable" />
+    <img src="img/1.4.4.png" alt="Ảnh 2" class="zoomable" />
+    <img src="img/1.3.0d.png" alt="Ảnh 1" class="zoomable" />
+    <img src="img/1.3.0e.png" alt="Ảnh 1" class="zoomable" />
+  </div>
+</div>
+
+<!-- Tiêu chí 1.5 -->
+<div id="tieuchi1-5" class="content-section" style="display: none;">
+  <div class="card-tieuchi">
+    <h2>Tiêu chí 1.5</h2>
+    <p>Có Có tổ chức triển khai thi, kiểm tra, đánh giá kết quả học
+tập trên phòng máy tính: có phần mềm, máy tính kết nối
+mạng LAN : kết hợp LMS  và  phần mềm NetSupport School 14. </p>
+  </div>
+  <div class="image-gallery">
+    <img src="img/1.5.png" alt="Ảnh 1" class="zoomable" />
+      </div>
+</div>
+
+<!-- Tiêu chí 1.6 -->
+<div id="tieuchi1-6" class="content-section" style="display: none;">
+  <div class="card-tieuchi">
+    <h2>Tiêu chí 1.6</h2>
+    <p>100 % giáo viên có thể khai thác sử dụng được các phần
+mềm, công cụ LMS  nhằm đổi mới phương pháp dạy học, xây dựng được học liệu số, bài
+giảng điện tử.</p>
+  </div>
+  <div class="image-gallery">
+    <img src="img/1.6.1.png" alt="Ảnh 1" class="zoomable" />
+    <img src="img/1.6.2.png" alt="Ảnh 2" class="zoomable" />
+  </div>
+</div>
+
+<!-- Tiêu chí 1.7 -->
+<div id="tieuchi1-7" class="content-section" style="display: none;">
+  <div class="card-tieuchi">
+    <h2>Tiêu chí 1.7</h2>
+    <p>Hạ tầng, thiết bị sử dụng chuyển đổi số dạy, học:</p>
+  </div>
+  <div class="image-gallery">
+    <img src="img/1.7.1.png" alt="Ảnh 1" class="zoomable" />
+    <img src="img/1.7.2.png" alt="Ảnh 2" class="zoomable" />
+  </div>
+</div>
+<!-- Tiêu chí 2.3 -->
+<div id="tieuchi2-3" class="content-section" style="display: none;">
+  <div class="card-tieuchi">
+    <h2>Tiêu chí 2.3</h2>
+    <p><p>
+      - Có triển khai phần mềm quản trị nhà trường<br>
+      - Có ban hành quy chế sử dụng hệ thống quản trị nhà trường<br>
+      - Có triển khai phân hệ quản lý học sinh (quản lý hồ sơ, kết quả học tập)<br>
+      - Có triển khai sổ điểm điện tử, học bạ điện tử<br>
+      - Có triển khai phân hệ quản lý đội ngũ CBVCNV<br>
+      - Có triển khai phân hệ quản lý cơ sở vật chất<br>
+      - Có triển khai phân hệ quản lý thông tin y tế trường học, quản lý thông tin về sức khỏe học sinh<br>
+      - Có triển khai phân hệ quản lý kế toán<br>
+      - Phần mềm kết nối và trao đổi đầy đủ dữ liệu với CSDL ngành (do Bộ quản lý)
+    </p></p>
+  </div>
+  <div class="image-gallery">
+    <img src="img/2.3.1.a.jpg" alt="Ảnh 1" class="zoomable" />
+    <img src="img/2.3.1.b.jpg" alt="Ảnh 1" class="zoomable" />
+    <img src="img/2.3.2.a.jpg" alt="Ảnh 1" class="zoomable" />
+    <img src="img/2.3.2.b.jpg" alt="Ảnh 1" class="zoomable" />
+    <img src="img/2.3.3.a.jpg" alt="Ảnh 1" class="zoomable" />
+    <img src="img/2.3.3.b.jpg" alt="Ảnh 1" class="zoomable" />
+    <img src="img/2.3.4.jpg" alt="Ảnh 1" class="zoomable" />
+    <img src="img/2.3.5.jpg" alt="Ảnh 1" class="zoomable" />
+    <img src="img/2.3.6.jpg" alt="Ảnh 1" class="zoomable" />
+    <img src="img/2.3.7.jpg" alt="Ảnh 1" class="zoomable" />
+    <img src="img/2.3.8.jpg" alt="Ảnh 1" class="zoomable" />
+  </div>
+</div>
+<!-- Tiêu chí 2.4 -->
+<div id="tieuchi2-4" class="content-section" style="display: none;">
+  <div class="card-tieuchi">
+    <h2>Tiêu chí 2.4</h2>
+    <p><strong>Mức độ triển khai dịch vụ trực tuyến:</strong><br><br>
+      - Có triển khai ứng dụng kết nối giữa gia đình và nhà trường (thông tin: qua OTT – Over The Top)<br>
+      - Có triển khai dịch vụ tuyển sinh đầu cấp trực tuyến<br>
+      - Có triển khai dịch vụ thu phí dịch vụ giáo dục theo hình thức không dùng tiền mặt</p>
+  </div>
+  <div class="image-gallery">
+    <img src="img/2.4.1.a.jpg" alt="Ảnh 1" class="zoomable" />
+    <img src="img/2.4.1.b.jpg" alt="Ảnh 1" class="zoomable" />
+    <img src="img/2.4.2.jpg" alt="Ảnh 1" class="zoomable" />
+    <img src="img/2.4.3.a.jpg" alt="Ảnh 1" class="zoomable" />
+    <img src="img/2.4.3.b.jpg" alt="Ảnh 1" class="zoomable" />
+  </div>
+</div>
+
+
     
+    <!-- Lightbox Overlay -->
+<div id="lightbox" style="
+  display:none; position:fixed; top:0; left:0;
+  width:100vw; height:100vh;
+  background:rgba(0,0,0,0.8);
+  justify-content:center; align-items:center;
+  z-index:9999;">
+  <img id="lightbox-img" src="" style="max-width:90vw; max-height:90vh; border-radius:10px;">
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const images = document.querySelectorAll(".zoomable");
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+
+  images.forEach(img => {
+    img.addEventListener("click", () => {
+      lightboxImg.src = img.src;
+      lightbox.style.display = "flex";
+    });
+  });
+
+  lightbox.addEventListener("click", () => {
+    lightbox.style.display = "none";
+    lightboxImg.src = "";
+  });
+});
+</script>
+
     <script>
         // Phân trang: Hiển thị 20 đề/trang
         const examsPerPage = 30;
@@ -917,6 +1161,20 @@ function loadContent(src) {
   }
 }
 </script>
+<script>
+function showSection(idToShow) {
+  // Ẩn tất cả các section
+  const sections = document.querySelectorAll('.content-section');
+  sections.forEach(section => section.style.display = 'none');
+
+  // Hiện section được chọn
+  const target = document.getElementById(idToShow);
+  if (target) {
+    target.style.display = 'block';
+  }
+}
+</script>
+
 </body>
 
 </html>
