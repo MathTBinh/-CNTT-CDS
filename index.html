@@ -1,1182 +1,1083 @@
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ứng dụng công nghệ thông tin và chuyển đổi số Trần Trường Sinh">
-    <title>CHUYỂN ĐỔI SỐ TRẦN TRƯỜNG SINH</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Trung tâm Bồi dưỡng Văn hóa Minh Tâm</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
     <style>
-        body {
-            font-family: 'Roboto', Arial, sans-serif;
+        /* === Reset & Font === */
+        * {
             margin: 0;
-            background-color: #85f19a;
-            color: #333;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
         }
-        .header {
+        
+        body {
+            color: #333;
+            line-height: 1.6;
+            padding-top: 80px; /* Offset for fixed header */
+        }
+        
+        /* === Header === */
+        header {
+            background-color: #c8102e;
+            color: white;
+            padding: 10px 0;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            background-color: #fff;
-            padding: 10px 15px;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #ddd;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            z-index: 1000;
-            box-sizing: border-box;
+            gap: 15px;
+        }
+        
+        .logo img {
             height: 60px;
         }
-        .header .logo {
+        
+        .logo-text h1 {
             font-size: 22px;
-            font-weight: 700;
-            color: #ff6200;
+            font-weight: bold;
+            line-height: 1.2;
+            margin-bottom: 5px;
         }
-        .nav-bar {
-    position: sticky;
+        
+        .logo-text p {
+            font-size: 14px;
+            font-weight: bold;  /* Chữ đậm */
+            color: #ffd700;     /* Màu vàng gold */
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3); /* Tạo độ nổi (tuỳ chọn) */
+        }
+        
+        /* === Navigation === */
+        nav ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s;
+            padding: 8px 0;
+            display: block;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: #ffd700;
+        }
+        
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: #ffd700;
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s;
+        }
+        
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+        
+        .register-btn {
+            background: white;
+            color: #c8102e;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            margin-left: 15px;
+            transition: all 0.3s;
+        }
+        
+        .register-btn:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* === Multi-level Menu === */
+nav ul li {
+    position: relative;
+}
+
+/* Main menu items */
+nav > ul > li > a {
+    padding: 15px 0;
+}
+
+/* Submenu styles */
+nav ul ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    min-width: 220px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-radius: 5px;
+    z-index: 1000;
+    animation: fadeIn 0.3s;
+}
+
+/* Third level menu */
+nav ul ul ul {
+    left: 100%;
     top: 0;
-    background-color: #c62828; /* Đỏ đậm */
-    color: #fff176; /* Vàng nhạt */
-    padding: 4px 10px;
-    height: 40px;
+}
+
+/* Menu items styling */
+nav ul ul li a {
+    color: #333 !important;
+    padding: 12px 20px !important;
+    font-weight: 500 !important;
+    border-bottom: 1px solid #f0f0f0;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-        .header .course a {
-            text-decoration: none;
-            background-color: #ff0000;
-            color: #fff;
-            padding: 6px 12px;
-            border-radius: 5px;
-            font-size: 12px;
-            font-weight: 500;
-            transition: background-color 0.3s;
-        }
-        .header .course a:hover {
-            background-color: #cc0000;
-        }
-        .header .header-right {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .header .nav-links {
-            display: none;
-        }
-        .header .nav-links a {
-            text-decoration: none;
-            color: #1a73e8;
-            font-size: 12px;
-            padding: 6px 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .header .nav-links a:hover {
-            background-color: #f1f1f1;
-            color: #ff6200;
-        }
-        .header .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .header .user-profile .avatar {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #ff6200;
-        }
-        .header .user-profile .user-info {
-            display: flex;
-            flex-direction: column;
-            text-align: right;
-        }
-        .header .user-profile .user-name {
-            font-size: 12px;
-            font-weight: 700;
-            color: #ff6200;
-            background-color: #fff3e6;
-            padding: 2px 6px;
-            border-radius: 3px;
-            display: inline-block;
-        }
-        .header .user-profile .user-phone {
-            font-size: 10px;
-            color: #1a73e8;
-            text-decoration: none;
-        }
-        .header .user-profile .user-phone:hover {
-            text-decoration: underline;
-        }
-        .nav-tabs {
-            position: fixed;
-            top: 60px;
-            left: 0;
-            width: 100%;
-            background-color: #1c035b;
-            border-bottom: 1px solid #ddd;
-            padding: 5px 15px;
-            display: flex;
-            align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            z-index: 999;
-            box-sizing: border-box;
-            height: 40px;
-        }
-        .nav-tabs a {
-    color: white;
-    padding: 10px 15px;
-    text-decoration: none;
-    font-weight: bold;
+
+nav ul ul li:last-child a {
+    border-bottom: none;
 }
 
-.nav-tabs a.nav-link-red {
-    color: #ffeb3b; /* vàng */
+nav ul ul li a:hover {
+    background: #f9f9f9;
+    color: #c8102e !important;
+    padding-left: 25px !important;
 }
 
-.nav-tabs a:hover {
-    background-color: #b71c1c;
+/* Menu arrows */
+nav ul li > a > i {
+    margin-left: 8px;
+    font-size: 12px;
+    transition: transform 0.3s;
 }
-        .nav-tabs .dropdown {
-            position: relative;
-            display: inline-block;
-            width: 100%;
-        }
-        .nav-tabs .dropdown-btn {
-            padding: 8px 15px;
-            background-color: #ff6200;
-            color: #fff;
-            border-radius: 5px;
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            width: 100%;
-            text-align: center;
-        }
-        .nav-tabs .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #fff;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-            max-height: 200px;
-            overflow-y: auto;
-            border-radius: 5px;
-            top: 100%;
-            z-index: 1000;
-            width: 100%;
-        }
-        .nav-tabs .dropdown-content a {
-            color: #333;
-            padding: 8px 15px;
-            text-decoration: none;
-            display: block;
-            font-size: 12px;
-            transition: background-color 0.3s;
-        }
-        .nav-tabs .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
-        .nav-tabs .dropdown:hover .dropdown-content {
-            display: block;
-        }
-        .nav-tabs .dropdown:hover .dropdown-btn {
-            background-color: #e55a00;
-        }
-        .dynamic-marquee {
-            position: fixed; /* Đặt fixed để không trượt khi cuộn */
-            top: 100px; /* Đặt ngay dưới nav-tabs (60px header + 40px nav-tabs) */
-            left: 0;
-            width: 100%;
-            background-color: #ff6200;
-            color: #fff;
-            padding: 5px 15px;
-            overflow: hidden;
-            height: 30px;
-            z-index: 998;
-            display: flex;
-            align-items: center;
-        }
-        .marquee-content {
-            display: flex;
-            white-space: nowrap;
-            animation: marquee 20s linear infinite;
-        }
-        .marquee-content span {
-            margin-right: 30px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: text-decoration 0.3s;
-        }
-        .marquee-content span:hover {
-            text-decoration: underline;
-        }
-        @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-        .marquee-controls {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            gap: 5px;
-        }
-        .marquee-controls button {
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 12px;
-            cursor: pointer;
-        }
-        .container {
-            display: flex;
-            max-width: 1200px;
-            margin: 130px auto 20px; /* Đẩy sát dynamic-marquee */
-            padding: 0 15px;
-        }
-        .sidebar {
-            width: 25%;
-            padding: 15px;
-            background-color: #fff;
-            position: fixed;
-            top: 140px;
-            bottom: 0;
-            overflow-y: auto;
-            box-shadow: 2px 0 4px rgba(0,0,0,0.1);
-            z-index: 997;
-            box-sizing: border-box;
-        }
-        .sidebar h2 {
-            font-size: 18px;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 15px;
-        }
-        .sidebar .category {
-            margin-bottom: 15px;
-        }
-        .sidebar .category h3 {
-            font-size: 14px;
-            font-weight: 700;
-            color: #ff6200;
-            margin-bottom: 8px;
-        }
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-        }
-        .sidebar ul li {
-            margin-bottom: 6px;
-        }
-        .sidebar ul li a {
-            text-decoration: none;
-            color: #1a73e8;
-            font-size: 12px;
-            display: block;
-            padding: 6px;
-            border-radius: 5px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .sidebar ul li a:hover {
-            background-color: #f1f1f1;
-            color: #ff6200;
-        }
-        .sidebar ul li.highlight {
-            background-color: #ff6200;
-            border-radius: 5px;
-        }
-        .sidebar ul li.highlight a {
-            color: #fff;
+
+nav ul li:hover > a > i.fa-chevron-down {
+    transform: rotate(180deg);
+}
+
+nav ul ul li:hover > a > i.fa-chevron-right {
+    transform: rotate(90deg);
+}
+
+/* Show submenu on hover */
+nav ul li:hover > ul {
+    display: block;
+}
+
+/* Mobile menu styles */
+@media (max-width: 768px) {
+    nav ul ul {
+        position: static;
+        box-shadow: none;
+        width: 100%;
+        display: none;
+        background: rgba(255,255,255,0.1);
+        animation: none;
+    }
+    
+    nav ul ul li a {
+        color: white !important;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    nav ul ul li a:hover {
+        background: rgba(255,255,255,0.2);
+    }
+    
+    nav ul li.active > ul {
+        display: block;
+    }
+}
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        .main-content {
-            width: 90%;
-            margin-left: 25%;
-            padding: 15px;
+        /* === Slider === */
+        .slider {
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+            position: relative;
         }
         
-        .main-content h1 {
-            font-size: 20px;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 15px;
-        }
-        .main-banner {
-            background: linear-gradient(135deg, #ff6200 0%, #fff 100%);
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            color: #333;
+        .slide {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
             position: relative;
-            overflow: hidden;
-            margin-top: 10px;
         }
-        .main-banner .banner-content {
-            max-width: 100%;
-        }
-        .main-banner h2 {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #f7e605;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-        }
-        .main-banner p {
-            font-size: 14px;
-            color: #fff;
-            margin-bottom: 10px;
-        }
-        .main-banner .cta-button {
-            display: inline-block;
-            padding: 8px 15px;
-            background-color: #4caf50;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: 500;
-            transition: background-color 0.3s;
-        }
-        .main-banner .cta-button:hover {
-            background-color: #3d8b40;
-        }
-        .main-banner .banner-icon {
+        
+        .slide-content {
             position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 40px;
-            color: rgba(255,255,255,0.2);
+            bottom: 50px;
+            left: 10%;
+            color: white;
+            max-width: 500px;
+            background: rgba(0,0,0,0.7);
+            padding: 30px;
+            border-radius: 10px;
+            animation: slideIn 0.8s ease-out;
         }
-        .main-content .article {
-            background-color: #fff;
-            padding: 15px;
-            border-radius: 8px;
+        
+        .slide-content h2 {
+            font-size: 32px;
             margin-bottom: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            color: #ffd700;
         }
-        .main-content .article:hover {
-            transform: translateY(-5px);
+        
+        .slide-content p {
+            margin-bottom: 20px;
+            font-size: 18px;
         }
-        .main-content .article .hot {
-            background-color: #ff0000;
-            color: #fff;
-            padding: 4px 8px;
-            font-size: 10px;
-            border-radius: 3px;
-            margin-right: 8px;
-        }
-        .main-content .article h2 {
+        
+        .slide-content .register-btn {
+            background: #c8102e;
+            color: white;
+            padding: 10px 25px;
             font-size: 16px;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 8px;
         }
-        .main-content .article h2 a {
-            text-decoration: none;
-            color: #333;
+        
+        .slide-content .register-btn:hover {
+            background: #a50e26;
+            color: white;
         }
-        .main-content .article h2 a:hover {
-            color: #ff6200;
+        
+        @keyframes slideIn {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
-        .main-content .article h2.highlight {
-            background-color: #ff6200;
-            color: #fff;
-            padding: 2px 4px;
-            border-radius: 3px;
+        
+        /* === Main Content === */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
-        .main-content .article p {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 8px;
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
         }
-        .main-content .article .actions {
-            display: flex;
-            align-items: center;
-            margin-top: 8px;
+        
+        .section-title h2 {
+            font-size: 28px;
+            color: #c8102e;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
         }
-        .main-content .article .actions a {
-            text-decoration: none;
-            margin-right: 10px;
-            color: #1a73e8;
-            font-size: 12px;
+        
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background: #ff7b25;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* === News Section === */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .news-item {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            background: white;
+        }
+        
+        .news-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .news-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .news-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .news-item:hover .news-img img {
+            transform: scale(1.1);
+        }
+        
+        .news-content {
+            padding: 20px;
+        }
+        
+        .news-date {
+            color: #c8102e;
+            font-size: 14px;
+            margin-bottom: 10px;
             font-weight: 500;
         }
-        .main-content .article .actions a:hover {
-            text-decoration: underline;
-        }
-        .main-content .article .actions .share {
-            display: flex;
-            align-items: center;
-        }
-        .main-content .article .actions .share a {
-            margin-left: 5px;
-            font-size: 12px;
-        }
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin-top: 15px;
-        }
-        .pagination a {
-            text-decoration: none;
-            padding: 6px 12px;
-            margin: 0 5px;
-            background-color: #f9f9f9;
+        
+        .news-content h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
             color: #333;
-            border-radius: 5px;
-            font-size: 12px;
-            transition: background-color 0.3s, color 0.3s;
         }
-        .pagination a.active {
-            background-color: #ff6200;
-            color: #fff;
+        
+        .news-content p {
+            color: #666;
+            font-size: 15px;
         }
-        .pagination a:hover:not(.active) {
-            background-color: #ff6200;
-            color: #fff;
+        
+        /* === Features === */
+        .features {
+            background: #f9f9f9;
+            padding: 60px 0;
         }
-        .pdf-viewer {
-            margin-top: 15px;
-            background-color: #fff;
-            padding: 15px;
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            text-align: center;
+        }
+        
+        .feature-item {
+            background: white;
+            padding: 30px 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
         }
-        .pdf-container {
-            width: 100%;
-            border: 1px solid #ccc;
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 5px;
+        
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
-        .pdf-canvas {
-            width: 100%;
+        
+        .feature-item i {
+            font-size: 40px;
+            color: #c8102e;
+            margin-bottom: 20px;
+        }
+        
+        .feature-item h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .feature-item p {
+            color: #666;
+            font-size: 15px;
+        }
+        
+        /* === Footer === */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-col h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+            color: #ffd700;
+        }
+        
+        .footer-col h3:after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 2px;
+            background: #c8102e;
+            bottom: 0;
+            left: 0;
+        }
+        
+        .footer-col p {
+            color: #bbb;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
             margin-bottom: 10px;
         }
-        .pdf-nav {
+        
+        .footer-col ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
+        .footer-col ul li a:hover {
+            color: #ffd700;
+            transform: translateX(5px);
+        }
+        
+        .contact-info p {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            color: #ddd;
+        }
+        
+        .contact-info i {
+            margin-right: 10px;
+            color: #c8102e;
+            width: 20px;
             text-align: center;
-            margin-top: 10px;
         }
-        .pdf-nav button {
-            padding: 6px 12px;
-            margin: 0 5px;
-            background-color: #ff6200;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: background-color 0.3s;
+        
+        .social-links a {
+            display: inline-block;
+            color: white;
+            margin-right: 15px;
+            font-size: 20px;
+            transition: all 0.3s;
         }
-        .pdf-nav button:hover:not(:disabled) {
-            background-color: #e55a00;
+        
+        .social-links a:hover {
+            color: #ffd700;
+            transform: translateY(-3px);
         }
-        .pdf-nav button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #bbb;
+            font-size: 14px;
         }
+        
+        /* === Responsive === */
+        @media (max-width: 1200px) {
+            nav ul li {
+                margin-left: 15px;
+            }
+            
+            nav ul li a {
+                font-size: 15px;
+            }
+            
+            .register-btn {
+                padding: 7px 15px;
+                margin-left: 15px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .news-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+            
+            /* Navigation adjustments for medium screens */
+            nav ul li {
+                margin-left: 12px;
+            }
+            
+            nav ul li a {
+                font-size: 14px;
+                white-space: nowrap;
+            }
+            
+            .register-btn {
+                padding: 6px 12px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 850px) {
+            /* Additional step before full mobile view */
+            nav ul li {
+                margin-left: 8px;
+            }
+            
+            .logo-text h1 {
+                font-size: 20px;
+            }
+        }
+
         @media (max-width: 768px) {
-            .main-banner {
-                flex-direction: column;
-                text-align: center;
+            body {
+                padding-top: 70px;
             }
-            .main-banner .banner-content {
-                max-width: 100%;
-            }
-            .main-banner .banner-icon {
-                display: none;
-            }
-            .header {
+            
+            .header-container {
                 flex-direction: column;
                 padding: 10px;
-                height: auto;
             }
-            .header .header-right {
-                flex-direction: column;
-                gap: 10px;
-                width: 100%;
-                align-items: center;
-            }
-            .header .nav-links {
-                display: flex;
+            
+            nav ul {
+                margin-top: 15px;
                 flex-wrap: wrap;
-                gap: 5px;
                 justify-content: center;
+                width: 100%;
             }
-            .header .user-profile {
-                justify-content: center;
+            
+            nav ul li {
+                margin: 5px 8px;
             }
-            .header .user-profile .user-info {
+            
+            nav ul li a {
+                padding: 5px;
+            }
+            
+            .register-btn {
+                margin: 15px auto 0;
+                display: block;
+                width: fit-content;
+            }
+            
+            .slide-content {
+                left: 5%;
+                right: 5%;
+                max-width: none;
+                padding: 20px;
+            }
+            
+            .news-grid,
+            .features-grid,
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+            
+            /* Mobile menu adjustments */
+            nav ul ul {
+                position: static;
+                box-shadow: none;
+                display: none;
+                background: rgba(255,255,255,0.1);
+                width: 100%;
+                animation: none;
+            }
+            
+            nav ul li.active > ul {
+                display: block;
+            }
+            
+            nav ul ul li {
+                margin: 0;
+            }
+            
+            nav ul ul a {
+                padding: 10px 15px !important;
+                color: white !important;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+            
+            nav ul ul a:hover {
+                background: rgba(255,255,255,0.2);
+                color: white !important;
+            }
+            
+            .feature-item {
+                padding: 25px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                flex-direction: column;
                 text-align: center;
             }
-            .nav-tabs {
-                top: 120px;
-                flex-direction: column;
-                align-items: center;
-                height: auto;
-                padding: 10px;
-            }
-            .nav-tabs .dropdown {
-                width: 100%;
+            
+            .logo img {
+                margin-right: 0;
                 margin-bottom: 10px;
             }
-            .nav-tabs .dropdown-btn {
-                width: 100%;
+            
+            .slide-content h2 {
+                font-size: 24px;
             }
-            .nav-tabs .dropdown-content {
-                width: 100%;
+            
+            .slide-content {
+                bottom: 30px;
+                padding: 20px;
             }
-            .dynamic-marquee {
-                top: 160px; /* Đặt sát nav-tabs trên mobile */
-                height: 30px;
-            }
-            .container {
-                margin-top: 190px; /* Đẩy sát dynamic-marquee trên mobile */
-            }
-            .sidebar {
-                position: static;
-                width: 100%;
-                height: auto;
-                box-shadow: none;
-                border-bottom: 1px solid #ddd;
-                padding: 10px;
-            }
-            .main-content {
-                width: 100%;
-                margin-left: 0;
-                padding: 10px;
-            }
-            .pdf-canvas {
-                width: 100%;
-                height: auto;
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
             }
         }
-        .main-banner .banner-content {
-    background-color: #0b3a2e; /* màu trắng mờ nổi bật */
-    padding: 20px;
-    border-radius: 8px;
-}
+        .chat-icon {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #10c875;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        
+        .chat-icon i {
+            color: white;
+            font-size: 24px;
+        }
+        
+        /* Khung chat */
+        .chat-box {
+            position: fixed;
+            bottom: 90px;
+            left: 20px;
+            width: 350px;
+            height: 450px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 1001;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            display: none;
+            flex-direction: column;
+        }
+        
+        .chat-box.show {
+            opacity: 1;
+            transform: translateY(0);
+            display: flex;
+        }
+        
+        .chat-header {
+            background: #6fc810;
+            color: white;
+            padding: 15px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-header h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+        
+        .close-chat {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        .chat-content {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+        
+        .chat-input {
+            padding: 10px;
+            border-top: 1px solid #eee;
+            display: flex;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        
+        .chat-input button {
+            background: #c8102e;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
 
     </style>
-    <style>
-.image-gallery {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  justify-content: center;
-  margin: 20px 0;
-}
-.image-gallery img {
-  max-width: 300px;
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  cursor: zoom-in;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-  transition: transform 0.3s;
-}
-.image-gallery img:hover {
-  transform: scale(1.03);
-}
-</style>
-<style>
-.card-tieuchi {
-  background-color: #0b3a2e;     /* nền xanh đậm */
-  color: white;                  /* mặc định chữ trắng */
-  padding: 20px 30px;            /* lùi vào 30px bên trái */
-  margin-left: 10px;             /* tránh bị che bởi sidebar */
-  border-radius: 10px;           /* bo góc */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* bóng đổ nhẹ */
-  margin-bottom: 20px;
-}
-
-.card-tieuchi h2 {
-  color: #facc15;                /* vàng sáng */
-  margin-top: 0;
-}
-
-.card-tieuchi p {
-  color: #ffffff;
-}
-</style>
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-        <div class="header">
-        <div class="logo">ỨNG DỤNG CNTT VÀ CHUYỂN ĐỔI SỐ</div>
-        <div class="header-right">
-            <div class="course">
-                <a href="https://teams.live.com/meet/9344468310237?p=GzpaSb6DLxbPpN0qIg">TỔ QUẢN LÝ CNTT TRẦN TRƯỜNG SINH</a>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="img/logo.png" alt="">
+                <div class="logo-text">
+                    <h1>MINH TÂM EDUCATION</h1>
+                    <p>Vững kiến thức - Sáng tương lai</p>
+                </div>
             </div>
-                        <div class="user-profile">
-                <img src="anh/cn.png" alt="" class="avatar">
-                <div class="user-info">
-                    <span class="user-name">TT Nguyễn Thanh Bình</span>
-                    <a href="tel:0878042368" class="user-phone">0822351447</a>
+            <nav>
+    <ul>
+        <li><a href="#">Trang chủ</a></li>
+        <li><a href="#">Giới thiệu</a></li>
+        <li>
+            <a href="#">Chương trình học <i class="fas fa-chevron-down"></i></a>
+            <ul class="submenu">
+                <li><a href="#">Lớp 1-5</a></li>
+                <li><a href="#">Lớp 6-9</a></li>
+                <li>
+                    <a href="#">Lớp 10-12 <i class="fas fa-chevron-right"></i></a>
+                    <ul>
+                        <li><a href="#">Toán</a></li>
+                        <li><a href="#">Lý</a></li>
+                        <li><a href="#">Hóa</a></li>
+                        <li><a href="#">Văn</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Luyện thi Đại học</a></li>
+            </ul>
+        </li>
+        <li><a href="#">Lịch khai giảng</a></li>
+        <li><a href="#">Tin tức</a></li>
+        <li><a href="#">Liên hệ</a></li>
+        <li><a href="#" onclick="openPopup(); return false;"class="register-btn">Đăng ký học</a></li>
+    </ul>
+</nav>
+        </div>
+    </header>
+
+    <!-- Slider -->
+    <div class="slider">
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
+            <div class="slide-content">
+                <h2>Khai giảng khóa đầu 2025</h2>
+                <p>Nhiều Ưu đãi học phí khi đăng ký trước 15/8</p>
+                 <a href="#" onclick="openPopup(); return false;" class="register-btn" style="display: inline-block; margin-top: 15px;">
+                Đăng ký ngay </a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="section-title">
+            <h2>Tin tức & Sự kiện</h2>
+        </div>
+        
+        <div class="news-grid">
+           <div class="news-item">
+            <div class="news-img">
+            <a href="#"> <!-- Thêm thẻ a -->
+            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Tin tức 1">
+            </a>
+            </div>
+            <div class="news-content">
+            <div class="news-date">15/06/2025</div>
+                <h3>
+            <a href="#">HÀNH TRÌNH KHỞI NGUYÊN</a> <!-- Thêm a vào tiêu đề -->
+            </h3>
+            <p>Minh Tâm được thành lập tháng 08/2025 với tầm nhìn trở thành điểm đến giáo dục uy tín ...</p>
+    </div>
+        </div>
+            
+            <div class="news-item">
+                <div class="news-img">
+                 <a href="#">   <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Tin tức 2">
+                </a>
+                </div>
+                <div class="news-content">
+                    <div class="news-date">10/07/2025</div>
+                    <h3>
+                        <a href="#">TRIẾT LÝ GIÁO DỤC </a> <!-- Thêm a vào tiêu đề -->
+                    </h3>
+                    <p>Thành công bắt đầu từ nền tảng vững chắc...</p>
+                </div>
+            </div>
+            
+            <div class="news-item">
+                <div class="news-img">
+                 <a href="#"> <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Tin tức 3">
+                </a>
+                </div>
+                <div class="news-content">
+                    <div class="news-date">05/07/2025</div>
+                    <h3>
+                    <a href="#">LỘ TRÌNH PHÁT TRIỂN</a> <!-- Thêm a vào tiêu đề -->
+                    </h3>
+                    <p>Chúng tôi tiên phong với mô hình giáo dục 3T...</p>
                 </div>
             </div>
         </div>
     </div>
-    <div class="nav-tabs"> 
-        <div class="nav-tabs">
-    <a href="index.html">Trang chủ</a>
-    <!-- thêm các mục khác -->
-     <a href="https://drive.google.com/drive/folders/1t0EP4Cz2leH3d1292NHmkb45ar0Jdvmh?usp=sharing"
-       target="_blank" class="nav-link-red">
-       LINK MINH CHỨNG THEO HƯỚNG DẪN CỦA SỞ
-    </a>
-</div>
 
-    
-</div>
-    <div class="dynamic-marquee" id="dynamicMarquee" aria-label="Thông báo động">
-        <div class="marquee-content" id="marqueeContent">
-            <span onclick="selectExam(1)">BÁO CÁO TỰ ĐÁNH GIÁ MỨC ĐỘ TỰ CHUYỂN ĐỔI SỐ NĂM HỌC 2024-2025</span>
-            <span onclick="window.location.href='/dang-ky-khoa-hoc'">CHỌN DANH MỤC CẦN XEM BÊN MENU TRÁI</span>
-            <span onclick="selectExam(2)">Xem trực tiếp trên web hoặc xem qua link trên thanh menu</span>
-        </div>
-        <div class="marquee-controls">
-            <button id="pauseButton" onclick="toggleMarquee()">❚❚</button>
-            <button onclick="closeMarquee()">×</button>
-        </div>
-    </div>
-    <div class="container">
-        <div class="sidebar">
-            <div class="category">
-                <h3>HỒ SƠ TỰ ĐÁNH GIÁ</h3>
-                <ul>
-                    <li><a href="#" onclick="showSection('introSection')">Giới thiệu</a></li>
-                    <li><a href="#" onclick="loadContent('QĐ THÀNH LẬP HỘI ĐỒNG TỰ ĐÁNH GIÁ CHUYỂN ĐỔI SỐ.pdf')">Quyết định thành lập Hội đồng</a></li>
-                    <li><a href="#" onclick="loadContent('35. KẾ HOẠCH ĐÁNH GIÁ MỨC ĐỘ CHUYỂN ĐỔI SỐ.pdf')">Kế hoạch tự đánh giá</a></li>
-                    <li><a href="#" onclick="loadContent('BaoCaoChuyenDoiSo_2024-2025.pdf')">Báo cáo tự đánh giá</a></li>
-                    <li><a href="#" onclick="loadContent('phụ lục  TỰ ĐÁNH GIÁ MỨC ĐỘ CDSTTS.pdf')">Phụ lục Báo cáo tự đánh giá</a></li>
-                    <li><a href="#" onclick="loadContent('KẾT QUẢ TỰ ĐÁNH GIÁ MỨC ĐỘ CHUYỂN SỐ 2024-2025.pdf')">Phê duyệt tự đánh giá</a></li>
-                </ul>
+    <!-- Features -->
+    <div class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Tại sao chọn Minh Tâm?</h2>
             </div>
-            <div class="category">
-                <h3>MINH CHỨNG TIÊU CHÍ 01</h3>
-                <ul>
-                    <li><a href="#" onclick="loadContent('117.KẾ HOẠCH TỔ CHỨC DẠY HỌC KIỂM TRA TRỰC TUYẾN .pdf')">Minh chứng 1.1</a></li>
-                    <li><a href="#" onclick="loadContent('QUYẾT ĐỊNH BAN HÀNH QUY CHẾ DẠY HỌC TRỤC TUYẾN.pdf')">Minh chứng 1.2</a></li>
-                     <li><a href="#" onclick="showSection('tieuchi1-3')">Tiêu chí 1.3</a></li>
-                      <li><a href="#" onclick="showSection('tieuchi1-4')">Tiêu chí 1.4</a></li>
-                       <li><a href="#" onclick="showSection('tieuchi1-5')">Tiêu chí 1.5</a></li>
-                        <li><a href="#" onclick="showSection('tieuchi1-6')">Tiêu chí 1.6</a></li>
-                         <li><a href="#" onclick="showSection('tieuchi1-7')">Tiêu chí 1.7</a></li>
-                     </ul>
-            </div>
-            <div class="category">
-                <h3>MINH CHỨNG TIÊU CHÍ O2</h3>
-                <ul>
-                    
-                     <li><a href="#" onclick="loadContent('128. KẾ HOẠCH CHUYỂN ĐỔI ỨNG DỤNG CNTT.pdf')">Minnh chứng 2.1-Mục II.3.5 của kế hoạch</a></li>
-                     <li><a href="#" onclick="loadContent('128. KẾ HOẠCH CHUYỂN ĐỔI ỨNG DỤNG CNTT.pdf')">Minnh chứng 2.2</a></li>
-                    <li><a href="#" onclick="showSection('tieuchi2-3')">Tiêu chí 2.3</a></li>
-                    <li><a href="#" onclick="showSection('tieuchi2-4')">Tiêu chí 2.4</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="main-content" id="contentArea">
             
-    <div id="introSection" class="content-section">
-    <div class="main-banner">
-      <div class="banner-content">
-        <h2>CHUYỂN ĐỔI SỐ TRONG GIÁO DỤC</h2>
-        <p>Trong bối cảnh cuộc Cách mạng công nghiệp lần thứ tư đang diễn ra mạnh mẽ, chuyển đổi số trong giáo dục đã trở thành xu thế tất yếu và là nhiệm vụ cấp bách nhằm nâng cao chất lượng, hiệu quả công tác giảng dạy và quản lý giáo dục. Các văn bản chỉ đạo của Chính phủ và Bộ Giáo dục và Đào tạo như Quyết định số 131/QĐ-TTg, Thông tư số 09/2021/TT-BGDĐT, Kế hoạch số 2889/KH-UBND của UBND tỉnh Bến Tre đều nhấn mạnh yêu cầu phải triển khai đồng bộ chuyển đổi số tại các cơ sở giáo dục, trong đó chú trọng phát triển nền tảng dạy học trực tuyến, xây dựng học liệu số, ứng dụng công nghệ trong quản trị trường học, và xây dựng cơ sở dữ liệu ngành "sống – sạch – đúng – đủ". Thực tiễn cũng cho thấy sau đại dịch COVID-19, việc ứng dụng công nghệ vào dạy học không còn là giải pháp tình thế, mà đã trở thành nền tảng lâu dài cho giáo dục linh hoạt và hiện đại. Trường THPT Trần Trường Sinh đã chủ động ban hành kế hoạch chuyển đổi số phù hợp với định hướng của ngành, triển khai hiệu quả hệ thống dạy học trực tuyến, xây dựng học liệu số, tổ chức kiểm tra đánh giá bằng máy tính, và áp dụng phần mềm quản trị nhà trường toàn diện. Những kết quả đạt được cho thấy sự quyết tâm, linh hoạt và năng động của nhà trường trong việc hiện thực hóa nhiệm vụ chuyển đổi số, góp phần từng bước hiện đại hóa giáo dục và hội nhập xu thế phát triển chung của ngành.</p>
-      </div>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <h3>Giáo viên chất lượng</h3>
+                    <p>Đội ngũ giáo viên kinh nghiệm, tận tâm từ các trường chuyên</p>
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-users"></i>
+                    <h3>Lớp học sĩ số nhỏ</h3>
+                    <p>Mỗi lớp chỉ 10-15 học sinh để đảm bảo chất lượng</p>
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-book-open"></i>
+                    <h3>Giáo trình riêng</h3>
+                    <p>Biên soạn phù hợp với năng lực từng học sinh</p>
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Cam kết tiến bộ</h3>
+                    <p>95% học sinh cải thiện điểm số sau 3 tháng</p>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
- <!-- Tiêu chí 1.3 -->
-<div id="tieuchi1-3" class="content-section" style="display: none;">
-  <div class="card-tieuchi">
-    <h2>Tiêu chí 1.3a</h2>
-    <p>Có triển khai các phần mềm, website  dạy học trực tuyến .</p>
-  </div>
-  <div class="image-gallery">
-    <img src="img/1.3.0a.png" alt="Ảnh 1" class="zoomable" />
-    <img src="img/1.3.0b.png" alt="Ảnh 1" class="zoomable" />
-    <img src="img/1.3.0c.png" alt="Ảnh 1" class="zoomable" />
-    <img src="img/1.3.0d.png" alt="Ảnh 1" class="zoomable" />
-    <img src="img/1.3.0e.png" alt="Ảnh 1" class="zoomable" />
-      </div>
-<div class="card-tieuchi">
-<h2>Tiêu chí 1.3b</h2>
-      <p>Có triển khai hệ thống quản lý học tập trực tuyến LMS (tổng cộng hơn 80 khóa học).</p>
-</div>    
-<div class="image-gallery">
-  <img src="img/1.3.1.png" alt="Ảnh 1" class="zoomable" />
-  <img src="img/1.3.2.png" alt="Ảnh 1" class="zoomable" />
-  <img src="img/1.3.3.png" alt="Ảnh 1" class="zoomable" />
-  <img src="img/1.3.4.png" alt="Ảnh 1" class="zoomable" />
-  <img src="img/1.3.5.png" alt="Ảnh 1" class="zoomable" />
-  <img src="img/1.3.6.png" alt="Ảnh 1" class="zoomable" />
-  <img src="img/1.3.7.png" alt="Ảnh 1" class="zoomable" />
-  <img src="img/1.3.8.png" alt="Ảnh 1" class="zoomable" />
-</div>
-<div class="card-tieuchi">
-<h2>Tiêu chí 1.3c</h2>
-      <p>Hệ thống LMS/LCMS có triển khai các chức năng (hơn 70 bài test):
-        (1) Giáo viên giao bài cho học sinh tự học;
-        (2) Giáo viên trả lời (giải đáp) các câu hỏi của học sinh;
-        (3) Tổ chức kiểm tra, đánh giá thường xuyên;</p>
-</div>    
-<div class="image-gallery">
-  <img src="img/1.3.9.png" alt="Ảnh 1" class="zoomable" />
-  <img src="img/1.3.10.png" alt="Ảnh 1" class="zoomable" />
-  <img src="img/1.3.11.png" alt="Ảnh 1" class="zoomable" />
-  <img src="img/1.3.12.png" alt="Ảnh 1" class="zoomable" />
-  
-</div>
 
-</div>
-
-<!-- Tiêu chí 1.4 -->
-<div id="tieuchi1-4" class="content-section" style="display: none;">
-  <div class="card-tieuchi">
-    <h2>Tiêu chí 1.4</h2>
-    <p>Xây dựng hơn 36 học liệu trên LMS và còn nhiều học liệu trên các nền tảng khác như website, goole drive.</p>
-  </div>
-  <div class="image-gallery">
-    <img src="img/1.4.1.png" alt="Ảnh 1" class="zoomable" />
-    <img src="img/1.4.2.png" alt="Ảnh 2" class="zoomable" />
-    <img src="img/1.4.3.png" alt="Ảnh 1" class="zoomable" />
-    <img src="img/1.4.4.png" alt="Ảnh 2" class="zoomable" />
-    <img src="img/1.3.0d.png" alt="Ảnh 1" class="zoomable" />
-    <img src="img/1.3.0e.png" alt="Ảnh 1" class="zoomable" />
-    <img src="img/1.5.6.png" alt="Ảnh 1" class="zoomable" />
-    <img src="img/1.5.7.png" alt="Ảnh 1" class="zoomable" />
-  </div>
-</div>
-
-<!-- Tiêu chí 1.5 -->
-<div id="tieuchi1-5" class="content-section" style="display: none;">
-  <div class="card-tieuchi">
-    <h2>Tiêu chí 1.5</h2>
-    <p>Có Có tổ chức triển khai thi, kiểm tra, đánh giá kết quả học
-tập trên phòng máy tính: có phần mềm, máy tính kết nối
-mạng LAN : kết hợp LMS  và  phần mềm NetSupport School 14. </p>
-  </div>
-  <div class="image-gallery">
-    <img src="img/1.5.jpg" alt="Ảnh 1" class="zoomable" />
-      </div>
-</div>
-
-<!-- Tiêu chí 1.6 -->
-<div id="tieuchi1-6" class="content-section" style="display: none;">
-  <div class="card-tieuchi">
-    <h2>Tiêu chí 1.6</h2>
-    <p>100 % giáo viên có thể khai thác sử dụng được các phần
-mềm, công cụ LMS  nhằm đổi mới phương pháp dạy học, xây dựng được học liệu số, bài
-giảng điện tử.</p>
-  </div>
-  <div class="image-gallery">
-    <img src="img/1.6.1.png" alt="Ảnh 1" class="zoomable" />
-    <img src="img/1.6.2.png" alt="Ảnh 2" class="zoomable" />
-  </div>
-</div>
-
-<!-- Tiêu chí 1.7 -->
-<div id="tieuchi1-7" class="content-section" style="display: none;">
-  <div class="card-tieuchi">
-    <h2>Tiêu chí 1.7</h2>
-    <p>Hạ tầng, thiết bị sử dụng chuyển đổi số dạy, học:</p>
-  </div>
-  <div class="image-gallery">
-    <img src="img/1.7.1.jpg" alt="Ảnh 1" class="zoomable" />
-    <img src="img/1.7.2.jpg" alt="Ảnh 2" class="zoomable" />
-  </div>
-</div>
-<!-- Tiêu chí 2.3 -->
-<div id="tieuchi2-3" class="content-section" style="display: none;">
-  <div class="card-tieuchi">
-    <h2>Tiêu chí 2.3</h2>
-    <p><p>
-      - Có triển khai phần mềm quản trị nhà trường<br>
-      - Có ban hành quy chế sử dụng hệ thống quản trị nhà trường<br>
-      - Có triển khai phân hệ quản lý học sinh (quản lý hồ sơ, kết quả học tập)<br>
-      - Có triển khai sổ điểm điện tử, học bạ điện tử<br>
-      - Có triển khai phân hệ quản lý đội ngũ CBVCNV<br>
-      - Có triển khai phân hệ quản lý cơ sở vật chất<br>
-      - Có triển khai phân hệ quản lý thông tin y tế trường học, quản lý thông tin về sức khỏe học sinh<br>
-      - Có triển khai phân hệ quản lý kế toán<br>
-      - Phần mềm kết nối và trao đổi đầy đủ dữ liệu với CSDL ngành (do Bộ quản lý)
-    </p></p>
-  </div>
-  <div class="image-gallery">
-    <img src="img/2.3.1.a.jpg" alt="Ảnh 1" class="zoomable" />
-    <img src="img/2.3.1.b.jpg" alt="Ảnh 1" class="zoomable" />
-    <img src="img/2.3.2.a.jpg" alt="Ảnh 1" class="zoomable" />
-    <img src="img/2.3.2.b.jpg" alt="Ảnh 1" class="zoomable" />
-    <img src="img/2.3.3.a.jpg" alt="Ảnh 1" class="zoomable" />
-    <img src="img/2.3.3.b.jpg" alt="Ảnh 1" class="zoomable" />
-    <img src="img/2.3.4.jpg" alt="Ảnh 1" class="zoomable" />
-    <img src="img/2.3.5.jpg" alt="Ảnh 1" class="zoomable" />
-    <img src="img/2.3.6.jpg" alt="Ảnh 1" class="zoomable" />
-    <img src="img/2.3.7.jpg" alt="Ảnh 1" class="zoomable" />
-    <img src="img/2.3.8.jpg" alt="Ảnh 1" class="zoomable" />
-  </div>
-</div>
-<!-- Tiêu chí 2.4 -->
-<div id="tieuchi2-4" class="content-section" style="display: none;">
-  <div class="card-tieuchi">
-    <h2>Tiêu chí 2.4</h2>
-    <p><strong>Mức độ triển khai dịch vụ trực tuyến:</strong><br><br>
-      - Có triển khai ứng dụng kết nối giữa gia đình và nhà trường (thông tin: qua OTT – Over The Top)<br>
-      - Có triển khai dịch vụ tuyển sinh đầu cấp trực tuyến<br>
-      - Có triển khai dịch vụ thu phí dịch vụ giáo dục theo hình thức không dùng tiền mặt</p>
-  </div>
-  <div class="image-gallery">
-    <img src="img/2.4.1.a.jpg" alt="Ảnh 1" class="zoomable" />
-    <img src="img/2.4.1.b.jpg" alt="Ảnh 1" class="zoomable" />
-    <img src="img/2.4.2.jpg" alt="Ảnh 1" class="zoomable" />
-    <img src="img/2.4.3.a.jpg" alt="Ảnh 1" class="zoomable" />
-    <img src="img/2.4.3.b.jpg" alt="Ảnh 1" class="zoomable" />
-  </div>
-</div>
-
-
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>Về chúng tôi</h3>
+                <p>Minh Tâm được thành lập tháng 08/2025 với tầm nhìn trở thành điểm đến giáo dục uy tín tại Thạnh Phú. Tiếp nối truyền thống nhiều năm kinh nghiệm trong ngành giáo dục của đội ngũ sáng lập, chúng tôi đã hoàn thiện những bước cuối cùng để chính thức khai trương vào tháng 8/2025.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Liên hệ</h3>
+                <div class="contact-info">
+                    <p><i class="fas fa-map-marker-alt"></i> khu phố 3, xã Thạnh Phú, tỉnh Vĩnh Long</p>
+                    <p><i class="fas fa-phone"></i> 0977899749-0918300170-0915870280</p>
+                    <p><i class="fas fa-envelope"></i> minhtamedu.thanhphu@gmail.com</p>
+                    <p><i class="fas fa-clock"></i> Thứ 2-CN: 7h30 - 20h30</p>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Liên kết nhanh</h3>
+                <ul>
+                    <li><a href="#">Lịch khai giảng</a></li>
+                    <li><a href="#">Bảng giá học phí</a></li>
+                    <li><a href="#">Đội ngũ giáo viên</a></li>
+                    <li><a href="#">Thành tích học sinh</a></li>
+                    <li><a href="#">Câu hỏi thường gặp</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2023 Cơ sở dạy thêm Minh Tâm. All Rights Reserved.</p>
+        </div>
+    </footer>
+<!-- Biểu tượng chatbox -->
+    <div class="chat-icon" id="chatIcon">
+        <i class="fas fa-comment-dots"></i>
+    </div>
     
-    <!-- Lightbox Overlay -->
-<div id="lightbox" style="
-  display:none; position:fixed; top:0; left:0;
-  width:100vw; height:100vh;
-  background:rgba(0,0,0,0.8);
-  justify-content:center; align-items:center;
-  z-index:9999;">
-  <img id="lightbox-img" src="" style="max-width:90vw; max-height:90vh; border-radius:10px;">
+    <!-- Khung chat -->
+    <div class="chat-box" id="chatBox">
+        <div class="chat-header">
+            <h3>Trợ lý ảo Minh Tâm</h3>
+            <button class="close-chat" id="closeChat">×</button>
+        </div>
+        <div class="chat-content">
+            <!-- Nội dung chat sẽ được thêm vào đây -->
+            <iframe src="https://MathTBinh-trolyminhminhtam.hf.space" style="width:100%; height:100%; border:none;"></iframe>
+        </div>
+    </div>
+
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script>
+       <script>
+    $(document).ready(function(){
+        // Slider
+        $('.slider').slick({
+            dots: true,
+            infinite: true,
+            speed: 500,
+            fade: true,
+            cssEase: 'linear',
+            autoplay: true,
+            autoplaySpeed: 5000
+        });
+        
+        // Mobile menu toggle (for small screens)
+        $('.menu-toggle').click(function(){
+            $('nav ul').toggleClass('show');
+        });
+    });
+</script>
+    </script>
+
+    <script>
+        // Tự động mở khung chat sau 3 giây
+        setTimeout(function() {
+            document.getElementById('chatBox').classList.add('show');
+        }, 3000);
+        
+        // Đóng khung chat khi click nút đóng
+        document.getElementById('closeChat').addEventListener('click', function() {
+            document.getElementById('chatBox').classList.remove('show');
+        });
+        
+        // Mở/đóng khung chat khi click biểu tượng
+        document.getElementById('chatIcon').addEventListener('click', function() {
+            const chatBox = document.getElementById('chatBox');
+            chatBox.classList.toggle('show');
+        });
+    </script>
+<!-- ✅ Popup Form -->
+<div id="popupForm" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000;">
+  <div style="background: white; width: 90%; max-width: 600px; margin: 60px auto; padding: 30px; border-radius: 10px; position: relative; overflow-y: auto; max-height: 80vh;">
+    <button onclick="closePopup()" style="position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 24px; cursor: pointer;">&times;</button>
+    <h2 style="color:#c62828">Đăng ký tư vấn - học</h2>
+
+    <form id="popupRegisterForm">
+      <label>Họ tên học sinh</label>
+      <input type="text" name="name" required style="width:100%;padding:10px;margin-bottom:10px">
+
+      <label>Số điện thoại</label>
+      <input type="tel" name="phone" required style="width:100%;padding:10px;margin-bottom:10px">
+
+      <label>Lớp</label>
+      <input type="text" name="grade" required style="width:100%;padding:10px;margin-bottom:10px" placeholder="VD: 6, 10, 12...">
+
+      <label>Môn</label>
+      <input type="text" name="subject" required style="width:100%;padding:10px;margin-bottom:10px" placeholder="Toán, Lý, Hóa...">
+
+      <button type="submit" style="background-color:#c62828;color:white;padding:12px 20px;border:none;border-radius:5px;cursor:pointer;width:100%">Gửi thông tin</button>
+    </form>
+  </div>
 </div>
 
+<!-- ✅ JavaScript -->
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const images = document.querySelectorAll(".zoomable");
-  const lightbox = document.getElementById("lightbox");
-  const lightboxImg = document.getElementById("lightbox-img");
+function openPopup() {
+  document.getElementById('popupForm').style.display = 'block';
+}
+function closePopup() {
+  document.getElementById('popupForm').style.display = 'none';
+}
+document.getElementById('openPopup').addEventListener('click', openPopup);
 
-  images.forEach(img => {
-    img.addEventListener("click", () => {
-      lightboxImg.src = img.src;
-      lightbox.style.display = "flex";
-    });
-  });
+// ✅ Gửi dữ liệu form đến Google Apps Script
+document.getElementById("popupRegisterForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = {
+    name: form.name.value,
+    phone: form.phone.value,
+    grade: form.grade.value,
+    subject: form.subject.value
+  };
 
-  lightbox.addEventListener("click", () => {
-    lightbox.style.display = "none";
-    lightboxImg.src = "";
+  fetch("https://script.google.com/macros/s/AKfycbzGM6PQT2rxPym-P9I8XlqTL4Yp3MhVPMKVYH1EfnMEFmS3jrR1j3qjHtQGU0gl3egv/exec", {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+  .then(res => {
+    alert("✅ Đăng ký thành công! Trung tâm sẽ liên hệ sớm.");
+    form.reset();
+    closePopup();
+  })
+  .catch(err => {
+    alert("❌ Gửi thất bại. Vui lòng thử lại.");
   });
 });
 </script>
-
-    <script>
-        // Phân trang: Hiển thị 20 đề/trang
-        const examsPerPage = 30;
-        let currentPage = 1;
-        let filteredExams = [];
-
-        // Lấy danh sách chuyên đề từ sidebar
-        const sidebarLinks = Array.from(document.querySelectorAll('.sidebar .category ul li a')).map(link => ({
-            title: link.textContent.trim(),
-            href: link.href,
-            element: link.parentElement
-        }));
-
-        // Hàm tạo dropdown menu (giả định từ exams.js)
-        function createDropdownMenu() {
-            const dropdown = document.getElementById('examDropdown');
-            if (typeof examList !== 'undefined' && Array.isArray(examList)) {
-                examList.forEach(exam => {
-                    const link = document.createElement('a');
-                    link.href = exam.available ? exam.file : '#';
-                    link.textContent = exam.title;
-                    if (!exam.available) {
-                        link.onclick = (e) => {
-                            e.preventDefault();
-                            alert(`Đề ${exam.id} chưa có sẵn!`);
-                        };
-                    }
-                    dropdown.appendChild(link);
-                });
-            } else {
-                console.error('examList không tồn tại hoặc không phải mảng.');
-            }
-        }
-
-        // Tích hợp và render danh sách đề thi từ exams.js
-        window.onload = function() {
-            if (typeof examList !== 'undefined' && Array.isArray(examList)) {
-                filteredExams = examList;
-                createDropdownMenu();
-                renderExams(currentPage);
-                loadChuyenDeList();
-                if (localStorage.getItem('marqueeClosed') === 'true') {
-                    document.getElementById('dynamicMarquee').style.display = 'none';
-                }
-            } else {
-                console.error('examList not loaded. Check exams.js or path.');
-                document.getElementById('examList').innerHTML = '<p>Lỗi: Không tải được danh sách đề thi từ exams.js.</p>';
-            }
-        };
-
-        function renderExams(page, exams = filteredExams) {
-            const start = (page - 1) * examsPerPage;
-            const end = start + examsPerPage;
-            const examsToShow = exams.slice(start, end);
-
-            const examListDiv = document.getElementById('examList');
-            examListDiv.innerHTML = '';
-
-            examsToShow.forEach(exam => {
-                const article = document.createElement('div');
-                article.className = 'article';
-                article.innerHTML = `
-                    <span class="hot">HOT</span>
-                    <h2><a href="${exam.available ? exam.file : '#'}" ${!exam.available ? 'onclick="alert(\'Đề ' + exam.id + ' chưa có sẵn!\'); return false;"' : ''}>${exam.title}</a></h2>
-                    ${exam.topic ? `<p>Chủ đề: ${exam.topic}</p>` : ''}
-                    <p>Bộ đề thi Toán bao gồm các câu hỏi trắc nghiệm nhiều lựa chọn, trắc nghiệm đúng/sai và trắc nghiệm trả lời ngắn. Đề thi giúp học sinh ôn luyện kiến thức và kỹ năng giải Toán.</p>
-                    <div class="actions">
-                        <a href="#">Thích</a>
-                        <a href="#">Chia sẻ 0</a>
-                        <div class="share">
-                            <a href="#">Theo dõi Trang</a>
-                            <a href="#">Chia sẻ</a>
-                        </div>
-                    </div>
-                `;
-                examListDiv.appendChild(article);
-            });
-
-            renderPagination(exams);
-        }
-
-        function renderPagination(exams = filteredExams) {
-            const totalPages = Math.ceil(exams.length / examsPerPage);
-            const paginationDiv = document.getElementById('pagination');
-            paginationDiv.innerHTML = '';
-
-            for (let i = 1; i <= totalPages; i++) {
-                const link = document.createElement('a');
-                link.href = '#';
-                link.textContent = i;
-                link.className = i === currentPage ? 'active' : '';
-                link.onclick = (e) => {
-                    e.preventDefault();
-                    currentPage = i;
-                    renderExams(currentPage);
-                };
-                paginationDiv.appendChild(link);
-            }
-        }
-
-        // Chọn đề thi từ marquee
-        function selectExam(examId) {
-            const dropdownContent = document.getElementById('examDropdown');
-            const exam = examList.find(exam => exam.id === examId);
-            if (!exam) {
-                alert(`Đề ${examId} không tồn tại trong danh sách!`);
-                return;
-            }
-            const examLink = dropdownContent.querySelector(`a[href="${exam.file}"]`);
-            if (examLink) {
-                dropdownContent.style.display = 'block';
-                examLink.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                examLink.style.backgroundColor = '#f1f1f1';
-                setTimeout(() => {
-                    examLink.style.backgroundColor = '';
-                }, 2000);
-                if (exam.available) {
-                    setTimeout(() => {
-                        window.location.href = examLink.href;
-                    }, 500);
-                } else {
-                    alert(`Đề ${examId} chưa có sẵn!`);
-                }
-            }
-        }
-
-        // Marquee controls
-        function toggleMarquee() {
-            const marquee = document.getElementById('marqueeContent');
-            const button = document.getElementById('pauseButton');
-            if (marquee.style.animationPlayState === 'paused') {
-                marquee.style.animationPlayState = 'running';
-                button.textContent = '❚❚';
-            } else {
-                marquee.style.animationPlayState = 'paused';
-                button.textContent = '▶';
-            }
-        }
-
-        function closeMarquee() {
-            const marquee = document.getElementById('dynamicMarquee');
-            marquee.style.display = 'none';
-            localStorage.setItem('marqueeClosed', 'true');
-        }
-
-        // Đặt workerSrc cho PDF.js
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js';
-
-        // Biến lưu trữ danh sách chuyên đề từ JSON
-        let chuyenDeList = [];
-
-        // Tải danh sách chuyên đề từ file JSON
-        async function loadChuyenDeList() {
-            try {
-                const response = await fetch('chuyen-de-list.json');
-                chuyenDeList = await response.json();
-                const sidebarLinks = document.querySelectorAll('.sidebar .category:nth-child(3) ul li a');
-                sidebarLinks.forEach(link => {
-                    const title = link.textContent.trim();
-                    const chuyenDe = chuyenDeList.find(item => item.title === title);
-                    if (chuyenDe) {
-                        link.onclick = (e) => {
-                            e.preventDefault();
-                            showPDF(chuyenDe.file, title);
-                        };
-                    }
-                });
-            } catch (error) {
-                console.error('Lỗi khi tải danh sách chuyên đề:', error);
-            }
-        }
-
-        // Hiển thị PDF trong main-content
-        async function showPDF(pdfUrl, title) {
-            const pdfViewer = document.getElementById('pdf-viewer');
-            const pdfTitle = document.getElementById('pdf-title');
-            const pdfContainer = document.getElementById('pdf-container');
-            pdfContainer.innerHTML = '';
-            pdfTitle.textContent = title;
-            pdfViewer.style.display = 'block';
-
-            try {
-                const loadingTask = pdfjsLib.getDocument(pdfUrl);
-                const pdf = await loadingTask.promise;
-                let currentPage = 1;
-
-                const renderPage = async (pageNum) => {
-                    if (pageNum < 1 || pageNum > pdf.numPages) return;
-                    pdfContainer.innerHTML = '';
-                    const page = await pdf.getPage(pageNum);
-                    const viewport = page.getViewport({ scale: 1.0 });
-                    const canvas = document.createElement('canvas');
-                    const context = canvas.getContext('2d');
-                    canvas.height = viewport.height;
-                    canvas.width = viewport.width;
-                    canvas.className = 'pdf-canvas';
-                    pdfContainer.appendChild(canvas);
-                    const renderContext = {
-                        canvasContext: context,
-                        viewport: viewport
-                    };
-                    await page.render(renderContext).promise;
-                    const navDiv = document.createElement('div');
-                    navDiv.className = 'pdf-nav';
-                    navDiv.innerHTML = `
-                        <button onclick="renderPage(${pageNum - 1})" ${pageNum === 1 ? 'disabled' : ''}>Trang trước</button>
-                        <span>Trang ${pageNum} / ${pdf.numPages}</span>
-                        <button onclick="renderPage(${pageNum + 1})" ${pageNum === pdf.numPages ? 'disabled' : ''}>Trang sau</button>
-                    `;
-                    pdfContainer.appendChild(navDiv);
-                };
-
-                window.renderPage = renderPage;
-                renderPage(currentPage);
-            } catch (error) {
-                console.error('Lỗi khi tải PDF:', error);
-                pdfContainer.innerHTML = '<p>Không thể tải tài liệu. Vui lòng thử lại sau.</p>';
-            }
-        }
-
-        // Ngăn nhấp chuột phải trên PDF
-        document.addEventListener('contextmenu', (e) => {
-            if (e.target.closest('.pdf-container')) {
-                e.preventDefault();
-            }
-        });
-
-        // Ngăn phím tắt Ctrl+S hoặc Ctrl+P
-        document.addEventListener('keydown', (e) => {
-            if ((e.ctrlKey && e.key === 's') || (e.ctrlKey && e.key === 'p')) {
-                e.preventDefault();
-                alert('Tính năng tải xuống hoặc in ấn đã bị vô hiệu hóa.');
-            }
-        });
-
-        // Giữ code iframe từ indexlu.html
-        (function(){
-            function c(){
-                var b=a.contentDocument||a.contentWindow.document;
-                if(b){
-                    var d=b.createElement('script');
-                    d.innerHTML="window.__CF$cv$params={r:'9390cc8cfacdae89',t:'MTc0NjExODQ0OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
-                    b.getElementsByTagName('head')[0].appendChild(d)
-                }
-            }
-            if(document.body){
-                var a=document.createElement('iframe');
-                a.height=1;
-                a.width=1;
-                a.style.position='absolute';
-                a.style.top=0;
-                a.style.left=0;
-                a.style.border='none';
-                a.style.visibility='hidden';
-                document.body.appendChild(a);
-                if('loading'!==document.readyState)c();
-                else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);
-                else{
-                    var e=document.onreadystatechange||function(){};
-                    document.onreadystatechange=function(b){
-                        e(b);
-                        'loading'!==document.readyState&&(document.onreadystatechange=e,c())
-                    }
-                }
-            }
-        })();
-    </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9392f3a6c9a2dd25',t:'MTc0NjE0MTAyMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
-
 <script>
-function loadContent(src) {
-  const content = document.getElementById("contentArea");
-  const ext = src.split('.').pop().toLowerCase();
-
-  if (ext === "pdf") {
-    content.innerHTML = '<iframe src="' + src + '" style="width:100%; height:85vh; border:1px solid #ccc; border-radius:6px;"></iframe>';
-  } else if (["jpg", "jpeg", "png", "gif", "webp"].includes(ext)) {
-    content.innerHTML = '<img src="' + src + '" style="max-width:100%; height:auto; border-radius:6px;">';
-  } else if (ext === "html") {
-    content.innerHTML = '<iframe src="' + src + '" style="width:100%; height:85vh; border:1px solid #ccc; border-radius:6px;"></iframe>';
-  } else {
-    content.innerHTML = '<p class="text-red-600">⚠️ Định dạng không hỗ trợ: ' + ext + '</p>';
-  }
-}
+// Hiển thị thông báo khi click vào link chưa hoàn thiện
+document.querySelectorAll('a[href="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault(); // Ngăn chuyển trang
+        alert('Nội dung đang được cập nhật. Vui lòng quay lại sau!');
+    });
+});
 </script>
-<script>
-function showSection(idToShow) {
-  // Ẩn tất cả các section
-  const sections = document.querySelectorAll('.content-section');
-  sections.forEach(section => section.style.display = 'none');
-
-  // Hiện section được chọn
-  const target = document.getElementById(idToShow);
-  if (target) {
-    target.style.display = 'block';
-  }
-}
-</script>
-
 </body>
-
 </html>
