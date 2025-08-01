@@ -6,823 +6,96 @@
     <title>Trung tâm Bồi dưỡng Văn hóa Minh Tâm</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
-    <style>
-        /* === Reset & Font === */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Arial, sans-serif;
-        }
-        
-        body {
-            color: #333;
-            line-height: 1.6;
-            padding-top: 80px; /* Offset for fixed header */
-        }
-        
-        /* === Header === */
-        header {
-            background-color: #c8102e;
-            color: white;
-            padding: 10px 0;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-        
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .logo img {
-            height: 60px;
-        }
-        
-        .logo-text h1 {
-            font-size: 22px;
-            font-weight: bold;
-            line-height: 1.2;
-            margin-bottom: 5px;
-        }
-        
-        .logo-text p {
-            font-size: 14px;
-            font-weight: bold;  /* Chữ đậm */
-            color: #ffd700;     /* Màu vàng gold */
-            text-shadow: 0 1px 2px rgba(0,0,0,0.3); /* Tạo độ nổi (tuỳ chọn) */
-        }
-        
-        /* === Navigation === */
-        nav ul {
-            display: flex;
-            list-style: none;
-            align-items: center;
-        }
-        
-        nav ul li {
-            margin-left: 20px;
-            position: relative;
-        }
-        
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 16px;
-            transition: all 0.3s;
-            padding: 8px 0;
-            display: block;
-            position: relative;
-        }
-        
-        nav ul li a:hover {
-            color: #ffd700;
-        }
-        
-        nav ul li a:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            background: #ffd700;
-            bottom: 0;
-            left: 0;
-            transition: width 0.3s;
-        }
-        
-        nav ul li a:hover:after {
-            width: 100%;
-        }
-        
-        .register-btn {
-            background: white;
-            color: #c8102e;
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-weight: bold;
-            margin-left: 15px;
-            transition: all 0.3s;
-        }
-        
-        .register-btn:hover {
-            background: #f0f0f0;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        
-        /* === Multi-level Menu === */
-nav ul li {
-    position: relative;
-}
-
-/* Main menu items */
-nav > ul > li > a {
-    padding: 15px 0;
-}
-
-/* Submenu styles */
-nav ul ul {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: white;
-    min-width: 220px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    border-radius: 5px;
-    z-index: 1000;
-    animation: fadeIn 0.3s;
-}
-
-/* Third level menu */
-nav ul ul ul {
-    left: 100%;
-    top: 0;
-}
-
-/* Menu items styling */
-nav ul ul li a {
-    color: #333 !important;
-    padding: 12px 20px !important;
-    font-weight: 500 !important;
-    border-bottom: 1px solid #f0f0f0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-nav ul ul li:last-child a {
-    border-bottom: none;
-}
-
-nav ul ul li a:hover {
-    background: #f9f9f9;
-    color: #c8102e !important;
-    padding-left: 25px !important;
-}
-
-/* Menu arrows */
-nav ul li > a > i {
-    margin-left: 8px;
-    font-size: 12px;
-    transition: transform 0.3s;
-}
-
-nav ul li:hover > a > i.fa-chevron-down {
-    transform: rotate(180deg);
-}
-
-nav ul ul li:hover > a > i.fa-chevron-right {
-    transform: rotate(90deg);
-}
-
-/* Show submenu on hover */
-nav ul li:hover > ul {
-    display: block;
-}
-
-/* Mobile menu styles */
-@media (max-width: 768px) {
-    nav ul ul {
-        position: static;
-        box-shadow: none;
-        width: 100%;
-        display: none;
-        background: rgba(255,255,255,0.1);
-        animation: none;
-    }
-    
-    nav ul ul li a {
-        color: white !important;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-    
-    nav ul ul li a:hover {
-        background: rgba(255,255,255,0.2);
-    }
-    
-    nav ul li.active > ul {
-        display: block;
-    }
-}
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* === Slider === */
-        .slider {
-            width: 100%;
-            height: 500px;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .slide {
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-        }
-        
-        .slide-content {
-            position: absolute;
-            bottom: 50px;
-            left: 10%;
-            color: white;
-            max-width: 500px;
-            background: rgba(0,0,0,0.7);
-            padding: 30px;
-            border-radius: 10px;
-            animation: slideIn 0.8s ease-out;
-        }
-        
-        .slide-content h2 {
-            font-size: 32px;
-            margin-bottom: 15px;
-            color: #ffd700;
-        }
-        
-        .slide-content p {
-            margin-bottom: 20px;
-            font-size: 18px;
-        }
-        
-        .slide-content .register-btn {
-            background: #c8102e;
-            color: white;
-            padding: 10px 25px;
-            font-size: 16px;
-        }
-        
-        .slide-content .register-btn:hover {
-            background: #a50e26;
-            color: white;
-        }
-        
-        @keyframes slideIn {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        
-        /* === Main Content === */
-        .container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        .section-title h2 {
-            font-size: 28px;
-            color: #c8102e;
-            position: relative;
-            display: inline-block;
-            padding-bottom: 10px;
-        }
-        
-        .section-title h2:after {
-            content: '';
-            position: absolute;
-            width: 50px;
-            height: 3px;
-            background: #ff7b25;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        
-        /* === News Section === */
-        .news-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-        }
-        
-        .news-item {
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s;
-            background: white;
-        }
-        
-        .news-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-        }
-        
-        .news-img {
-            height: 200px;
-            overflow: hidden;
-        }
-        
-        .news-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-        
-        .news-item:hover .news-img img {
-            transform: scale(1.1);
-        }
-        
-        .news-content {
-            padding: 20px;
-        }
-        
-        .news-date {
-            color: #c8102e;
-            font-size: 14px;
-            margin-bottom: 10px;
-            font-weight: 500;
-        }
-        
-        .news-content h3 {
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: #333;
-        }
-        
-        .news-content p {
-            color: #666;
-            font-size: 15px;
-        }
-        
-        /* === Features === */
-        .features {
-            background: #f9f9f9;
-            padding: 60px 0;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
-            text-align: center;
-        }
-        
-        .feature-item {
-            background: white;
-            padding: 30px 20px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: all 0.3s;
-        }
-        
-        .feature-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-        
-        .feature-item i {
-            font-size: 40px;
-            color: #c8102e;
-            margin-bottom: 20px;
-        }
-        
-        .feature-item h3 {
-            margin-bottom: 15px;
-            color: #333;
-        }
-        
-        .feature-item p {
-            color: #666;
-            font-size: 15px;
-        }
-        
-        /* === Footer === */
-        footer {
-            background: #1a1a1a;
-            color: white;
-            padding: 60px 0 20px;
-        }
-        
-        .footer-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .footer-col h3 {
-            font-size: 20px;
-            margin-bottom: 20px;
-            position: relative;
-            padding-bottom: 10px;
-            color: #ffd700;
-        }
-        
-        .footer-col h3:after {
-            content: '';
-            position: absolute;
-            width: 50px;
-            height: 2px;
-            background: #c8102e;
-            bottom: 0;
-            left: 0;
-        }
-        
-        .footer-col p {
-            color: #bbb;
-            font-size: 15px;
-            line-height: 1.6;
-        }
-        
-        .footer-col ul {
-            list-style: none;
-        }
-        
-        .footer-col ul li {
-            margin-bottom: 10px;
-        }
-        
-        .footer-col ul li a {
-            color: #ddd;
-            text-decoration: none;
-            transition: all 0.3s;
-            display: inline-block;
-        }
-        
-        .footer-col ul li a:hover {
-            color: #ffd700;
-            transform: translateX(5px);
-        }
-        
-        .contact-info p {
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            color: #ddd;
-        }
-        
-        .contact-info i {
-            margin-right: 10px;
-            color: #c8102e;
-            width: 20px;
-            text-align: center;
-        }
-        
-        .social-links a {
-            display: inline-block;
-            color: white;
-            margin-right: 15px;
-            font-size: 20px;
-            transition: all 0.3s;
-        }
-        
-        .social-links a:hover {
-            color: #ffd700;
-            transform: translateY(-3px);
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 30px;
-            margin-top: 30px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: #bbb;
-            font-size: 14px;
-        }
-        
-        /* === Responsive === */
-        @media (max-width: 1200px) {
-            nav ul li {
-                margin-left: 15px;
-            }
-            
-            nav ul li a {
-                font-size: 15px;
-            }
-            
-            .register-btn {
-                padding: 7px 15px;
-                margin-left: 15px;
-            }
-        }
-
-        @media (max-width: 992px) {
-            .news-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .features-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 20px;
-            }
-            
-            .footer-container {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 30px;
-            }
-            
-            /* Navigation adjustments for medium screens */
-            nav ul li {
-                margin-left: 12px;
-            }
-            
-            nav ul li a {
-                font-size: 14px;
-                white-space: nowrap;
-            }
-            
-            .register-btn {
-                padding: 6px 12px;
-                font-size: 14px;
-            }
-        }
-
-        @media (max-width: 850px) {
-            /* Additional step before full mobile view */
-            nav ul li {
-                margin-left: 8px;
-            }
-            
-            .logo-text h1 {
-                font-size: 20px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding-top: 70px;
-            }
-            
-            .header-container {
-                flex-direction: column;
-                padding: 10px;
-            }
-            
-            nav ul {
-                margin-top: 15px;
-                flex-wrap: wrap;
-                justify-content: center;
-                width: 100%;
-            }
-            
-            nav ul li {
-                margin: 5px 8px;
-            }
-            
-            nav ul li a {
-                padding: 5px;
-            }
-            
-            .register-btn {
-                margin: 15px auto 0;
-                display: block;
-                width: fit-content;
-            }
-            
-            .slide-content {
-                left: 5%;
-                right: 5%;
-                max-width: none;
-                padding: 20px;
-            }
-            
-            .news-grid,
-            .features-grid,
-            .footer-container {
-                grid-template-columns: 1fr;
-            }
-            
-            /* Mobile menu adjustments */
-            nav ul ul {
-                position: static;
-                box-shadow: none;
-                display: none;
-                background: rgba(255,255,255,0.1);
-                width: 100%;
-                animation: none;
-            }
-            
-            nav ul li.active > ul {
-                display: block;
-            }
-            
-            nav ul ul li {
-                margin: 0;
-            }
-            
-            nav ul ul a {
-                padding: 10px 15px !important;
-                color: white !important;
-                border-bottom: 1px solid rgba(255,255,255,0.1);
-            }
-            
-            nav ul ul a:hover {
-                background: rgba(255,255,255,0.2);
-                color: white !important;
-            }
-            
-            .feature-item {
-                padding: 25px 15px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .logo {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .logo img {
-                margin-right: 0;
-                margin-bottom: 10px;
-            }
-            
-            .slide-content h2 {
-                font-size: 24px;
-            }
-            
-            .slide-content {
-                bottom: 30px;
-                padding: 20px;
-            }
-            
-            .footer-container {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-        }
-        .chat-icon {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            width: 60px;
-            height: 60px;
-            background-color: #10c875;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            z-index: 1000;
-        }
-        
-        .chat-icon i {
-            color: white;
-            font-size: 24px;
-        }
-        
-        /* Khung chat */
-        .chat-box {
-            position: fixed;
-            bottom: 90px;
-            left: 20px;
-            width: 350px;
-            height: 450px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            z-index: 1001;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-            display: none;
-            flex-direction: column;
-        }
-        
-        .chat-box.show {
-            opacity: 1;
-            transform: translateY(0);
-            display: flex;
-        }
-        
-        .chat-header {
-            background: #6fc810;
-            color: white;
-            padding: 15px;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .chat-header h3 {
-            margin: 0;
-            font-size: 16px;
-        }
-        
-        .close-chat {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-        }
-        
-        .chat-content {
-            flex: 1;
-            padding: 15px;
-            overflow-y: auto;
-        }
-        
-        .chat-input {
-            padding: 10px;
-            border-top: 1px solid #eee;
-            display: flex;
-        }
-        
-        .chat-input input {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            margin-right: 10px;
-        }
-        
-        .chat-input button {
-            background: #c8102e;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-    </style>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles1.css">
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <img src="img/logo.png" alt="">
-                <div class="logo-text">
-                    <h1>MINH TÂM EDUCATION</h1>
-                    <p>Vững kiến thức - Sáng tương lai</p>
-                </div>
+    <!-- Thay thế toàn bộ phần <header> hiện tại bằng code này -->
+<header>
+    <div class="header-container">
+        <div class="logo">
+            <img src="img/logo.png" alt="Logo" class="logo-img">
+            <div class="logo-text">
+                <h1>MINH TÂM EDUCATION</h1>
+                <p>Vững kiến thức - Sáng tương lai</p>
             </div>
-            <nav>
-    <ul>
-        <li><a href="#">Trang chủ</a></li>
-        <li><a href="#">Giới thiệu</a></li>
-        <li>
-            <a href="#">Chương trình học <i class="fas fa-chevron-down"></i></a>
-            <ul class="submenu">
-                <li><a href="#">Lớp 1-5</a></li>
-                <li><a href="#">Lớp 6-9</a></li>
-                <li>
-                    <a href="#">Lớp 10-12 <i class="fas fa-chevron-right"></i></a>
-                    <ul>
-                        <li><a href="#">Toán</a></li>
-                        <li><a href="#">Lý</a></li>
-                        <li><a href="#">Hóa</a></li>
-                        <li><a href="#">Văn</a></li>
+        </div>
+
+        <!-- Nút hamburger - Thêm mới -->
+        <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu">
+            <span class="hamburger-icon"></span>
+            <span class="hamburger-icon"></span>
+            <span class="hamburger-icon"></span>
+        </button>
+
+        <nav id="mainNav">
+            <ul class="main-menu">
+                <li><a href="index.html">Trang chủ</a></li>
+                <li><a href="gioithieu.html">Giới thiệu</a></li>
+                <li class="menu-item-has-children">
+                    <a href="#">Chương trình học <i class="fas fa-chevron-down dropdown-icon"></i></a>
+                    <ul class="sub-menu">
+                        <li><a href="#">Lớp 1-5</a></li>
+                        <li><a href="#">Lớp 6-9</a></li>
+                        <li class="menu-item-has-children">
+                            <a href="#">Lớp 10-12 <i class="fas fa-chevron-right nested-dropdown-icon"></i></a>
+                            <ul class="nested-sub-menu">
+                                <li><a href="#">Toán</a></li>
+                                <li><a href="#">Lý</a></li>
+                                <li><a href="#">Hóa</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
-                <li><a href="#">Luyện thi Đại học</a></li>
+                <li><a href="congkhai.html">Bảng công khai</a></li>
+                <li><a href="#" class="register-btn">Đăng ký học</a></li>
             </ul>
-        </li>
-        <li><a href="#">Lịch khai giảng</a></li>
-        <li><a href="#">Tin tức</a></li>
-        <li><a href="#">Liên hệ</a></li>
-        <li><a href="#" onclick="openPopup(); return false;"class="register-btn">Đăng ký học</a></li>
-    </ul>
-</nav>
-        </div>
-    </header>
+        </nav>
+    </div>
+</header>
 
     <!-- Slider -->
     <div class="slider">
-        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
-            <div class="slide-content">
-                <h2>Khai giảng khóa đầu 2025</h2>
-                <p>Nhiều Ưu đãi học phí khi đăng ký trước 15/8</p>
-                 <a href="#" onclick="openPopup(); return false;" class="register-btn" style="display: inline-block; margin-top: 15px;">
-                Đăng ký ngay </a>
-            </div>
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
+        <div class="slide-content">
+            <h2>Sớm Bước Thành Công</h2>
+            <p>Đăng ký trước 15/8, nhận ưu đãi học phí lên đến 20%!</p>
+            <a href="#" onclick="openPopup(); return false;" class="register-btn" style="display: inline-block; margin-top: 15px;">
+                    Đăng ký ngay
+                </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://minhtamedu.com" target="_blank" class="share-btn">Chia sẻ</a>
         </div>
     </div>
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
+        <div class="slide-content">
+            <h2>Rủ Bạn, Nhận Quà</h2>
+            <p>Giới thiệu bạn bè,nhận ngay ưu đãi!</p>
+            <a href="#" onclick="openPopup(); return false;" class="register-btn" style="display: inline-block; margin-top: 15px;">
+                    Đăng ký ngay
+                </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://minhtamedu.com" target="_blank" class="share-btn">Chia sẻ</a>
+        </div>
+    </div>
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
+        <div class="slide-content">
+            <h2>Khóa Học Vươn Tầm</h2>
+            <p>Đăng ký khóa học mới, giảm 10% học phí!</p>
+            <a href="#" onclick="openPopup(); return false;" class="register-btn" style="display: inline-block; margin-top: 15px;">
+                    Đăng ký ngay
+                </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://minhtamedu.com" target="_blank" class="share-btn">Chia sẻ</a>
+        </div>
+    </div>
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1516321497487-e288fb19713f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
+        <div class="slide-content">
+            <h2>Cùng Nhóm, Cùng Sáng</h2>
+            <p>Nhóm trên 5 học sinh, giảm tới 15% học phí cho cả nhóm!</p>
+            <a href="#" onclick="openPopup(); return false;" class="register-btn" style="display: inline-block; margin-top: 15px;">
+                    Đăng ký ngay
+                </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://minhtamedu.com" target="_blank" class="share-btn">Chia sẻ</a>
+        </div>
+    </div>
+</div>
 
 
     <!-- Main Content -->
@@ -830,7 +103,6 @@ nav ul li:hover > ul {
         <div class="section-title">
             <h2>Tin tức & Sự kiện</h2>
         </div>
-        
         <div class="news-grid">
            <div class="news-item">
             <div class="news-img">
@@ -841,11 +113,25 @@ nav ul li:hover > ul {
             <div class="news-content">
             <div class="news-date">15/06/2025</div>
                 <h3>
-            <a href="#">HÀNH TRÌNH KHỞI NGUYÊN</a> <!-- Thêm a vào tiêu đề -->
+            <a href="gioithieu.html">THÔNG TIN CHÍNH VỀ TRUNG TÂM</a> <!-- Thêm a vào tiêu đề -->
+            </h3>
+            <p>Minh Tâm Dù mới thành lập nhưng chúng tôi tự hào quy tụ những giáo viên giỏi với bề dày kinh nghiệm ...</p>
+          </div>
+        </div>
+         <div class="news-item">
+            <div class="news-img">
+            <a href="#"> <!-- Thêm thẻ a -->
+            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Tin tức 1">
+            </a>
+            </div>
+            <div class="news-content">
+            <div class="news-date">15/06/2025</div>
+                <h3>
+            <a href="giơithieu.html">HÀNH TRÌNH KHỞI NGUYÊN</a> <!-- Thêm a vào tiêu đề -->
             </h3>
             <p>Minh Tâm được thành lập tháng 08/2025 với tầm nhìn trở thành điểm đến giáo dục uy tín ...</p>
-    </div>
-        </div>
+          </div>
+          </div>
             
             <div class="news-item">
                 <div class="news-img">
@@ -855,7 +141,7 @@ nav ul li:hover > ul {
                 <div class="news-content">
                     <div class="news-date">10/07/2025</div>
                     <h3>
-                        <a href="#">TRIẾT LÝ GIÁO DỤC </a> <!-- Thêm a vào tiêu đề -->
+                        <a href="giơithieu.html">TRIẾT LÝ GIÁO DỤC </a> <!-- Thêm a vào tiêu đề -->
                     </h3>
                     <p>Thành công bắt đầu từ nền tảng vững chắc...</p>
                 </div>
@@ -869,7 +155,7 @@ nav ul li:hover > ul {
                 <div class="news-content">
                     <div class="news-date">05/07/2025</div>
                     <h3>
-                    <a href="#">LỘ TRÌNH PHÁT TRIỂN</a> <!-- Thêm a vào tiêu đề -->
+                    <a href="giơithieu.html">LỘ TRÌNH PHÁT TRIỂN</a> <!-- Thêm a vào tiêu đề -->
                     </h3>
                     <p>Chúng tôi tiên phong với mô hình giáo dục 3T...</p>
                 </div>
@@ -888,7 +174,7 @@ nav ul li:hover > ul {
                 <div class="feature-item">
                     <i class="fas fa-chalkboard-teacher"></i>
                     <h3>Giáo viên chất lượng</h3>
-                    <p>Đội ngũ giáo viên kinh nghiệm, tận tâm từ các trường chuyên</p>
+                    <p>Đội ngũ giáo viên giỏi, kinh nghiệm, tận tâm từ các trường trên địa bàn</p>
                 </div>
                 
                 <div class="feature-item">
@@ -948,7 +234,7 @@ nav ul li:hover > ul {
         </div>
         
         <div class="copyright">
-            <p>&copy; 2023 Cơ sở dạy thêm Minh Tâm. All Rights Reserved.</p>
+            <p>&copy; 2025 Cơ sở dạy thêm Minh Tâm. All Rights Reserved.</p>
         </div>
     </footer>
 <!-- Biểu tượng chatbox -->
@@ -972,27 +258,18 @@ nav ul li:hover > ul {
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-    <script>
-       <script>
+<script>
     $(document).ready(function(){
-        // Slider
         $('.slider').slick({
-            dots: true,
-            infinite: true,
-            speed: 500,
-            fade: true,
-            cssEase: 'linear',
             autoplay: true,
-            autoplaySpeed: 5000
-        });
-        
-        // Mobile menu toggle (for small screens)
-        $('.menu-toggle').click(function(){
-            $('nav ul').toggleClass('show');
+            autoplaySpeed: 3000,
+            dots: true,
+            arrows: true,
+            slidesToShow: 1,
+            slidesToScroll: 1
         });
     });
 </script>
-    </script>
 
     <script>
         // Tự động mở khung chat sau 3 giây
@@ -1071,13 +348,52 @@ document.getElementById("popupRegisterForm").addEventListener("submit", function
 });
 </script>
 <script>
-// Hiển thị thông báo khi click vào link chưa hoàn thiện
 document.querySelectorAll('a[href="#"]').forEach(link => {
+    // Bỏ qua nếu thẻ <a> có onclick hoặc class đặc biệt
+    if (link.hasAttribute('onclick') || link.classList.contains('no-alert')) {
+        return; // Không thêm event listener
+    }
+    
     link.addEventListener('click', (e) => {
-        e.preventDefault(); // Ngăn chuyển trang
+        e.preventDefault();
         alert('Nội dung đang được cập nhật. Vui lòng quay lại sau!');
     });
 });
 </script>
+<script>
+// 1. Toggle menu chính
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const mainMenu = document.querySelector('.main-menu');
+
+hamburgerBtn.addEventListener('click', () => {
+    mainMenu.classList.toggle('active');
+    
+    // Animation cho icon hamburger
+    hamburgerBtn.classList.toggle('active');
+});
+
+// 2. Xử lý submenu trên mobile
+document.querySelectorAll('.menu-item-has-children > a').forEach(item => {
+    item.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768) {
+            e.preventDefault();
+            const submenu = this.nextElementSibling;
+            const icon = this.querySelector('.dropdown-icon, .nested-dropdown-icon');
+            
+            submenu.classList.toggle('active');
+            icon.classList.toggle('active');
+        }
+    });
+});
+
+// 3. Đóng menu khi click bên ngoài
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('#mainNav') && !e.target.closest('.hamburger-btn')) {
+        mainMenu.classList.remove('active');
+        hamburgerBtn.classList.remove('active');
+    }
+});
+</script>
+
 </body>
 </html>
