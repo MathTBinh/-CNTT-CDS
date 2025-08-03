@@ -6,7 +6,7 @@
     <title>Trung tâm Bồi dưỡng Văn hóa Minh Tâm</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
-    <link rel="stylesheet" href="styles1.css">
+    <link rel="stylesheet" href="styles_1.css">
 </head>
 <body>
     <!-- Thay thế toàn bộ phần <header> hiện tại bằng code này -->
@@ -20,39 +20,37 @@
             </div>
         </div>
 
-        <!-- Nút hamburger - Thêm mới -->
-        <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu">
-            <span class="hamburger-icon"></span>
-            <span class="hamburger-icon"></span>
-            <span class="hamburger-icon"></span>
-        </button>
+         <button class="hamburger-btn">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
 
-        <nav id="mainNav">
-            <ul class="main-menu">
-                <li><a href="index.html">Trang chủ</a></li>
-                <li><a href="gioithieu.html">Giới thiệu</a></li>
-                <li class="menu-item-has-children">
-                    <a href="#">Chương trình học <i class="fas fa-chevron-down dropdown-icon"></i></a>
-                    <ul class="sub-menu">
-                        <li><a href="#">Lớp 1-5</a></li>
-                        <li><a href="#">Lớp 6-9</a></li>
-                        <li class="menu-item-has-children">
-                            <a href="#">Lớp 10-12 <i class="fas fa-chevron-right nested-dropdown-icon"></i></a>
-                            <ul class="nested-sub-menu">
-                                <li><a href="#">Toán</a></li>
-                                <li><a href="#">Lý</a></li>
-                                <li><a href="#">Hóa</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><a href="congkhai.html">Bảng công khai</a></li>
-                <li><a href="#" class="register-btn">Đăng ký học</a></li>
-            </ul>
-        </nav>
-    </div>
+         <nav id="mainNav">
+                <ul class="main-menu">
+                    <li><a href="#">Trang chủ</a></li>
+                    <li><a href="gioithieu.html">Giới thiệu</a></li>
+                    <li>
+                        <a href="#">Chương trình học <i class="fas fa-chevron-down dropdown-icon"></i></a>
+                        <ul class="submenu">
+                            <li><a href="#">Lớp 1-5</a></li>
+                            <li>
+                                <a href="#">Lớp 6-9 <i class="fas fa-chevron-right nested-dropdown-icon"></i></a>
+                                <ul class="nested-sub-menu">
+                                    <li><a href="#">Toán</a></li>
+                                    <li><a href="#">Lý</a></li>
+                                    <li><a href="#">Hóa</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Lớp 10-12</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Bảng công khai</a></li>
+                    <li><a href="#" class="register-btn">Đăng ký học</a></li>
+                </ul>
+            </nav>
+        </div>
 </header>
-
     <!-- Slider -->
     <div class="slider">
     <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
@@ -107,7 +105,7 @@
            <div class="news-item">
             <div class="news-img">
             <a href="#"> <!-- Thêm thẻ a -->
-            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Tin tức 1">
+            <img src="img/minhtam.png" alt="Tin tức 1">
             </a>
             </div>
             <div class="news-content">
@@ -121,7 +119,7 @@
          <div class="news-item">
             <div class="news-img">
             <a href="#"> <!-- Thêm thẻ a -->
-            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Tin tức 1">
+            <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Tin tức 1">
             </a>
             </div>
             <div class="news-content">
@@ -205,7 +203,7 @@
                 <h3>Về chúng tôi</h3>
                 <p>Minh Tâm được thành lập tháng 08/2025 với tầm nhìn trở thành điểm đến giáo dục uy tín tại Thạnh Phú. Tiếp nối truyền thống nhiều năm kinh nghiệm trong ngành giáo dục của đội ngũ sáng lập, chúng tôi đã hoàn thiện những bước cuối cùng để chính thức khai trương vào tháng 8/2025.</p>
                 <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href=""><i class="fab fa-facebook"></i></a>
                     <a href="#"><i class="fab fa-youtube"></i></a>
                     <a href="#"><i class="fab fa-tiktok"></i></a>
                 </div>
@@ -255,21 +253,7 @@
     </div>
 
 
-    <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-<script>
-    $(document).ready(function(){
-        $('.slider').slick({
-            autoplay: true,
-            autoplaySpeed: 3000,
-            dots: true,
-            arrows: true,
-            slidesToShow: 1,
-            slidesToScroll: 1
-        });
-    });
-</script>
+    
 
     <script>
         // Tự động mở khung chat sau 3 giây
@@ -350,40 +334,57 @@ document.getElementById("popupRegisterForm").addEventListener("submit", function
 });
 </script>
 
-<script>
-        // Mobile menu toggle
-        document.getElementById('menuToggle').addEventListener('click', function() {
-            document.getElementById('mainNav').classList.toggle('active');
-        });
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 
-        // Mobile submenu toggle
-        document.querySelectorAll('.has-submenu > a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                if (window.innerWidth <= 768) {
-                    e.preventDefault();
-                    const submenu = this.nextElementSibling;
-                    submenu.classList.toggle('active');
-                    
-                    // Đóng các submenu khác cùng cấp
-                    const parentLi = this.parentElement;
-                    parentLi.parentElement.querySelectorAll('.has-submenu').forEach(item => {
-                        if (item !== parentLi && item.querySelector('.submenu')) {
-                            item.querySelector('.submenu').classList.remove('active');
-                        }
-                    });
-                }
+
+
+
+
+    <script>
+        // Khởi tạo slider
+        $(document).ready(function(){
+            $('.slider').slick({
+                dots: true,
+                infinite: true,
+                speed: 500,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 3000,
+                prevArrow: '<button type="button" class="slick-prev">❮</button>',
+                nextArrow: '<button type="button" class="slick-next">❯</button>'
             });
-        });
 
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            const nav = document.getElementById('mainNav');
-            const toggle = document.getElementById('menuToggle');
-            
-            if (window.innerWidth <= 768 && !nav.contains(e.target) && !toggle.contains(e.target)) {
-                nav.classList.remove('active');
+            // Toggle hamburger menu
+            $('.hamburger-btn').click(function(){
+                $(this).toggleClass('active');
+                $('#mainNav').toggleClass('active');
+            });
+
+            $('.main-menu > li > a').click(function(e){
+              if ($(window).width() <= 768) {
+            var $submenu = $(this).siblings('.submenu');
+             if ($submenu.length) {
+            e.preventDefault();
+            $submenu.toggleClass('active');
+            $(this).find('.dropdown-icon').toggleClass('active');
             }
-        });
+             }
+            });
+            $('.submenu > li > a').click(function(e){
+            if ($(window).width() <= 768) {
+             var $nestedSubmenu = $(this).siblings('.nested-sub-menu');
+            if ($nestedSubmenu.length) {
+            e.preventDefault();
+            $nestedSubmenu.toggleClass('active');
+            $(this).find('.nested-dropdown-icon').toggleClass('active');
+            }
+            }
+            });
 
+            
+        });
+    </script>
 </body>
 </html>
