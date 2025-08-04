@@ -147,6 +147,7 @@ nav ul li a:hover:after {
 }
 
 /* === Multi-level Dropdown Menu === */
+/* === Multi-level Dropdown Menu === */
 nav ul ul {
     position: absolute;
     top: 100%;
@@ -175,6 +176,9 @@ nav ul li:hover > ul {
 nav ul ul li {
     margin: 0;
     border-bottom: 1px solid #eee;
+    display: block !important;              /* Ưu tiên xếp dọc */
+    width: 100% !important;                 /* Đảm bảo chiếm toàn bộ chiều rộng */
+    float: none !important;                 /* Loại bỏ float nếu có */
 }
 
 nav ul ul li:last-child {
@@ -185,6 +189,9 @@ nav ul ul a {
     color: #333 !important;
     padding: 10px 15px !important;
     white-space: nowrap;
+    display: block !important;              /* Đảm bảo link xếp dọc */
+    width: 100% !important;                 /* Đảm bảo link chiếm toàn bộ */
+    float: none !important;                 /* Loại bỏ float nếu có */
 }
 
 nav ul ul a:hover {
@@ -193,12 +200,21 @@ nav ul ul a:hover {
     padding-left: 20px !important;
 }
 
+nav ul ul ul li {
+    display: block !important;              /* Xếp dọc cho cấp 3 */
+    width: 100% !important;
+}
+
+nav ul ul ul a {
+    display: block !important;              /* Xếp dọc cho cấp 3 */
+    width: 100% !important;
+}
+
 nav ul ul .fa-chevron-right {
     float: right;
     font-size: 12px;
     margin-top: 5px;
 }
-
 /* === Slider === */
 .slider {
     width: 100%;
@@ -516,6 +532,7 @@ footer {
 }
 
 /* === Chatbox === */
+/* === Chatbox === */
 .chat-icon {
     position: fixed;
     bottom: 20px;
@@ -581,6 +598,35 @@ footer {
     border: none;
     color: white;
     font-size: 20px;
+    cursor: pointer;
+}
+
+.chat-content {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.chat-input {
+    padding: 10px;
+    border-top: 1px solid #eee;
+    display: flex;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.chat-input button {
+    background: #f1ebec;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
     cursor: pointer;
 }
 
