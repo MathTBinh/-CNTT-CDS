@@ -663,23 +663,26 @@ footer {
 
 @media (max-width: 768px) {
     body {
-        padding-top: 70px;
+        padding-top: 60px; /* Giảm từ 70px -> 60px */
     }
     
     .header-container {
         align-items: center;
+        height: 60px; /* Thêm mới - Cố định chiều cao header */
     }
     
     .hamburger-btn {
         display: flex;
+        width: 24px; /* Thêm mới - Nhỏ hơn */
+        height: 18px; /* Thêm mới - Nhỏ hơn */
     }
     
     nav {
         position: fixed;
-        top: 80px;
+        top: 60px; /* Giảm từ 80px -> 60px */
         left: -50%;
         width: 50%;
-        height: calc(100vh - 80px);
+        height: calc(100vh - 60px); /* Điều chỉnh theo top mới */
         background-color: var(--primary-color);
         transition: all 0.3s ease;
         z-index: 999;
@@ -692,7 +695,7 @@ footer {
     
     nav ul {
         flex-direction: column;
-        padding: 20px 0;
+        padding: 15px 0; /* Giảm từ 20px -> 15px */
     }
     
     nav ul li {
@@ -703,13 +706,14 @@ footer {
     }
     
     nav ul li a {
-        padding: 15px 20px;
+        padding: 10px 20px; /* Giảm từ 15px -> 10px */
+        font-size: 14px; /* Thêm mới - Nhỏ hơn */
     }
     
     nav ul ul {
         position: static;
         display: none;
-       background-color: rgba(0, 0, 0, 0.4);
+        background-color: rgba(0, 0, 0, 0.4);
         box-shadow: none;
         opacity: 1;
         visibility: visible;
@@ -726,25 +730,28 @@ footer {
     }
     
     nav ul ul a {
-        padding-left: 30px !important;
+        padding: 8px 20px 8px 30px !important; /* Giảm padding dọc */
         font-size: 13px;
         word-break: break-word;
         color: var(--secondary-color) !important;
     }
     
     nav ul ul ul a {
-        padding-left: 45px !important;
+        padding-left: 40px !important; /* Giảm từ 45px -> 40px */
         font-size: 13px;
         word-break: break-word;
         color: var(--secondary-color) !important;
     }
     
     .register-btn {
-        margin: 15px 20px;
+        margin: 10px 20px; /* Giảm từ 15px -> 10px */
         width: calc(100% - 40px);
         text-align: center;
+        padding: 6px 15px; /* Thêm mới - Nhỏ hơn */
+        font-size: 14px; /* Thêm mới - Nhỏ hơn */
     }
     
+    /* === Các phần không thay đổi giữ nguyên === */
     .slide {
         height: 300px;
     }
