@@ -780,7 +780,7 @@ footer {
 
 @media (max-width: 480px) {
     .logo {
-        flex-direction: column;
+        flex-direction: row;
         text-align: center;
     }
     
