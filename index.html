@@ -308,7 +308,7 @@ function closePopup() {
 }
 document.getElementById('openPopup').addEventListener('click', openPopup);
 
-// ✅ Gửi dữ liệu form đến Google Apps Script
+// ✅ Gửi dữ liệu form
 document.getElementById("popupRegisterForm").addEventListener("submit", function(e) {
   e.preventDefault();
   const form = e.target;
@@ -319,18 +319,33 @@ document.getElementById("popupRegisterForm").addEventListener("submit", function
     subject: form.subject.value
   };
 
-  fetch("https://script.google.com/macros/s/AKfycbzGM6PQT2rxPym-P9I8XlqTL4Yp3MhVPMKVYH1EfnMEFmS3jrR1j3qjHtQGU0gl3egv/exec", {
+  // 1. Gửi đến Google Sheets
+  const googleSheetsPromise = fetch("https://script.google.com/macros/s/AKfycbzGM6PQT2rxPym-P9I8XlqTL4Yp3MhVPMKVYH1EfnMEFmS3jrR1j3qjHtQGU0gl3egv/exec", {
     method: "POST",
     body: JSON.stringify(data)
-  })
-  .then(res => {
-    alert("✅ Đăng ký thành công! Trung tâm sẽ liên hệ sớm.");
-    form.reset();
-    closePopup();
-  })
-  .catch(err => {
-    alert("❌ Gửi thất bại. Vui lòng thử lại.");
   });
+
+  // 2. Gửi đến Telegram
+  const telegramPromise = fetch(`https://api.telegram.org/bot8240637801:AAExl0vkqP4fXXE_D2seiLrKJxCAb3C5FnE/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      chat_id: '-4832541970',
+      text: `🎯 *THÔNG TIN ĐĂNG KÝ MỚI*\n\n├ Họ tên: ${data.name}\n├ Điện thoại: [${data.phone}](tel:${data.phone})\n├ Lớp: ${data.grade}\n└ Môn học: ${data.subject}`,
+      parse_mode: 'Markdown'
+    })
+  });
+
+  // Xử lý kết quả
+  Promise.all([googleSheetsPromise, telegramPromise])
+    .then(() => {
+      alert("✅ Đăng ký thành công! Trung tâm sẽ liên hệ sớm.");
+      form.reset();
+      closePopup();
+    })
+    .catch(err => {
+      alert("❌ Gửi thất bại. Vui lòng thử lại.");
+    });
 });
 </script>
 
