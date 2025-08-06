@@ -46,8 +46,8 @@
                             <li><a href="#">Lớp 10-12</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">Bảng công khai</a></li>
-                    <li><a href="dangky2.html" class="register-btn">Đăng ký học</a></li>
+                    <li><a href="congkhai.html">Bảng công khai</a></li>
+                    <li><a href="dangky.html" class="register-btn">Đăng ký học</a></li>
                 </ul>
             </nav>
         </div>
@@ -205,7 +205,7 @@
                 <h3>Về chúng tôi</h3>
                 <p>Minh Tâm được thành lập tháng 08/2025 với tầm nhìn trở thành điểm đến giáo dục uy tín tại Thạnh Phú. Tiếp nối truyền thống nhiều năm kinh nghiệm trong ngành giáo dục của đội ngũ sáng lập, chúng tôi đã hoàn thiện những bước cuối cùng để chính thức khai trương vào tháng 8/2025.</p>
                 <div class="social-links">
-                    <a href=""><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.facebook.com/nguyen.binhthanh.5209"><i class="fab fa-facebook"></i></a>
                     <a href="#"><i class="fab fa-youtube"></i></a>
                     <a href="#"><i class="fab fa-tiktok"></i></a>
                 </div>
@@ -239,21 +239,35 @@
     </footer>
 <!-- Biểu tượng zalo -->
 <!-- Nút Zalo chính thức -->
+ <!-- Thay thế phần zalo-actions hiện tại bằng đoạn code này -->
+<div class="zalo-actions" id="zaloActions">
+    <a href="javascript:void(0)" class="zalo-action" onclick="openZaloChat()">
+        <img src="https://img.icons8.com/color/24/000000/zalo.png" alt="Chat Zalo">
+        Nhắn tin Zalo
+    </a>
+    <a href="javascript:void(0)" class="zalo-action" onclick="openZaloCall()">
+        <img src="https://img.icons8.com/color/24/000000/phone.png" alt="Gọi điện">
+        Gọi điện thoại
+    </a>
+    <a href="javascript:void(0)" class="zalo-action" onclick="openZaloVideoCall()">
+        <img src="https://img.icons8.com/color/24/000000/video-call.png" alt="Video call">
+        Gọi video Zalo
+    </a>
+</div>
 <div class="official-zalo-btn" id="zaloBtn">
     <img src="https://img.icons8.com/color/48/000000/zalo.png" alt="Zalo"> <!-- Logo Zalo chính thức -->
 </div>
-
 <!-- Menu chức năng -->
-<div class="zalo-actions" id="zaloActions">
+ <div class="zalo-actions" id="zaloActions">
     <a href="https://zalo.me/0907424450" class="zalo-action" target="_blank">
         <img src="https://img.icons8.com/color/24/000000/zalo.png" alt="Chat Zalo">
         Nhắn tin Zalo
     </a>
-    <a href="tel:0977899749" class="zalo-action">
+    <a href="tel:0918300170" class="zalo-action">
         <img src="https://img.icons8.com/color/24/000000/phone.png" alt="Gọi điện">
         Gọi điện thoại
     </a>
-    <a href="https://zalo.me/0977899749?call" class="zalo-action" target="_blank">
+    <a href="https://zalo.me/0907424450?call" class="zalo-action" target="_blank">
         <img src="https://img.icons8.com/color/24/000000/video-call.png" alt="Video call">
         Gọi video Zalo
     </a>
@@ -426,7 +440,7 @@ document.getElementById("popupRegisterForm").addEventListener("submit", function
             
         });
 
-        // Xử lý click
+        // Xử lý click zalo
 document.getElementById('zaloBtn').addEventListener('click', function(e) {
     e.stopPropagation();
     document.getElementById('zaloActions').classList.toggle('show');

@@ -520,7 +520,7 @@ body {
         .chat-icon {
             position: fixed;
             bottom: 20px;
-            left: 20px;
+            right: 20px;
             width: 60px;
             height: 60px;
             background-color: #10c875;
@@ -546,7 +546,7 @@ body {
         .chat-box {
             position: fixed;
             bottom: 90px;
-            left: 20px;
+            right: 20px;
             width: 350px;
             height: 450px;
             background: white;
@@ -1050,3 +1050,171 @@ body {
         max-width: 100%;
     }
 }
+/* === zalo === */
+zalo-float {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            width: 60px;
+            height: 60px;
+            background-color: #0068ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0, 104, 255, 0.3);
+            z-index: 9999;
+            cursor: pointer;
+            transition: all 0.3s;
+            animation: zaloPulse 2s infinite;
+        }
+        
+        .zalo-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(0, 104, 255, 0.4);
+        }
+        
+        .zalo-float img {
+            width: 34px;
+            height: 34px;
+        }
+        
+        /* Popup chức năng */
+        .zalo-popup {
+            position: fixed;
+            bottom: 100px;
+            left: 25px;
+            width: 200px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            z-index: 9998;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s;
+            visibility: hidden;
+            padding: 15px;
+        }
+        
+        .zalo-popup.show {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+        
+        .zalo-option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        
+        .zalo-option:hover {
+            background: #f0f7ff;
+            transform: translateX(5px);
+        }
+        
+        .zalo-option i {
+            margin-right: 10px;
+            font-size: 20px;
+            width: 24px;
+            text-align: center;
+        }
+        
+        .zalo-option.chat i { color: #0068ff; }
+        .zalo-option.call i { color: #00C300; }
+        .zalo-option.video i { color: #FF2D2D; }
+        
+        /* Animation */
+        @keyframes zaloPulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 104, 255, 0.5); }
+            70% { box-shadow: 0 0 0 15px rgba(0, 104, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 104, 255, 0); }
+        }
+        
+    
+        /* Nút Zalo nổi - Sử dụng logo chính thức */
+        .official-zalo-btn {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            width: 60px;
+            height: 60px;
+            background-color: #0068ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0, 104, 255, 0.3);
+            z-index: 9999;
+            cursor: pointer;
+            transition: all 0.3s;
+            animation: zaloPulse 2s infinite;
+        }
+        
+        .official-zalo-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .official-zalo-btn img {
+            width: 34px;
+            height: 34px;
+            pointer-events: none;
+        }
+        
+        /* Popup chức năng */
+        .zalo-actions {
+            position: fixed;
+            bottom: 100px;
+            left: 25px;
+            width: 200px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            z-index: 9998;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s;
+            visibility: hidden;
+            padding: 15px;
+        }
+        
+        .zalo-actions.show {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+        
+        .zalo-action {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .zalo-action:hover {
+            background: #f0f7ff;
+        }
+        
+        .zalo-action img {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+        
+        /* Animation */
+         @keyframes zaloPulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 104, 255, 0.5); }
+            70% { box-shadow: 0 0 0 15px rgba(0, 104, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 104, 255, 0); }
+        }
