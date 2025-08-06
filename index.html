@@ -239,26 +239,12 @@
     </footer>
 <!-- Biểu tượng zalo -->
 <!-- Nút Zalo chính thức -->
- <!-- Thay thế phần zalo-actions hiện tại bằng đoạn code này -->
-<div class="zalo-actions" id="zaloActions">
-    <a href="javascript:void(0)" class="zalo-action" onclick="openZaloChat()">
-        <img src="https://img.icons8.com/color/24/000000/zalo.png" alt="Chat Zalo">
-        Nhắn tin Zalo
-    </a>
-    <a href="javascript:void(0)" class="zalo-action" onclick="openZaloCall()">
-        <img src="https://img.icons8.com/color/24/000000/phone.png" alt="Gọi điện">
-        Gọi điện thoại
-    </a>
-    <a href="javascript:void(0)" class="zalo-action" onclick="openZaloVideoCall()">
-        <img src="https://img.icons8.com/color/24/000000/video-call.png" alt="Video call">
-        Gọi video Zalo
-    </a>
-</div>
 <div class="official-zalo-btn" id="zaloBtn">
     <img src="https://img.icons8.com/color/48/000000/zalo.png" alt="Zalo"> <!-- Logo Zalo chính thức -->
 </div>
+
 <!-- Menu chức năng -->
- <div class="zalo-actions" id="zaloActions">
+<div class="zalo-actions" id="zaloActions">
     <a href="https://zalo.me/0907424450" class="zalo-action" target="_blank">
         <img src="https://img.icons8.com/color/24/000000/zalo.png" alt="Chat Zalo">
         Nhắn tin Zalo
@@ -440,7 +426,7 @@ document.getElementById("popupRegisterForm").addEventListener("submit", function
             
         });
 
-        // Xử lý click zalo
+       // Xử lý click zalo
 document.getElementById('zaloBtn').addEventListener('click', function(e) {
     e.stopPropagation();
     document.getElementById('zaloActions').classList.toggle('show');
