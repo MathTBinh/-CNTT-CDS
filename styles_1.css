@@ -974,4 +974,23 @@ zalo-float {
             70% { box-shadow: 0 0 0 15px rgba(0, 104, 255, 0); }
             100% { box-shadow: 0 0 0 0 rgba(0, 104, 255, 0); }
         }
-  
+
+        /* === Bản đồ === */
+  /* Thêm vào phần CSS */
+.map-link {
+    color: #ddd;
+    text-decoration: none;
+    transition: all 0.3s;
+    border-bottom: 1px dashed var(--secondary-color);
+    padding-bottom: 1px;
+}
+
+.map-link:hover {
+    color: var(--secondary-color);
+    border-bottom-color: transparent;
+}
+
+.contact-info .fa-map-marker-alt {
+    color: var(--secondary-color);
+    margin-right: 8px;
+}

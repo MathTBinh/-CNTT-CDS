@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài liệu học tập - Minh Tâm Education</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles2.css">
+</head>
+<body>
+    <!-- Header (giống các trang khác) -->
+    <header>
+        <!-- ... (giữ nguyên header như các trang khác) ... -->
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Sidebar điều hướng tài liệu -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">DANH MỤC TÀI LIỆU</div>
+                <ul class="document-nav" id="documentNav">
+                    <!-- Các mục tài liệu sẽ được thêm bằng JavaScript -->
+                </ul>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-title">TÀI LIỆU MỚI</div>
+                <ul class="article-list">
+                    <li><a href="#" data-doc="toan10-chuong1">Toán 10 - Chương 1: Mệnh đề, Tập hợp</a></li>
+                    <li><a href="#" data-doc="hoa11-chuong2">Hóa 11 - Chương 2: Nitơ - Photpho</a></li>
+                    <li><a href="#" data-doc="van12-chuong3">Văn 12 - Ôn tập truyện ngắn Việt Nam</a></li>
+                </ul>
+            </div>
+        </aside>
+        
+        <!-- Khu vực hiển thị nội dung tài liệu -->
+        <main class="main-content">
+            <div id="documentViewer">
+                <div class="document-placeholder">
+                    <i class="fas fa-book-open" style="font-size: 50px; color: #c8102e; margin-bottom: 20px;"></i>
+                    <h2>Chào mừng đến với kho tài liệu Minh Tâm</h2>
+                    <p>Vui lòng chọn tài liệu từ danh mục bên trái để bắt đầu</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer (giống các trang khác) -->
+    <footer>
+        <!-- ... (giữ nguyên footer như các trang khác) ... -->
+    </footer>
+
+    <!-- Các phần khác (Zalo, chatbox, popup - giữ nguyên) -->
+    <!-- ... -->
+
+    <style>
+        /* CSS bổ sung cho trang tài liệu */
+        .document-nav {
+            list-style: none;
+        }
+        
+        .document-nav li {
+            margin-bottom: 5px;
+        }
+        
+        .document-nav a {
+            display: block;
+            padding: 10px 15px;
+            color: #333;
+            text-decoration: none;
+            border-left: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .document-nav a:hover,
+        .document-nav a.active {
+            background: #f0f0f0;
+            border-left: 3px solid #c8102e;
+            color: #c8102e;
+        }
+        
+        .document-nav .submenu {
+            padding-left: 20px;
+            display: none;
+        }
+        
+        .document-nav .active .submenu {
+            display: block;
+        }
+        
+        #documentViewer {
+            min-height: 80vh;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        
+        .document-placeholder {
+            text-align: center;
+            padding: 50px 0;
+            color: #666;
+        }
+        
+        .document-content {
+            display: none;
+        }
+        
+        .document-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+
+    <script>
+        // Dữ liệu tài liệu mẫu (có thể thay bằng AJAX load từ server)
+        const documentData = {
+            "toan10": {
+                "title": "Toán lớp 10",
+                "docs": {
+                    "toan10-chuong1": "Chương 1: Mệnh đề, Tập hợp",
+                    "toan10-chuong2": "Chương 2: Hàm số bậc nhất và bậc hai",
+                    "toan10-chuong3": "Chương 3: Phương trình, Hệ phương trình"
+                }
+            },
+            "hoa11": {
+                "title": "Hóa lớp 11",
+                "docs": {
+                    "hoa11-chuong1": "Chương 1: Sự điện li",
+                    "hoa11-chuong2": "Chương 2: Nitơ - Photpho",
+                    "hoa11-chuong3": "Chương 3: Cacbon - Silic"
+                }
+            },
+            "van12": {
+                "title": "Văn lớp 12",
+                "docs": {
+                    "van12-chuong1": "Tác phẩm: Vợ chồng A Phủ",
+                    "van12-chuong2": "Tác phẩm: Vợ nhặt",
+                    "van12-chuong3": "Tác phẩm: Rừng xà nu"
+                }
+            }
+        };
+
+        // Tạo menu điều hướng tài liệu
+        function initDocumentNav() {
+            const navContainer = document.getElementById('documentNav');
+            
+            for (const [key, category] of Object.entries(documentData)) {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <a href="#" class="category-link" data-category="${key}">
+                        ${category.title} <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu" id="submenu-${key}"></ul>
+                `;
+                navContainer.appendChild(li);
+                
+                // Thêm tài liệu con
+                const submenu = document.getElementById(`submenu-${key}`);
+                for (const [docId, docTitle] of Object.entries(category.docs)) {
+                    const subLi = document.createElement('li');
+                    subLi.innerHTML = `<a href="#" data-doc="${docId}">${docTitle}</a>`;
+                    submenu.appendChild(subLi);
+                }
+            }
+            
+            // Xử lý click category
+            document.querySelectorAll('.category-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    this.parentElement.classList.toggle('active');
+                    this.querySelector('i').classList.toggle('fa-chevron-up');
+                    this.querySelector('i').classList.toggle('fa-chevron-down');
+                });
+            });
+            
+            // Xử lý click tài liệu
+            document.querySelectorAll('[data-doc]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    loadDocument(this.getAttribute('data-doc'));
+                    
+                    // Đánh dấu active
+                    document.querySelectorAll('[data-doc]').forEach(el => {
+                        el.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                });
+            });
+        }
+        
+        // Load nội dung tài liệu
+        function loadDocument(docId) {
+            const viewer = document.getElementById('documentViewer');
+            
+            // Hiển thị loading
+            viewer.innerHTML = `
+                <div style="text-align: center; padding: 50px 0;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 30px; color: #c8102e;"></i>
+                    <p>Đang tải tài liệu...</p>
+                </div>
+            `;
+            
+            // Giả lập load tài liệu (thực tế sẽ dùng AJAX)
+            setTimeout(() => {
+                // Đây là nơi bạn sẽ load nội dung thực từ server
+                // Ví dụ: fetch(`/documents/${docId}.html`).then(...)
+                
+                // Ví dụ nội dung tài liệu mẫu
+                const docContent = `
+                    <div class="document-content">
+                        <h1 class="article-title">${getDocTitle(docId)}</h1>
+                        <div class="article-content">
+                            <p>Đây là nội dung tài liệu ${docId}. Trên thực tế, bạn sẽ load nội dung HTML từ server.</p>
+                            
+                            <h2 class="article-subtitle">Nội dung chính</h2>
+                            <ul>
+                                <li>Lý thuyết cơ bản</li>
+                                <li>Bài tập ví dụ</li>
+                                <li>Bài tập tự luyện</li>
+                                <li>Đáp án và hướng dẫn</li>
+                            </ul>
+                            
+                            <div style="margin-top: 30px; padding: 20px; background: #f9f9f9; border-radius: 8px;">
+                                <h3>Tải xuống bản đầy đủ</h3>
+                                <a href="#" class="register-btn" style="display: inline-block; margin-top: 10px;">
+                                    <i class="fas fa-download"></i> Download PDF
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                viewer.innerHTML = docContent;
+            }, 800);
+        }
+        
+        // Hàm helper lấy tiêu đề tài liệu
+        function getDocTitle(docId) {
+            for (const category of Object.values(documentData)) {
+                if (category.docs[docId]) {
+                    return category.docs[docId];
+                }
+            }
+            return "Tài liệu học tập";
+        }
+        
+        // Khởi tạo khi trang tải xong
+        document.addEventListener('DOMContentLoaded', function() {
+            initDocumentNav();
+            
+            // Load tài liệu đầu tiên nếu có tham số URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const docParam = urlParams.get('doc');
+            if (docParam && documentData[docParam.split('-')[0]]) {
+                loadDocument(docParam);
+            }
+        });
+    </script>
+</body>
+</html>
