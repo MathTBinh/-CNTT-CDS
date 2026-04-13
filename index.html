@@ -3,452 +3,553 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CƠ SỞ DẠY THÊM MINH TÂM</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+    <title>MINHTAMEDU - Hệ Thống Giáo Dục Chuyên Nghiệp</title>
     
-    <link rel="stylesheet" href="styles_1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;800&family=Times+New+Roman:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { --primary: #1a237e; --accent: #c62828; --text: #2d3436; --bg: #f8f9fa; --success: #28a745; --warning: #ffc107; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Lexend', sans-serif; background-color: var(--bg); color: var(--text); overflow-x: hidden; }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px);
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            padding: 12px 5%; display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05); border-bottom: 3px solid var(--primary);
+        }
+        .logo-box { display: flex; align-items: center; gap: 15px; }
+        .logo-icon { 
+            width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary), #3949ab); 
+            border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;
+        }
+        .logo-text h1 { color: var(--primary); font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px; }
+        .logo-text p { font-size: 0.75rem; color: var(--accent); font-weight: 600; text-transform: uppercase; }
+        
+        nav ul { display: flex; list-style: none; gap: 30px; align-items: center; }
+        nav a { text-decoration: none; color: var(--text); font-weight: 600; cursor: pointer; transition: 0.3s; position: relative; padding: 8px 0; }
+        nav a::after { content: ''; position: absolute; width: 0; height: 3px; bottom: 0; left: 0; background-color: var(--accent); transition: 0.3s; border-radius: 3px; }
+        nav a:hover::after, nav a.active::after { width: 100%; }
+        nav a:hover, nav a.active { color: var(--accent); }
+        .btn-reg { background: linear-gradient(135deg, var(--accent), #ff4d4d); color: white !important; padding: 12px 28px; border-radius: 50px; box-shadow: 0 5px 15px rgba(198, 40, 40, 0.3); }
+        .btn-reg::after { display: none; }
+        .btn-reg:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(198, 40, 40, 0.4); }
+
+        /* Content Sections */
+        .content-section { display: none; min-height: 80vh; padding-top: 100px; animation: fadeIn 0.5s ease; }
+        .content-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Hero Section */
+        .hero { 
+            background: linear-gradient(135deg, rgba(26, 35, 126, 0.92), rgba(26, 35, 126, 0.75)), 
+            url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1920&q=80') center/cover; 
+            color: white; text-align: center; padding: 100px 5% 70px; border-radius: 0 0 60px 60px; margin-bottom: 50px; 
+        }
+        .hero h2 { font-size: 3.2rem; margin-bottom: 20px; font-weight: 800; text-shadow: 2px 2px 10px rgba(0,0,0,0.3); }
+        .hero p { font-size: 1.2rem; max-width: 650px; margin: 0 auto 30px; opacity: 0.95; }
+        
+        .stats-mini { display: flex; justify-content: center; gap: 50px; margin-top: 40px; }
+        .stat-item { text-align: center; }
+        .stat-number { font-size: 2.5rem; font-weight: 800; }
+        .stat-label { font-size: 0.9rem; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Class Grid */
+        .section-title { text-align: center; color: var(--primary); font-size: 2.2rem; margin-bottom: 20px; font-weight: 800; }
+        .section-subtitle { text-align: center; color: #666; margin-bottom: 40px; font-size: 1.1rem; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 30px; padding: 0 5% 60px; }
+        .card { 
+            background: white; border-radius: 20px; padding: 28px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
+            transition: 0.4s; position: relative; overflow: hidden; border: 1px solid rgba(0,0,0,0.05);
+        }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(26,35,126,0.12); }
+        .card-badge { 
+            position: absolute; top: 20px; right: -35px; background: var(--accent); color: white; 
+            padding: 5px 40px; transform: rotate(45deg); font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+        }
+        .card h3 { color: var(--primary); font-size: 1.5rem; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px dashed #eee; }
+        .card-info { color: #555; margin-bottom: 12px; display: flex; align-items: flex-start; gap: 12px; }
+        .card-info i { color: var(--primary); width: 20px; text-align: center; margin-top: 3px; }
+        .card-info strong { color: var(--text); min-width: 70px; }
+        .schedule-badge { 
+            display: inline-block; background: #e8eaf6; padding: 4px 10px; border-radius: 20px; 
+            font-size: 0.8rem; margin-right: 5px; margin-bottom: 5px; color: var(--primary);
+        }
+        .card-price { 
+            font-size: 2rem; font-weight: 800; color: var(--accent); margin: 25px 0 20px; text-align: center; 
+            border-top: 1px solid #eee; padding-top: 20px;
+        }
+        .card-price small { font-size: 0.9rem; font-weight: 400; color: #888; }
+        .btn-card { 
+            display: block; text-align: center; background: linear-gradient(135deg, var(--primary), #3949ab); 
+            color: white; padding: 14px; border-radius: 12px; text-decoration: none; font-weight: 600; 
+            cursor: pointer; transition: 0.3s; border: none; width: 100%; font-size: 1rem;
+        }
+        .btn-card:hover { background: linear-gradient(135deg, #0d1557, #1a237e); transform: scale(1.02); }
+
+        /* Bảng Công Khai A4 */
+        .legal-container { 
+            background: white; max-width: 1000px; margin: 0 auto 50px; padding: 45px 55px; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1); font-family: 'Times New Roman', Times, serif; 
+            color: black; line-height: 1.5; border-radius: 8px;
+        }
+        .legal-header { text-align: center; margin-bottom: 25px; }
+        .legal-header h3 { font-size: 16pt; margin: 0; text-transform: uppercase; font-weight: bold; }
+        .legal-header p { font-size: 14pt; margin: 5px 0; font-weight: bold; }
+        .legal-divider { width: 30%; height: 1px; background: black; margin: 15px auto 25px; }
+        .legal-title { text-align: center; font-size: 16pt; font-weight: bold; margin-bottom: 25px; text-transform: uppercase; }
+        .legal-text { font-size: 13pt; margin-bottom: 15px; text-align: justify; }
+        .moet-table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 12pt; }
+        .moet-table th, .moet-table td { border: 1px solid black; padding: 10px 12px; }
+        .moet-table th { font-weight: bold; text-align: center; background-color: #f5f5f5; }
+        .moet-table td { vertical-align: top; }
+
+        /* Loading & Popup */
+        #loadingOverlay { 
+            position: fixed; inset: 0; background: white; z-index: 9999; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+        }
+        .spinner { width: 50px; height: 50px; border: 5px solid var(--primary); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        
+        #regPopup { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        .popup-content { background: white; width: 90%; max-width: 480px; padding: 40px; border-radius: 24px; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.3); }
+        .popup-content h2 { color: var(--primary); text-align: center; margin-bottom: 25px; }
+        .popup-content input, .popup-content select { width: 100%; padding: 14px 16px; margin-bottom: 18px; border: 2px solid #e0e0e0; border-radius: 12px; font-family: 'Lexend'; font-size: 1rem; transition: 0.3s; }
+        .popup-content input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(26,35,126,0.1); }
+        .close-popup { position: absolute; top: 20px; right: 20px; font-size: 24px; cursor: pointer; color: #999; }
+        
+        footer { background: linear-gradient(135deg, #0d1557, var(--primary)); color: white; padding: 40px; text-align: center; margin-top: 60px; }
+        .footer-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; text-align: left; }
+        .footer-col h4 { margin-bottom: 20px; font-size: 1.2rem; }
+        .footer-col p, .footer-col a { color: #ccc; text-decoration: none; line-height: 1.8; display: block; }
+        .footer-col i { margin-right: 10px; color: var(--accent); }
+        .copyright { margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); color: #aaa; }
+
+        /* Zalo Widget */
+        .zalo-widget { position: fixed; bottom: 30px; left: 30px; z-index: 1000; }
+        .zalo-btn-main { 
+            width: 65px; height: 65px; background: white; border-radius: 50%; box-shadow: 0 5px 20px rgba(0,0,0,0.2); 
+            display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s;
+        }
+        .zalo-btn-main:hover { transform: scale(1.1); }
+        .zalo-btn-main img { width: 45px; height: 45px; }
+        .zalo-menu { 
+            position: absolute; bottom: 80px; left: 0; background: white; border-radius: 16px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15); display: none; overflow: hidden; min-width: 220px;
+        }
+        .zalo-menu.show { display: block; animation: slideUp 0.3s ease; }
+        .zalo-item { display: flex; align-items: center; gap: 15px; padding: 15px 20px; color: #333; text-decoration: none; font-weight: 500; border-bottom: 1px solid #eee; transition: 0.2s; }
+        .zalo-item:hover { background: #f8f9fa; color: var(--primary); }
+        .zalo-item img { width: 28px; height: 28px; }
+        .zalo-item:last-child { border-bottom: none; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 15px; padding: 15px 5%; }
+            nav ul { flex-wrap: wrap; justify-content: center; gap: 15px; }
+            .hero h2 { font-size: 2rem; }
+            .legal-container { padding: 30px 20px; }
+        }
+        /* Nút Hệ Thống trên Topbar */
+        .btn-system { 
+            background: transparent !important; 
+            color: var(--primary) !important; 
+            border: 2px solid var(--primary); 
+            padding: 10px 22px; 
+            border-radius: 50px; 
+        }
+        .btn-system:hover { 
+            background: var(--primary) !important; 
+            color: white !important; 
+            box-shadow: 0 5px 15px rgba(26, 35, 126, 0.2); 
+        }
+        /* Banner Học Trực Tuyến */
+        .promo-banner {
+            max-width: 1200px; margin: 0 auto 50px; border-radius: 20px; overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1); display: block; position: relative; transition: transform 0.3s;
+        }
+        .promo-banner:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .promo-banner img { width: 100%; display: block; object-fit: cover; max-height: 220px; }
+        .promo-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to right, rgba(26,35,126,0.9), transparent);
+            display: flex; flex-direction: column; justify-content: center; padding: 40px 50px;
+        }
+        .promo-overlay h3 { color: white; font-size: 2.2rem; margin-bottom: 10px; font-weight: 800; }
+        .promo-overlay p { color: #e0e0e0; font-size: 1.1rem; margin-bottom: 20px; max-width: 500px; }
+        .promo-btn {
+            display: inline-block; background: var(--warning); color: #333;
+            padding: 10px 25px; border-radius: 50px; font-weight: bold; width: fit-content; text-transform: uppercase; font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
-    <!-- Thay thế toàn bộ phần <header> hiện tại bằng code này -->
-<header>
-    <div class="header-container">
-        <div class="logo">
-            <img src="img/logo.png" alt="Logo" class="logo-img">
+
+    <div id="loadingOverlay">
+        <div class="spinner"></div>
+        <h3 style="color: var(--primary); margin-bottom: 10px;">Đang kết nối hệ thống</h3>
+        <p style="color: #666;">Vui lòng đợi trong giây lát...</p>
+    </div>
+
+    <header>
+        <div class="logo-box">
+            <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
             <div class="logo-text">
-                <h1>MINHTAMEDUCATION</h1>
-                <p>Vững kiến thức - Sáng tương lai</p>
+                <h1 id="ui-centerName">MINHTAMEDU</h1>
+                <p id="ui-slogan">Đang tải cấu hình...</p>
             </div>
         </div>
+        <nav>
+            <ul>
+                <li><a onclick="switchTab('home')" id="tab-home" class="active"><i class="fas fa-home"></i> Trang Chủ</a></li>
+                <li><a onclick="switchTab('legal')" id="tab-legal"><i class="fas fa-file-alt"></i> Công Khai (TT29)</a></li>
+                <li><a href="MINHTAMEDU.html" target="_blank" class="btn-system"><i class="fas fa-desktop"></i> Quản Trị</a></li>
+                <li><a onclick="openRegForm()" class="btn-reg"><i class="fas fa-pen"></i> Đăng Ký Tư Vấn</a></li>
+            </ul>
+        </nav>
+    </header>
 
-         <button class="hamburger-btn">
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-            </button>
-
-         <nav id="mainNav">
-                <ul class="main-menu">
-                    <li><a href="#">Trang chủ</a></li>
-                    <li><a href="gioithieu.html">Giới thiệu</a></li>
-                    <li>
-                        <a href="#">Chương trình học <i class="fas fa-chevron-down dropdown-icon"></i></a>
-                        <ul class="submenu">
-                            <li><a href="#">Lớp 1-5</a></li>
-                            <li>
-                                <a href="#">Lớp 6-9 <i class="fas fa-chevron-right nested-dropdown-icon"></i></a>
-                                <ul class="nested-sub-menu">
-                                    <li><a href="#">Toán</a></li>
-                                    <li><a href="#">Lý</a></li>
-                                    <li><a href="#">Hóa</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="trangtailieu.html">Lớp 10-12</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="congkhai.html">Bảng công khai</a></li>
-                    <li><a href="dangky.html" class="register-btn">Đăng ký học</a></li>
-                </ul>
-            </nav>
-        </div>
-</header>
-
-    <!-- Slider -->
-    <div class="slider">
-    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
-        <div class="slide-content">
-            <h2>Sớm Bước Thành Công</h2>
-            <p>Đăng ký trước 15/8, nhận ưu đãi học phí lên đến 20%!</p>
-            <a href="#" onclick="openPopup(); return false;" class="register-btn" style="display: inline-block; margin-top: 15px;">
-                    Đăng ký ngay
-                </a>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=https://minhtamedu.com" target="_blank" class="share-btn">Chia sẻ</a>
-        </div>
-    </div>
-    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
-        <div class="slide-content">
-            <h2>Rủ Bạn, Nhận Quà</h2>
-            <p>Giới thiệu bạn bè,nhận ngay ưu đãi!</p>
-            <a href="#" onclick="openPopup(); return false;" class="register-btn" style="display: inline-block; margin-top: 15px;">
-                    Đăng ký ngay
-                </a>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=https://minhtamedu.com" target="_blank" class="share-btn">Chia sẻ</a>
-        </div>
-    </div>
-    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
-        <div class="slide-content">
-            <h2>Khóa Học Vươn Tầm</h2>
-            <p>Đăng ký khóa học mới, giảm 10% học phí!</p>
-            <a href="#" onclick="openPopup(); return false;" class="register-btn" style="display: inline-block; margin-top: 15px;">
-                    Đăng ký ngay
-                </a>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=https://minhtamedu.com" target="_blank" class="share-btn">Chia sẻ</a>
-        </div>
-    </div>
-    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1516321497487-e288fb19713f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
-        <div class="slide-content">
-            <h2>Cùng Nhóm, Cùng Sáng</h2>
-            <p>Nhóm trên 5 học sinh, giảm tới 15% học phí cho cả nhóm!</p>
-            <a href="#" onclick="openPopup(); return false;" class="register-btn" style="display: inline-block; margin-top: 15px;">
-                    Đăng ký ngay
-                </a>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=https://minhtamedu.com" target="_blank" class="share-btn">Chia sẻ</a>
-        </div>
-    </div>
-</div>
-
-
-    <!-- Main Content -->
-    <div class="container">
-        <div class="section-title">
-            <h2>Tin tức & Sự kiện</h2>
-        </div>
-        <div class="news-grid">
-           <div class="news-item">
-            <div class="news-img">
-            <a href="#"> <!-- Thêm thẻ a -->
-            <img src="img/minhtam.png" alt="Tin tức 1">
-            </a>
-            </div>
-            <div class="news-content">
-            <div class="news-date">15/06/2025</div>
-                <h3>
-            <a href="gioithieu.html">THÔNG TIN CHÍNH VỀ TRUNG TÂM</a> <!-- Thêm a vào tiêu đề -->
-            </h3>
-            <p>Minh Tâm Dù mới thành lập nhưng chúng tôi tự hào quy tụ những giáo viên giỏi với bề dày kinh nghiệm ...</p>
-          </div>
-        </div>
-         <div class="news-item">
-            <div class="news-img">
-            <a href="#"> <!-- Thêm thẻ a -->
-            <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Tin tức 1">
-            </a>
-            </div>
-            <div class="news-content">
-            <div class="news-date">15/06/2025</div>
-                <h3>
-            <a href="giơithieu.html">HÀNH TRÌNH KHỞI NGUYÊN</a> <!-- Thêm a vào tiêu đề -->
-            </h3>
-            <p>Minh Tâm được thành lập tháng 08/2025 với tầm nhìn trở thành điểm đến giáo dục uy tín ...</p>
-          </div>
-          </div>
-            
-            <div class="news-item">
-                <div class="news-img">
-                 <a href="#">   <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Tin tức 2">
-                </a>
-                </div>
-                <div class="news-content">
-                    <div class="news-date">10/07/2025</div>
-                    <h3>
-                        <a href="giơithieu.html">TRIẾT LÝ GIÁO DỤC </a> <!-- Thêm a vào tiêu đề -->
-                    </h3>
-                    <p>Thành công bắt đầu từ nền tảng vững chắc...</p>
-                </div>
-            </div>
-            
-            <div class="news-item">
-                <div class="news-img">
-                 <a href="#"> <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Tin tức 3">
-                </a>
-                </div>
-                <div class="news-content">
-                    <div class="news-date">05/07/2025</div>
-                    <h3>
-                    <a href="giơithieu.html">LỘ TRÌNH PHÁT TRIỂN</a> <!-- Thêm a vào tiêu đề -->
-                    </h3>
-                    <p>Chúng tôi tiên phong với mô hình giáo dục 3T...</p>
-                </div>
+    <!-- TRANG CHỦ -->
+    <main id="home" class="content-section active">
+        <div class="hero">
+            <h2>Kiến Tạo Tương Lai Cùng Minh Tâm</h2>
+            <p>Hệ thống lớp học chất lượng cao, sĩ số tiêu chuẩn, giáo viên giàu kinh nghiệm - Công khai minh bạch theo Thông tư 29.</p>
+            <div class="stats-mini">
+                <div class="stat-item"><div class="stat-number" id="stat-classes">0</div><div class="stat-label">Lớp đang mở</div></div>
+                <div class="stat-item"><div class="stat-number" id="stat-teachers">0</div><div class="stat-label">Giáo viên</div></div>
+                <div class="stat-item"><div class="stat-number" id="stat-subjects">0</div><div class="stat-label">Môn học</div></div>
             </div>
         </div>
-    </div>
-
-    <!-- Features -->
-    <div class="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Tại sao chọn Minh Tâm?</h2>
+        <a href="https://nguyenthanhbinh.edu.vn/" target="_blank" class="promo-banner">
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80" alt="Học trực tuyến">
+            <div class="promo-overlay">
+                <h3>Không Gian Học Ảo 4.0</h3>
+                <p>Nền tảng tương tác thông minh, xóa nhòa khoảng cách địa lý cùng đội ngũ Minh Tâm Edu.</p>
+                <span class="promo-btn"><i class="fas fa-play-circle"></i> Vào phòng học ngay</span>
             </div>
-            
-            <div class="features-grid">
-                <div class="feature-item">
-                    <i class="fas fa-chalkboard-teacher"></i>
-                    <h3>Giáo viên chất lượng</h3>
-                    <p>Đội ngũ giáo viên giỏi, kinh nghiệm, tận tâm từ các trường trên địa bàn</p>
-                </div>
-                
-                <div class="feature-item">
-                    <i class="fas fa-users"></i>
-                    <h3>Lớp học sĩ số nhỏ</h3>
-                    <p>Mỗi lớp chỉ 10-15 học sinh để đảm bảo chất lượng</p>
-                </div>
-                
-                <div class="feature-item">
-                    <i class="fas fa-book-open"></i>
-                    <h3>Giáo trình riêng</h3>
-                    <p>Biên soạn phù hợp với năng lực từng học sinh</p>
-                </div>
-                
-                <div class="feature-item">
-                    <i class="fas fa-chart-line"></i>
-                    <h3>Cam kết tiến bộ</h3>
-                    <p>95% học sinh cải thiện điểm số sau 3 tháng</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-col">
-                <h3>Về chúng tôi</h3>
-                <p>Minh Tâm được thành lập tháng 08/2025 với tầm nhìn trở thành điểm đến giáo dục uy tín tại Thạnh Phú. Tiếp nối truyền thống nhiều năm kinh nghiệm trong ngành giáo dục của đội ngũ sáng lập, chúng tôi đã hoàn thiện những bước cuối cùng để chính thức khai trương vào tháng 8/2025.</p>
-                <div class="social-links">
-                    <a href="https://www.facebook.com/nguyen.binhthanh.5209"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                    <a href="#"><i class="fab fa-tiktok"></i></a>
-                </div>
-            </div>
-            
-            <div class="footer-col">
-                <h3>Liên hệ</h3>
-                <div class="contact-info">
-                    <p>
-                        <i class="fas fa-map-marker-alt"></i> 
-                        <a href="https://maps.app.goo.gl/QguRnECfmfQGVM769" 
-                         target="_blank" 
-                         class="map-link">
-                        khu phố 3, xã Thạnh Phú, tỉnh Vĩnh Long
-                     </a>
-                    </p>
-                    <p><i class="fas fa-phone"></i> 0977899749-0918300170-0915870280</p>
-                    <p><i class="fas fa-envelope"></i> minhtamedu.thanhphu@gmail.com</p>
-                    <p><i class="fas fa-clock"></i> Thứ 2-CN: 7h30 - 20h30</p>
-                </div>
-            </div>
-            
-            <div class="footer-col">
-                <h3>Liên kết nhanh</h3>
-                <ul>
-                    <li><a href="#">Lịch khai giảng</a></li>
-                    <li><a href="#">Bảng giá học phí</a></li>
-                    <li><a href="#">Đội ngũ giáo viên</a></li>
-                    <li><a href="#">Thành tích học sinh</a></li>
-                    <li><a href="#">Câu hỏi thường gặp</a></li>
-                </ul>
-            </div>
-        </div>
+        </a>
         
+        <h2 class="section-title">📚 CÁC LỚP ĐANG TUYỂN SINH</h2>
+        
+        <p class="section-subtitle">Đăng ký ngay để nhận ưu đãi học phí và tư vấn lộ trình phù hợp</p>
+        <div id="courseContainer" class="grid"></div>
+    </main>
+
+    <!-- TRANG CÔNG KHAI THÔNG TƯ 29 -->
+    <main id="legal" class="content-section">
+        <div class="legal-container">
+            <div class="legal-header">
+                <h3>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</h3>
+                <p>Độc lập - Tự do - Hạnh phúc</p>
+                <div class="legal-divider"></div>
+            </div>
+            
+            <div class="legal-title">CÔNG KHAI THÔNG TIN VỀ TUYỂN SINH CÁC KHÓA HỌC THÊM<br>NĂM <span id="leg-year">...</span></div>
+            
+            <div class="legal-text">
+                <strong>Cơ sở dạy thêm <span id="leg-name">...</span></strong>, địa chỉ: <span id="leg-address">...</span>, 
+                điện thoại liên lạc: <span id="leg-hotline">...</span> trân trọng công khai thông tin tuyển sinh 
+                các lớp học thêm năm <span id="leg-year2">...</span> như sau:
+            </div>
+            
+            <div class="legal-text"><strong>1. Các môn học được tổ chức dạy thêm:</strong><br>📖 <span id="leg-subjects">Đang cập nhật...</span></div>
+            <div class="legal-text"><strong>2. Địa điểm tổ chức các lớp học thêm:</strong> <span id="leg-address2">...</span></div>
+            <div class="legal-text"><strong>3. Hình thức tổ chức dạy thêm, học thêm:</strong> Dạy học trực tiếp tại cơ sở, phân lớp theo năng lực học sinh, sĩ số giới hạn đảm bảo chất lượng.</div>
+            
+            <div class="legal-text"><strong>4. Thời khóa biểu các lớp học thêm:</strong></div>
+            <table class="moet-table">
+                <thead><tr><th>STT</th><th>Tên lớp</th><th>Môn học</th><th>Lịch học</th></tr></thead>
+                <tbody id="leg-tkb-table"></tbody>
+            </table>
+
+            <div class="legal-text"><strong>5. Danh sách người dạy thêm:</strong></div>
+            <table class="moet-table">
+                <thead><tr><th>STT</th><th>Họ và tên</th><th>Trình độ CM</th><th>Chuyên ngành</th><th>Đơn vị công tác</th></tr></thead>
+                <tbody id="leg-teacher-table"></tbody>
+            </table>
+
+            <div class="legal-text"><strong>6. Mức thu tiền học thêm:</strong></div>
+            <table class="moet-table">
+                <thead><tr><th>Lớp học</th><th>Mức thu (VNĐ/buổi)</th><th>Ghi chú</th></tr></thead>
+                <tbody id="leg-fee-table"></tbody>
+            </table>
+
+            <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+                <div style="text-align: center;">
+                    <p><strong>NGƯỜI LẬP BIỂU</strong></p>
+                    <p style="margin-top: 60px;"><span id="leg-representative">Bộ phận chuyên môn</span></p>
+                </div>
+                <div style="text-align: center;">
+                    <p><em><span id="leg-place">...</span>, ngày <span id="leg-date-day">...</span> tháng <span id="leg-date-month">...</span> năm <span id="leg-date-year">...</span></em></p>
+                    <p style="margin-top: 10px;"><strong>HỘ KINH DOANH</strong></p>
+                    <p style="margin-top: 60px;"><strong id="leg-director">...</strong></p>
+                    <p style="font-style: italic;" id="leg-director-title"></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4><i class="fas fa-graduation-cap"></i> MINHTAMEDU</h4>
+                <p id="footer-slogan">Vững kiến thức - Sáng tương lai</p>
+                <p><i class="fas fa-certificate"></i> <span id="footer-license">Đang cập nhật</span></p>
+            </div>
+            <div class="footer-col">
+                <h4><i class="fas fa-map-marker-alt"></i> Liên hệ</h4>
+                <p><i class="fas fa-location-dot"></i> <span id="footer-address">...</span></p>
+                <p><i class="fas fa-phone"></i> <span id="footer-phone">...</span></p>
+                <p><i class="fas fa-envelope"></i> <span id="footer-email">...</span></p>
+            </div>
+            <div class="footer-col">
+                <h4><i class="fas fa-link"></i> Kết nối</h4>
+                <a href="#" id="footer-facebook"><i class="fab fa-facebook"></i> Facebook</a>
+                <a href="#" id="footer-zalo"><i class="fab fa-whatsapp"></i> Zalo OA</a>
+                <a href="#" id="footer-youtube"><i class="fab fa-youtube"></i> YouTube</a>
+            </div>
+        </div>
         <div class="copyright">
-            <p>&copy; 2025 Cơ sở dạy thêm Minh Tâm. All Rights Reserved.</p>
+            <p>© <span id="footer-year">2025</span> <span id="footer-centerName">MINHTAMEDU</span>. Toàn bộ thông tin được công khai theo Thông tư 29/2024/TT-BGDĐT.</p>
         </div>
     </footer>
-<!-- Biểu tượng zalo -->
-<!-- Nút Zalo chính thức -->
-<div class="official-zalo-btn" id="zaloBtn">
-    <img src="https://img.icons8.com/color/48/000000/zalo.png" alt="Zalo"> <!-- Logo Zalo chính thức -->
-</div>
 
-<!-- Menu chức năng -->
-<div class="zalo-actions" id="zaloActions">
-    <a href="https://zalo.me/0907424450" class="zalo-action" target="_blank">
-        <img src="https://img.icons8.com/color/24/000000/zalo.png" alt="Chat Zalo">
-        Nhắn tin Zalo
-    </a>
-    <a href="tel:0918300170" class="zalo-action">
-        <img src="https://img.icons8.com/color/24/000000/phone.png" alt="Gọi điện">
-        Gọi điện thoại
-    </a>
-    <a href="https://zalo.me/0907424450?call" class="zalo-action" target="_blank">
-        <img src="https://img.icons8.com/color/24/000000/video-call.png" alt="Video call">
-        Gọi video Zalo
-    </a>
-</div>
-
-
-<!-- Biểu tượng chatbox -->
-    <div class="chat-icon" id="chatIcon">
-        <i class="fas fa-comment-dots"></i>
-    </div>
-    
-    <!-- Khung chat -->
-    <div class="chat-box" id="chatBox">
-        <div class="chat-header">
-            <h3>Trợ lý ảo Minh Tâm</h3>
-            <button class="close-chat" id="closeChat">×</button>
+    <!-- ZALO WIDGET -->
+    <div class="zalo-widget">
+        <div class="zalo-menu" id="zaloMenu">
+            <a id="zaloChatLink" href="#" class="zalo-item" target="_blank"><img src="https://img.icons8.com/color/48/000000/zalo.png" alt="Chat"> Nhắn tin Zalo</a>
+            <a id="zaloCallLink" href="#" class="zalo-item"><img src="https://img.icons8.com/color/48/000000/phone.png" alt="Call"> Gọi điện thoại</a>
+            <a id="zaloVideoLink" href="#" class="zalo-item" target="_blank"><img src="https://img.icons8.com/color/48/000000/video-call.png" alt="Video"> Gọi video Zalo</a>
         </div>
-        <div class="chat-content">
-            <!-- Nội dung chat sẽ được thêm vào đây -->
-            <iframe src="https://MathTBinh-trolyminhminhtam.hf.space" style="width:100%; height:100%; border:none;"></iframe>
+        <div class="zalo-btn-main" id="zaloBtn">
+            <img src="https://img.icons8.com/color/48/000000/zalo.png" alt="Zalo">
         </div>
     </div>
 
+    <!-- POPUP ĐĂNG KÝ -->
+    <div id="regPopup">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closeRegForm()">&times;</span>
+            <h2><i class="fas fa-user-graduate"></i> ĐĂNG KÝ TƯ VẤN</h2>
+            <form id="leadForm">
+                <input type="text" id="leadName" placeholder="Họ và tên học sinh *" required>
+                <input type="tel" id="leadPhone" placeholder="Số điện thoại Phụ huynh *" required>
+                <select id="leadClassSelect" required>
+                    <option value="">-- Chọn lớp quan tâm --</option>
+                </select>
+                <textarea id="leadNote" placeholder="Ghi chú thêm (nếu có)" rows="2" style="width:100%; padding:12px; border-radius:12px; border:2px solid #e0e0e0; font-family:'Lexend';"></textarea>
+                <button type="submit" style="background: linear-gradient(135deg, var(--accent), #ff4d4d); color:white; border:none; padding:16px; width:100%; border-radius:12px; cursor:pointer; font-weight:bold; margin-top:15px; font-size:1rem;">
+                    <i class="fas fa-paper-plane"></i> GỬI THÔNG TIN NGAY
+                </button>
+            </form>
+        </div>
+    </div>
 
-    
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 
-    <script>
-        // Tự động mở khung chat sau 3 giây
-        setTimeout(function() {
-            document.getElementById('chatBox').classList.add('show');
-        }, 3000);
-        
-        // Đóng khung chat khi click nút đóng
-        document.getElementById('closeChat').addEventListener('click', function() {
-            document.getElementById('chatBox').classList.remove('show');
+        const app = initializeApp({
+            apiKey: "AIzaSyBlbn4uFRqgm-hBiUDkS7CFxRCZItqhAoU",
+            authDomain: "bkcbinh.firebaseapp.com",
+            projectId: "bkcbinh",
+            storageBucket: "bkcbinh.firebasestorage.app"
         });
+        const db = getFirestore(app);
+
+        // Global state
+        let publicClasses = [];
+        let siteConfig = {};
+
+        // Zalo Widget
+        const zaloBtn = document.getElementById('zaloBtn');
+        const zaloMenu = document.getElementById('zaloMenu');
+        zaloBtn.addEventListener('click', (e) => { e.stopPropagation(); zaloMenu.classList.toggle('show'); });
+        document.addEventListener('click', (e) => { if (!zaloBtn.contains(e.target) && !zaloMenu.contains(e.target)) zaloMenu.classList.remove('show'); });
+
+        // Tab switching
+        window.switchTab = (tabId) => {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            document.getElementById('tab-' + tabId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        // Registration Form
+        window.openRegForm = (className = '') => {
+            const select = document.getElementById('leadClassSelect');
+            select.innerHTML = '<option value="">-- Chọn lớp quan tâm --</option>';
+            publicClasses.forEach(cls => {
+                const option = document.createElement('option');
+                option.value = cls.className;
+                option.textContent = `${cls.className} - ${cls.subject}`;
+                if (cls.className === className) option.selected = true;
+                select.appendChild(option);
+            });
+            document.getElementById('regPopup').style.display = 'flex';
+        };
+        window.closeRegForm = () => { document.getElementById('regPopup').style.display = 'none'; };
         
-        // Mở/đóng khung chat khi click biểu tượng
-        document.getElementById('chatIcon').addEventListener('click', function() {
-            const chatBox = document.getElementById('chatBox');
-            chatBox.classList.toggle('show');
-        });
-    </script>
-
-<!-- ✅ Popup Form -->
- <a href="#" id="openPopup" class="register-btn"></a>
-<div id="popupForm" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000;">
-  <div style="background: white; width: 90%; max-width: 600px; margin: 60px auto; padding: 30px; border-radius: 10px; position: relative; overflow-y: auto; max-height: 80vh;">
-    <button onclick="closePopup()" style="position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 24px; cursor: pointer;">&times;</button>
-    <h2 style="color:#c62828">Đăng ký tư vấn - học</h2>
-
-    <form id="popupRegisterForm">
-      <label>Họ tên học sinh</label>
-      <input type="text" name="name" required style="width:100%;padding:10px;margin-bottom:10px">
-
-      <label>Số điện thoại</label>
-      <input type="tel" name="phone" required style="width:100%;padding:10px;margin-bottom:10px">
-
-      <label>Lớp</label>
-      <input type="text" name="grade" required style="width:100%;padding:10px;margin-bottom:10px" placeholder="VD: 6, 10, 12...">
-
-      <label>Môn</label>
-      <input type="text" name="subject" required style="width:100%;padding:10px;margin-bottom:10px" placeholder="Toán, Lý, Hóa...">
-
-      <button type="submit" style="background-color:#c62828;color:white;padding:12px 20px;border:none;border-radius:5px;cursor:pointer;width:100%">Gửi thông tin</button>
-    </form>
-  </div>
-</div>
-
-<!-- ✅ JavaScript -->
-<script>
-function openPopup() {
-  document.getElementById('popupForm').style.display = 'block';
-}
-function closePopup() {
-  document.getElementById('popupForm').style.display = 'none';
-}
-document.getElementById('openPopup').addEventListener('click', openPopup);
-
-// ✅ Gửi dữ liệu form
-document.getElementById("popupRegisterForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-  const form = e.target;
-  const data = {
-    name: form.name.value,
-    phone: form.phone.value,
-    grade: form.grade.value,
-    subject: form.subject.value
-  };
-
-  // 1. Gửi đến Google Sheets
-  const googleSheetsPromise = fetch("https://script.google.com/macros/s/AKfycbzGM6PQT2rxPym-P9I8XlqTL4Yp3MhVPMKVYH1EfnMEFmS3jrR1j3qjHtQGU0gl3egv/exec", {
-    method: "POST",
-    body: JSON.stringify(data)
-  });
-
-  // 2. Gửi đến Telegram
-  const telegramPromise = fetch(`https://api.telegram.org/bot8240637801:AAExl0vkqP4fXXE_D2seiLrKJxCAb3C5FnE/sendMessage`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      chat_id: '-4832541970',
-      text: `🎯 *THÔNG TIN ĐĂNG KÝ MỚI*\n\n├ Họ tên: ${data.name}\n├ Điện thoại: [${data.phone}](tel:${data.phone})\n├ Lớp: ${data.grade}\n└ Môn học: ${data.subject}`,
-      parse_mode: 'Markdown'
-    })
-  });
-
-  // Xử lý kết quả
-  Promise.all([googleSheetsPromise, telegramPromise])
-    .then(() => {
-      alert("✅ Đăng ký thành công! Trung tâm sẽ liên hệ sớm.");
-      form.reset();
-      closePopup();
-    })
-    .catch(err => {
-      alert("❌ Gửi thất bại. Vui lòng thử lại.");
-    });
-});
-</script>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-
-
-
-
-
-    <script>
-        // Khởi tạo slider
-        $(document).ready(function(){
-            $('.slider').slick({
-                dots: true,
-                infinite: true,
-                speed: 500,
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                autoplay: true,
-                autoplaySpeed: 3000,
-                prevArrow: '<button type="button" class="slick-prev">❮</button>',
-                nextArrow: '<button type="button" class="slick-next">❯</button>'
-            });
-
-            // Toggle hamburger menu
-            $('.hamburger-btn').click(function(){
-                $(this).toggleClass('active');
-                $('#mainNav').toggleClass('active');
-            });
-
-            $('.main-menu > li > a').click(function(e){
-              if ($(window).width() <= 768) {
-            var $submenu = $(this).siblings('.submenu');
-             if ($submenu.length) {
+      document.getElementById('leadForm').onsubmit = async (e) => {
             e.preventDefault();
-            $submenu.toggleClass('active');
-            $(this).find('.dropdown-icon').toggleClass('active');
-            }
-             }
-            });
-            $('.submenu > li > a').click(function(e){
-            if ($(window).width() <= 768) {
-             var $nestedSubmenu = $(this).siblings('.nested-sub-menu');
-            if ($nestedSubmenu.length) {
-            e.preventDefault();
-            $nestedSubmenu.toggleClass('active');
-            $(this).find('.nested-dropdown-icon').toggleClass('active');
-            }
-            }
-            });
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ĐANG GỬI...';
 
+            const name = document.getElementById('leadName').value;
+            const phone = document.getElementById('leadPhone').value;
+            const className = document.getElementById('leadClassSelect').value;
+            const note = document.getElementById('leadNote').value;
             
-        });
+            try {
+                // Khôi phục kết nối Telegram về điện thoại của Giám đốc
+                await fetch(`https://api.telegram.org/bot8240637801:AAExl0vkqP4fXXE_D2seiLrKJxCAb3C5FnE/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: '-4832541970',
+                        text: `🎯 ĐĂNG KÝ TỪ WEBSITE MỚI\n- HS: ${name}\n- SĐT: ${phone}\n- Lớp quan tâm: ${className}\n- Ghi chú: ${note || 'Không'}`
+                    })
+                });
+                
+                alert(`✅ Đăng ký thành công!\n\nTrung tâm sẽ sớm liên hệ qua số điện thoại ${phone}.`);
+                e.target.reset();
+                closeRegForm();
+            } catch (error) {
+                alert("❌ Lỗi kết nối, vui lòng gọi trực tiếp Hotline.");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        };
 
-       // Xử lý click zalo
-document.getElementById('zaloBtn').addEventListener('click', function(e) {
-    e.stopPropagation();
-    document.getElementById('zaloActions').classList.toggle('show');
-});
+        // Main bootstrap
+        async function bootSystem() {
+            try {
+                const snap = await getDoc(doc(db, 'public_data', 'published_data'));
+                if (!snap.exists()) throw new Error("Chưa có dữ liệu đồng bộ từ Admin");
+                
+                const data = snap.data();
+                siteConfig = data.config || {};
+                publicClasses = data.publicClasses || [];
+                
+                // 1. INJECT CONFIG TO UI
+                const setText = (id, val, fb = '') => { const el = document.getElementById(id); if(el) el.textContent = val || fb; };
+                
+                setText('ui-centerName', siteConfig.centerName, 'MINHTAMEDU');
+                setText('ui-slogan', siteConfig.slogan, 'Trung tâm bồi dưỡng văn hóa');
+                setText('footer-slogan', siteConfig.slogan);
+                setText('footer-license', siteConfig.licenseNumber ? `GP: ${siteConfig.licenseNumber}` : '');
+                setText('footer-address', siteConfig.address);
+                setText('footer-phone', siteConfig.hotline || siteConfig.phone);
+                setText('footer-email', siteConfig.email);
+                setText('footer-centerName', siteConfig.centerName);
+                setText('footer-year', new Date().getFullYear());
+                
+                // Zalo Links
+                if(siteConfig.zaloLink) {
+                    document.getElementById('zaloChatLink').href = siteConfig.zaloLink;
+                    document.getElementById('zaloVideoLink').href = siteConfig.zaloLink + '?call';
+                    document.getElementById('footer-zalo').href = siteConfig.zaloLink;
+                }
+                if(siteConfig.hotline) {
+                    const phone = siteConfig.hotline.replace(/\D/g,'');
+                    document.getElementById('zaloCallLink').href = `tel:${phone}`;
+                }
+                if(siteConfig.facebook) document.getElementById('footer-facebook').href = siteConfig.facebook;
 
-// Đóng popup khi click ra ngoài
-document.addEventListener('click', function() {
-    document.getElementById('zaloActions').classList.remove('show');
-});
+                // Legal Page Config
+                const year = new Date().getFullYear();
+                setText('leg-year', year); setText('leg-year2', year);
+                setText('leg-name', siteConfig.centerName);
+                setText('leg-address', siteConfig.address);
+                setText('leg-address2', siteConfig.address);
+                setText('leg-hotline', siteConfig.hotline || siteConfig.phone);
+                setText('leg-director', siteConfig.directorName);
+                setText('leg-director-title', siteConfig.directorDegree || 'Chủ hộ kinh doanh');
+                setText('leg-representative', siteConfig.representative || 'Bộ phận chuyên môn');
+                setText('leg-place', siteConfig.address?.split(',')[0] || 'Cơ sở chính');
+                
+                const now = new Date();
+                setText('leg-date-day', String(now.getDate()).padStart(2, '0'));
+                setText('leg-date-month', String(now.getMonth() + 1).padStart(2, '0'));
+                setText('leg-date-year', now.getFullYear());
 
-// Ngăn đóng popup khi click vào menu
-document.getElementById('zaloActions').addEventListener('click', function(e) {
-    e.stopPropagation();
-});
+                // Subjects
+                const subjects = [...new Set(publicClasses.map(c => c.subject).filter(Boolean))];
+                setText('leg-subjects', subjects.join(', ') || 'Đang cập nhật');
+
+                // 2. RENDER CLASSES & SCHEDULE
+                let htmlCards = '', htmlTkb = '', htmlFee = '';
+                const uniqueTeachers = new Map();
+                const dayMap = { mon: 'Thứ 2', tue: 'Thứ 3', wed: 'Thứ 4', thu: 'Thứ 5', fri: 'Thứ 6', sat: 'Thứ 7', sun: 'CN' };
+
+                publicClasses.forEach((cls, idx) => {
+                    // Parse schedule
+                    let scheduleHtml = '', tkbText = '';
+                    if (Array.isArray(cls.schedule)) {
+                        cls.schedule.forEach(s => {
+                            let day = typeof s === 'string' ? s : s.day;
+                            let time = (typeof s === 'object' && s.startTime) ? `${s.startTime}-${s.endTime}` : '';
+                            scheduleHtml += `<span class="schedule-badge"><i class="far fa-calendar-alt"></i> ${dayMap[day] || day} ${time}</span>`;
+                            tkbText += `${dayMap[day] || day} ${time}, `;
+                        });
+                    }
+                    tkbText = tkbText.slice(0, -2) || 'Liên hệ';
+                    const timeDisplay = cls.startTime && cls.endTime ? `${cls.startTime}-${cls.endTime}` : 'Liên hệ';
+                    
+                    const feeSession = (cls.feePerSession && cls.feePerSession > 0) ? cls.feePerSession.toLocaleString() : 'Liên hệ';
+                    
+                    // Cards
+                    htmlCards += `<div class="card">${idx < 3 ? '<span class="card-badge">HOT</span>' : ''}<h3>${cls.className}</h3><div class="card-info"><i class="fas fa-book-open"></i><strong>Môn học:</strong> ${cls.subject}</div><div class="card-info"><i class="fas fa-chalkboard-user"></i><strong>Giáo viên:</strong> ${cls.teacher}</div><div class="card-info"><i class="far fa-clock"></i><strong>Lịch học:</strong><div>${scheduleHtml || 'Liên hệ'}</div></div><div class="card-price">${feeSession}<small> VNĐ/buổi</small></div><a onclick="openRegForm('${cls.className}')" class="btn-card"><i class="fas fa-pencil-alt"></i> Đăng ký ngay</a></div>`;
+                    
+                    // Legal Tables
+                    htmlTkb += `<tr><td>${idx+1}</td><td><strong>${cls.className}</strong></td><td>${cls.subject}</td><td>${tkbText}</td></td></tr>`;
+                    htmlFee += `<tr><td>${cls.className}</td><td style="text-align:right; font-weight:bold;">${feeSession}</td><td>${feeSession === 'Liên hệ' ? 'Liên hệ trung tâm' : 'Theo tháng 8 buổi học'}</td></tr>`;
+                    
+                    // Teachers
+                    if(cls.teacher && !uniqueTeachers.has(cls.teacher)) {
+                        uniqueTeachers.set(cls.teacher, {
+                            name: cls.teacher,
+                            qual: cls.teacherQualification || 'Đại học Sư phạm',
+                            major: cls.teacherMajor || cls.subject || 'Theo phân công',
+                            unit: cls.teacherWorkUnit || siteConfig.centerName || 'Cơ sở'
+                        });
+                    }
+                });
+                
+                document.getElementById('courseContainer').innerHTML = htmlCards || '<p style="text-align:center;grid-column:1/-1;">Chưa có lớp học được công khai.</p>';
+                document.getElementById('leg-tkb-table').innerHTML = htmlTkb;
+                document.getElementById('leg-fee-table').innerHTML = htmlFee;
+
+                // Teachers table
+                let htmlTeachers = '';
+                let tIdx = 1;
+                uniqueTeachers.forEach(t => {
+                    htmlTeachers += `<tr><td>${tIdx++}</td><td><strong>${t.name}</strong></td><td>${t.qual}</td><td>${t.major}</td><td>${t.unit}</td></tr>`;
+                });
+                document.getElementById('leg-teacher-table').innerHTML = htmlTeachers || '<tr><td colspan="5">Đang cập nhật...</td></tr>';
+
+                // Stats
+                document.getElementById('stat-classes').textContent = publicClasses.length;
+                document.getElementById('stat-teachers').textContent = uniqueTeachers.size;
+                document.getElementById('stat-subjects').textContent = subjects.length;
+
+                document.getElementById('loadingOverlay').style.display = 'none';
+            } catch (error) {
+                console.error(error);
+                document.getElementById('loadingOverlay').innerHTML = `<div style="text-align:center; color:red;"><i class="fas fa-exclamation-triangle" style="font-size:40px;"></i><h3>Chưa có dữ liệu</h3><p>Vui lòng vào Admin CMS để Đồng bộ dữ liệu.</p></div>`;
+            }
+        }
+        
+        bootSystem();
     </script>
-
 </body>
 </html>
