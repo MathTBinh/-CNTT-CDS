@@ -1009,7 +1009,7 @@
                             <th>Tên lớp</th>
                             <th>Môn học</th>
                             <th>Lịch học</th>
-                            <th>Học phí/tháng</th>
+                            
                             <th>Thông số Kỳ học</th>
                             <th>Sĩ số</th>
                             <th>Thao tác</th>
@@ -1954,7 +1954,12 @@
                 <div class="form-grid">
                     <div class="form-group"><label>Tên lớp *</label><input type="text" id="editClassName" required></div>
                     <div class="form-group"><label>Môn học</label><input type="text" id="editClassSubject"></div>
-                    
+                    <div class="form-group">
+    <label>Giáo viên phụ trách</label>
+    <select id="editClassTeacherId">
+        <option value="">-- Chọn giáo viên --</option>
+    </select>
+</div>
                     <div class="form-group"><label>Lương trả GV / Buổi (VNĐ)</label><input type="number" id="editClassTeacherRate" style="border-color: var(--info);"></div>
                     
                     <div class="form-group"><label>Sĩ số tối đa</label><input type="number" id="editClassMaxStudents"></div>
@@ -2600,9 +2605,7 @@
                         }).join('') : '<span style="color:var(--gray)">Chưa xếp lịch</span>'}
         </div>
     </td>
-    <td style="color: var(--primary); font-weight: bold;">
-        ${c.fee ? c.fee.toLocaleString('vi-VN') + 'đ' : '0đ'}
-    </td>
+    
     <td style="background: #f8f9ff;">
         ${typeof formatClassSessionInfo === 'function' ? formatClassSessionInfo(c) : ''}
     </td>
@@ -2718,16 +2721,30 @@
                 window.showModal('editTeacherModal');
             };
 // ========== SỬA LỚP HỌC (NẠP DỮ LIỆU AN TOÀN & ĐẦY ĐỦ) // ========== 1. SỬA LỚP HỌC (NẠP ĐỦ DỮ LIỆU LƯƠNG) ==========
+ // ========== 1. NẠP DỮ LIỆU SỬA LỚP (BỔ SUNG CHỌN GV) ==========
             window.editClass = (id) => {
                 const c = window.classes.find(x => x.id === id);
                 if (!c) return;
+                
+                // Điền các thông tin cơ bản
                 document.getElementById('editClassId').value = c.id;
                 document.getElementById('editClassName').value = c.className || '';
                 document.getElementById('editClassSubject').value = c.subject || '';
+                document.getElementById('editClassTeacherRate').value = c.teacherRate ?? 0;
                 
-                // 👉 DÒNG QUAN TRỌNG: Nạp Lương vào ô HTML
-                document.getElementById('editClassTeacherRate').value = c.teacherRate || 0; 
-                
+                // ĐÃ BỔ SUNG: Nạp danh sách giáo viên vào ô chọn
+                const teacherSelect = document.getElementById('editClassTeacherId');
+                if (teacherSelect) {
+                    teacherSelect.innerHTML = '<option value="">-- Chọn giáo viên --</option>';
+                    window.teachers.forEach(t => {
+                        const opt = document.createElement('option');
+                        opt.value = t.id;
+                        opt.textContent = t.fullName;
+                        if (t.id === c.teacherId) opt.selected = true; // Tự động chọn giáo viên đang dạy
+                        teacherSelect.appendChild(opt);
+                    });
+                }
+
                 document.getElementById('editClassMaxStudents').value = c.maxStudents || 0;
                 document.getElementById('editClassFeePerSession').value = c.feePerSession || 0;
                 document.getElementById('editClassTotalSessions').value = c.totalSessions || 0;
@@ -2735,7 +2752,7 @@
                 document.getElementById('editClassStartDate').value = c.startDate?.toDate ? c.startDate.toDate().toISOString().split('T')[0] : '';
                 document.getElementById('editClassEndDate').value = c.endDate?.toDate ? c.endDate.toDate().toISOString().split('T')[0] : '';
                 document.getElementById('editClassStatus').value = c.status || 'active';
-                // Load TKB cũ
+                
                 const scheduleContainer = document.getElementById('editScheduleContainer');
                 scheduleContainer.innerHTML = ''; 
                 if (Array.isArray(c.schedule)) {
@@ -2744,21 +2761,21 @@
                 window.showModal('editClassModal');
             };
 
-            // ========== 2. LƯU SỬA LỚP (ĐỌC ĐÚNG ID Ô LƯƠNG ĐỂ ĐẨY LÊN FIREBASE) ==========
+            // ========== 2. LƯU DỮ LIỆU SỬA LỚP (BỔ SUNG LƯU GV) ==========
             window.submitEditClass = async (e) => {
                 e.preventDefault();
                 const id = document.getElementById('editClassId').value;
-                const btn = e.target.querySelector('button[type="submit"]');
+                const btn = e.target.querySelector('button[type=\"submit\"]');
                 const originalText = btn.innerHTML;
-                btn.disabled = true; btn.innerHTML = '<span class="loading"></span>...';
+                btn.disabled = true; btn.innerHTML = '<span class=\"loading\"></span>...';
+                
                 try {
-                    await window.setDoc(window.doc(window.db, 'classes', id), {
+                    const teacherId = document.getElementById('editClassTeacherId').value || null;
+                    const updateData = {
                         className: document.getElementById('editClassName').value, 
                         subject: document.getElementById('editClassSubject').value,
-                        
-                        // 👉 DÒNG QUAN TRỌNG: Đọc dữ liệu từ HTML đẩy lên Firebase
+                        teacherId: teacherId, // ĐÃ BỔ SUNG: Lưu ID giáo viên mới
                         teacherRate: parseInt(document.getElementById('editClassTeacherRate').value) || 0,
-                        
                         maxStudents: parseInt(document.getElementById('editClassMaxStudents').value) || 0, 
                         feePerSession: parseInt(document.getElementById('editClassFeePerSession').value) || 0,
                         totalSessions: parseInt(document.getElementById('editClassTotalSessions').value) || 0, 
@@ -2768,12 +2785,14 @@
                         schedule: window.getScheduleData('editScheduleContainer'), 
                         status: document.getElementById('editClassStatus').value,
                         updatedAt: window.serverTimestamp()
-                    }, { merge: true });
-                    window.showToast('✅ Đã cập nhật Lớp học!', 'success'); window.hideModal('editClassModal');
+                    };
+
+                    await window.updateDoc(window.doc(window.db, 'classes', id), updateData);
+                    window.showToast('✅ Đã cập nhật lớp học & Giáo viên!', 'success'); 
+                    window.hideModal('editClassModal');
                 } catch (err) { window.showToast('Lỗi: ' + err.message, 'error'); }
                 finally { btn.disabled = false; btn.innerHTML = originalText; }
             };
-
             // ========== 3. THÊM LỚP MỚI (CŨNG PHẢI ĐỌC LƯƠNG) ==========
             document.getElementById('addClassForm').onsubmit = async (e) => {
                 e.preventDefault();
@@ -3002,15 +3021,16 @@
             };
 
             // 3. Hàm thực thi đẩy dữ liệu lên Firebase (MẮT XÍCH 2)
+         // 3. Hàm thực thi đẩy dữ liệu lên Firebase (ĐÃ NÂNG CẤP TỰ ĐỘNG TÁCH TÊN & XẾP LỚP)
             window.executeImport = async () => {
                 if (!currentImportData || currentImportData.length === 0) return;
 
                 const typeName = currentImportType === 'students' ? 'Học sinh' : 'Giáo viên';
                 if (!confirm(`Xác nhận nhập ${currentImportData.length} bản ghi vào danh sách ${typeName}?`)) return;
 
-                // Firebase writeBatch giới hạn 500 thao tác mỗi lần, ta chia nhỏ mảng nếu file quá lớn
                 const chunk_size = 400;
                 let successCount = 0;
+                let enrollCount = 0; // Biến đếm số học sinh được tự động xếp lớp
 
                 try {
                     const resultsDiv = document.getElementById('importResults');
@@ -3024,12 +3044,11 @@
                         const batch = window.writeBatch(window.db);
 
                         chunk.forEach(row => {
-                            const newRef = window.doc(window.collection(window.db, currentImportType)); // Tự động tạo ID mới
+                            const newRef = window.doc(window.collection(window.db, currentImportType)); 
 
-                            // Ánh xạ dữ liệu thông minh
                             const getVal = (keys) => {
                                 let val = "";
-                                keys.forEach(k => { if (row[k]) val = row[k]; });
+                                keys.forEach(k => { if (row[k] !== undefined && row[k] !== null) val = row[k]; });
                                 return val.toString().trim();
                             };
 
@@ -3037,15 +3056,21 @@
                             const email = getVal(['Email', 'Thư điện tử']);
                             const phone = getVal(['SĐT', 'Số điện thoại', 'Phone']);
 
+                            // 💡 TỰ ĐỘNG TÁCH HỌ & TÊN ĐỂ DỄ SẮP XẾP A-Z SAU NÀY
+                            const nameParts = fullName.split(' ');
+                            const firstName = nameParts.pop(); // Lấy từ cuối cùng làm Tên
+                            const lastName = nameParts.join(' '); // Phần còn lại làm Họ
+
                             let dataObj = {
                                 fullName: fullName || 'Chưa cập nhật',
+                                firstName: firstName || '', // Lưu ngầm
+                                lastName: lastName || '',   // Lưu ngầm
                                 email: email,
                                 phone: phone,
                                 status: 'active',
                                 createdAt: window.serverTimestamp()
                             };
 
-                            // Dữ liệu riêng biệt
                             if (currentImportType === 'teachers') {
                                 const luong = getVal(['Lương', 'Lương/giờ', 'Rate']);
                                 dataObj.hourlyRate = parseInt(luong) || 0;
@@ -3053,34 +3078,56 @@
                             else if (currentImportType === 'students') {
                                 dataObj.address = getVal(['Địa chỉ', 'Nơi ở']);
                                 dataObj.parentName = getVal(['Phụ huynh', 'Tên phụ huynh']);
+                                
+                                // 💡 TỰ ĐỘNG XẾP LỚP NẾU TRONG EXCEL CÓ CỘT "LỚP"
+                                const targetClassName = getVal(['Lớp', 'Tên lớp', 'Lớp học']);
+                                if (targetClassName && window.classes) {
+                                    // Dò tìm tên lớp trong hệ thống (không phân biệt hoa thường)
+                                    const matchedClass = window.classes.find(c => c.className.toLowerCase() === targetClassName.toLowerCase());
+                                    if (matchedClass) {
+                                        // 1. Tự động tạo phiếu Ghi danh
+                                        const enrollRef = window.doc(window.collection(window.db, 'enrollments'));
+                                        batch.set(enrollRef, {
+                                            studentId: newRef.id,
+                                            classId: matchedClass.id,
+                                            enrollDate: window.serverTimestamp(),
+                                            status: 'active'
+                                        });
+                                        // 2. Tự động tăng sĩ số của Lớp đó lên 1
+                                        batch.set(window.doc(window.db, 'classes', matchedClass.id), { 
+                                            currentStudents: window.increment(1) 
+                                        }, { merge: true });
+                                        
+                                        enrollCount++;
+                                    }
+                                }
                             }
 
                             batch.set(newRef, dataObj);
                             successCount++;
                         });
 
-                        // Đẩy gói dữ liệu lên Cloud
                         await batch.commit();
                     }
 
+                    // HIỂN THỊ KẾT QUẢ THÔNG MINH
                     window.showToast(`Đã import thành công ${successCount} bản ghi!`, 'success');
                     if (resultsDiv) {
-                        resultsDiv.innerHTML = `<p style="color:green; font-weight:bold; font-size:16px;">✅ Đã thêm thành công ${successCount} ${typeName}.</p>`;
+                        let msg = `<p style="color:green; font-weight:bold; font-size:16px;">✅ Đã thêm thành công ${successCount} ${typeName}.</p>`;
+                        if (currentImportType === 'students' && enrollCount > 0) {
+                            msg += `<p style="color:var(--primary); font-weight:bold; margin-top:10px;">🎓 Tự động nhận diện và xếp ${enrollCount} học sinh vào các lớp!</p>`;
+                        }
+                        resultsDiv.innerHTML = msg;
                     }
 
-                    // Tự động quay về trang quản lý sau 2 giây
-                    setTimeout(() => {
-                        window.switchSection(currentImportType);
-                    }, 2000);
+                    setTimeout(() => { window.switchSection(currentImportType); }, 3000);
 
                 } catch (error) {
                     console.error("Lỗi Import:", error);
                     window.showToast('Quá trình import thất bại!', 'error');
-                    const resultsDiv = document.getElementById('importResults');
-                    if (resultsDiv) resultsDiv.innerHTML = `<p style="color:red; font-weight:bold;">❌ Lỗi: ${error.message}</p>`;
+                    if (document.getElementById('importResults')) document.getElementById('importResults').innerHTML = `<p style="color:red; font-weight:bold;">❌ Lỗi: ${error.message}</p>`;
                 }
             };
-
             // ========== HÀM TÍNH TOÁN HỌC PHÍ THEO KỲ (DỰA TRÊN THÔNG SỐ MỚI) ==========
             window.calculateTuitionForClass = function (classData) {
                 // Lấy thông số, mặc định 0 nếu không có (tương thích lớp cũ)
