@@ -3613,66 +3613,167 @@
                 // Tự động điền số dư nợ vào ô nhập tiền
                 document.getElementById('paymentAmount').value = status.remainingDebt;
             };
+    // ⏸️ HÀM HIỂN THỊ MODAL CẤU HÌNH NGHỈ (TẬN DỤNG NÚT BẤM CỦA ANH)
+// ⏸️ HÀM GẮN SỰ KIỆN CHO NÚT "CẤU HÌNH NGHỈ" (ĐÃ SỬA CHUẨN ID)
+window.showSkipSessionsModal = function(classId = null) {
+    // 🎯 LỖI Ở ĐÂY ĐÃ ĐƯỢC SỬA: Dùng đúng ID 'skipSessionsModal' trong HTML của anh
+    const modal = document.getElementById('skipSessionsModal');
+    const content = modal.querySelector('.modal-content');
 
-          
-        window.calculateClassPeriods = function(classData) {
-            if (!classData.startDate || !classData.endDate) return [];
-            const start = classData.startDate.toDate();
-            const end = classData.endDate.toDate();
-            const schedule = classData.schedule || [];
-            const feePerSession = classData.feePerSession || 0;
-            // Dữ liệu ngày nghỉ cấu hình theo kỳ { "0": 1, "1": 0 }
-            const periodSkips = classData.periodSkips || {}; 
+    // 1. Nếu chưa có classId (bấm từ menu ngoài), hiển thị danh sách lớp
+    if (!classId) {
+        let options = window.classes.map(c => `<option value="${c.id}">${c.className} - ${c.subject || ''}</option>`).join('');
+        content.innerHTML = `
+            <div class="modal-header" style="display:flex; justify-content:space-between; margin-bottom:15px;">
+                <h3 style="margin:0;">⏸️ CHỌN LỚP CẤU HÌNH NGHỈ</h3>
+                <span class="close" style="cursor:pointer; font-size:24px; line-height:1;" onclick="window.hideModal('skipSessionsModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label style="font-weight:bold; margin-bottom:10px; display:block;">Chọn lớp học cần khai báo ngày giáo viên vắng:</label>
+                    <select id="selectClassForSkip" class="form-control" style="width:100%; padding:10px; border-radius:8px; border:2px solid #ccc;">
+                        <option value="">-- Chọn lớp học --</option>${options}
+                    </select>
+                </div>
+                <div style="margin-top:20px; text-align:right;">
+                    <button class="btn btn-primary" onclick="window.showSkipSessionsModal(document.getElementById('selectClassForSkip').value)">TIẾP TỤC <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        `;
+        window.showModal('skipSessionsModal');
+        return;
+    }
 
-            let periods = [];
-            let currentStart = new Date(start);
-            let pIndex = 0;
-            const today = new Date();
+    // 2. Giao diện quản lý danh sách ngày nghỉ của lớp cụ thể
+    const cls = window.classes.find(c => c.id === classId);
+    if (!cls) return window.showToast('Không tìm thấy lớp học!', 'error');
 
-            while (currentStart < end) {
-                let currentEnd = new Date(currentStart);
-                currentEnd.setDate(currentStart.getDate() + 27); // 4 tuần = 28 ngày
-                if (currentEnd > end) currentEnd = new Date(end);
+    let absentList = (cls.absentDates || []).sort().reverse().map(date => `
+        <div style="display:flex; justify-content:space-between; align-items:center; background:#f8f9fa; padding:10px; margin-bottom:8px; border-radius:8px; border-left:5px solid #f57f17;">
+            <span><i class="far fa-calendar-times"></i> <b>${new Date(date).toLocaleDateString('vi-VN')}</b></span>
+            <button class="btn-icon btn-danger" style="border:none; background:none; color:red; cursor:pointer;" onclick="window.removeAbsentDate('${classId}', '${date}')" title="Xóa"><i class="fas fa-trash"></i></button>
+        </div>
+    `).join('') || '<p style="text-align:center; color:#999; padding:20px; border:1px dashed #ccc; border-radius:8px;">Lớp chưa có ngày nghỉ nào.</p>';
 
-                // Đếm số buổi dựa vào TKB trong khoảng ngày của kỳ này
-                let sessionCount = 0;
-                const activeDays = schedule.map(s => {
-                    const dayMap = { 'sun': 0, 'mon': 1, 'tue': 2, 'wed': 3, 'thu': 4, 'fri': 5, 'sat': 6 };
-                    return dayMap[s.day];
-                });
+    content.innerHTML = `
+        <div class="modal-header" style="display:flex; justify-content:space-between; margin-bottom:15px;">
+            <h3 style="margin:0;">⏸️ QUẢN LÝ NGÀY NGHỈ: ${cls.className}</h3>
+            <span class="close" style="cursor:pointer; font-size:24px; line-height:1;" onclick="window.hideModal('skipSessionsModal')">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div style="background:#fff3e0; padding:12px; border-radius:8px; margin-bottom:15px; font-size:0.85rem; color:#e65100; border:1px solid #ffe0b2;">
+                <i class="fas fa-info-circle"></i> <b>Lưu ý:</b> Khai báo ngày giáo viên vắng. Hệ thống sẽ tự "nhảy cóc" qua ngày này để đảm bảo đủ 8 buổi thực dạy/kỳ.
+            </div>
+            <div class="form-group" style="background:#f1f8e9; padding:15px; border-radius:10px; border:1px solid #c5e1a5;">
+                <label><b>Thêm ngày nghỉ mới:</b></label>
+                <div style="display:flex; gap:10px; margin-top:8px;">
+                    <input type="date" id="newAbsentDate" class="form-control" style="flex:1; border:2px solid #ccc; border-radius:6px; padding:8px;">
+                    <button class="btn btn-success" onclick="window.addAbsentDate('${classId}')"><i class="fas fa-plus"></i> THÊM</button>
+                </div>
+            </div>
+            <div style="margin-top:20px;">
+                <label><b>Lịch sử các ngày đã nghỉ:</b></label>
+                <div id="absentDatesContainer" style="margin-top:10px; max-height:250px; overflow-y:auto; padding-right:5px;">
+                    ${absentList}
+                </div>
+            </div>
+            <div style="margin-top:20px; display:flex; justify-content:flex-end; gap:10px;">
+                <button class="btn" style="background:#6c757d; color:white;" onclick="window.showSkipSessionsModal()">Quay lại</button>
+                <button class="btn btn-danger" onclick="window.hideModal('skipSessionsModal')">Đóng</button>
+            </div>
+        </div>
+    `;
+    window.showModal('skipSessionsModal');
+};
 
-                let loopDate = new Date(currentStart);
-                while (loopDate <= currentEnd) {
-                    if (activeDays.includes(loopDate.getDay())) sessionCount++;
-                    loopDate.setDate(loopDate.getDate() + 1);
-                }
+// Đảm bảo 2 hàm phụ này vẫn nằm ngay dưới hàm trên
+window.addAbsentDate = async function(classId) {
+    const date = document.getElementById('newAbsentDate').value;
+    if (!date) return window.showToast("Vui lòng chọn ngày!", "warning");
+    const cls = window.classes.find(c => c.id === classId);
+    let dates = cls.absentDates || [];
+    if (dates.includes(date)) return window.showToast("Ngày này đã có!", "warning");
+    dates.push(date);
+    await window.updateDoc(window.doc(window.db, "classes", classId), { absentDates: dates });
+    window.showToast("Đã thêm ngày nghỉ!", "success");
+    window.showSkipSessionsModal(classId); // Refresh giao diện
+};
 
-                const skips = periodSkips[pIndex] || 0;
-                const actual = Math.max(0, sessionCount - skips);
-                const isCurrent = today >= currentStart && today <= currentEnd;
+window.removeAbsentDate = async function(classId, date) {
+    if (!confirm("Xóa ngày nghỉ này?")) return;
+    const cls = window.classes.find(c => c.id === classId);
+    let dates = (cls.absentDates || []).filter(d => d !== date);
+    await window.updateDoc(window.doc(window.db, "classes", classId), { absentDates: dates });
+    window.showSkipSessionsModal(classId);
+};    
+window.calculateClassPeriods = function(classData) {
+    if (!classData.startDate || !classData.endDate) return [];
+    const start = classData.startDate.toDate();
+    const end = classData.endDate.toDate();
+    const schedule = classData.schedule || [];
+    const feePerSession = classData.feePerSession || 0;
+    const absentDates = classData.absentDates || []; // Lấy danh sách ngày nghỉ cụ thể
 
+    const dayMap = { 'sun': 0, 'mon': 1, 'tue': 2, 'wed': 3, 'thu': 4, 'fri': 5, 'sat': 6 };
+    const activeDays = schedule.map(s => dayMap[s.day]);
+    if (activeDays.length === 0) return [];
+
+    const sessionsPerPeriod = 8; // CHIẾN THUẬT: 8 BUỔI THỰC DẠY / KỲ
+    let periods = [];
+    let currentDate = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+    let endDateLimit = new Date(end.getFullYear(), end.getMonth(), end.getDate());
+    
+    let pIndex = 1;
+    let pStartDate = new Date(currentDate);
+    let actualTaught = 0;   // Chỉ đếm khi giáo viên có dạy
+    let skipsInPeriod = 0; // Đếm số buổi nghỉ giáo viên vắng
+    const today = new Date();
+
+    while (currentDate <= endDateLimit) {
+        if (activeDays.includes(currentDate.getDay())) {
+            if (actualTaught === 0 && skipsInPeriod === 0) pStartDate = new Date(currentDate);
+            
+            // 🎯 ĐÃ SỬA LỖI: Cắt chuỗi ngày theo giờ Việt Nam, không dùng toISOString nữa
+            const y = currentDate.getFullYear();
+            const m = String(currentDate.getMonth() + 1).padStart(2, '0');
+            const d = String(currentDate.getDate()).padStart(2, '0');
+            const dateStr = `${y}-${m}-${d}`; 
+
+            if (absentDates.includes(dateStr)) {
+                skipsInPeriod++; // Trùng ngày nghỉ -> Ghi nhận nghỉ, dời lịch dạy
+            } else {
+                actualTaught++; // Ngày dạy bình thường
+            }
+
+            if (actualTaught === sessionsPerPeriod) {
                 periods.push({
-                    index: pIndex,
-                    name: `Kỳ ${pIndex + 1} (${currentStart.toLocaleDateString('vi-VN')} - ${currentEnd.toLocaleDateString('vi-VN')})`,
-                    totalSessions: sessionCount,
-                    skipSessions: skips,
-                    actualSessions: actual,
-                    fee: actual * feePerSession,
-                    isCurrent: isCurrent
+                    index: pIndex - 1,
+                    name: `Kỳ ${pIndex} (${pStartDate.toLocaleDateString('vi-VN')} - ${currentDate.toLocaleDateString('vi-VN')})`,
+                    actualSessions: actualTaught,
+                    skipSessions: skipsInPeriod, // 🎯 Chắc chắn hiển thị đúng số ngày nghỉ
+                    fee: actualTaught * feePerSession,
+                    isCurrent: today >= pStartDate && today <= currentDate
                 });
-
-                currentStart.setDate(currentStart.getDate() + 28);
-                pIndex++;
+                pIndex++; actualTaught = 0; skipsInPeriod = 0;
             }
-            // Nếu hôm nay vượt quá endDate, mặc định chọn kỳ cuối
-            if (periods.length > 0 && !periods.some(p => p.isCurrent)) {
-                periods[periods.length - 1].isCurrent = true;
-            }
-            return periods;
-        };
-
-        // ========== NÂNG CẤP BỘ NÃO KẾ TOÁN (TÍNH THEO KỲ) ==========
-      // ========== NÂNG CẤP BỘ NÃO KẾ TOÁN (TÍNH THEO KỲ - CHỐNG LỖI INDEX FIREBASE) ==========
+        }
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+    
+    // Gom buổi lẻ cuối khóa
+    if (actualTaught > 0) {
+        periods.push({
+            index: pIndex - 1,
+            name: `Kỳ ${pIndex} (${pStartDate.toLocaleDateString('vi-VN')} - ${endDateLimit.toLocaleDateString('vi-VN')})`,
+            actualSessions: actualTaught,
+            skipSessions: skipsInPeriod,
+            fee: actualTaught * feePerSession,
+            isCurrent: today >= pStartDate
+        });
+    }
+    return periods;
+};
+// ========== NÂNG CẤP BỘ NÃO KẾ TOÁN (TÍNH THEO KỲ - CHỐNG LỖI INDEX FIREBASE) ==========
         window.getStudentPaymentStatusByPeriod = async function (studentId, classId, periodIndex, periodFee) {
             try {
                 // Rút gọn truy vấn để hệ thống Firebase không bị tắc nghẽn
@@ -3684,7 +3785,7 @@
                 const snap = await window.getDocs(q);
                 let totalPaid = 0;
                 
-                // Dùng Javascript lọc an toàn phần còn lại
+                // Dùng Javascript lọc an toàn phần còn lại để lấy đúng số tiền đã đóng của kỳ này
                 snap.forEach(d => {
                     const p = d.data();
                     if (p.type === 'tuition' && p.periodIndex == periodIndex) {
@@ -3692,6 +3793,7 @@
                     }
                 });
                 
+                // Trừ ra số nợ còn lại
                 const remainingDebt = Math.max(0, periodFee - totalPaid);
                 return { paid: remainingDebt <= 0, totalPaid, totalDebt: periodFee, remainingDebt };
             } catch (e) { 
@@ -3699,7 +3801,42 @@
                 return { paid: false, totalPaid: 0, totalDebt: periodFee, remainingDebt: periodFee }; 
             }
         };
+        // ========== NÂNG CẤP BỘ NÃO KẾ TOÁN (TÍNH THEO KỲ) ==========
+      // ========== NÂNG CẤP BỘ NÃO KẾ TOÁN (TÍNH THEO KỲ - CHỐNG LỖI INDEX FIREBASE) ==========
+    // HÀM TÍNH NỢ LŨY KẾ (TỪ ĐẦU ĐẾN KỲ HIỆN TẠI)
+window.getStudentCumulativeDebt = async function (studentId, classId, currentPeriodIndex, periods) {
+    try {
+        // 1. Tính tổng tiền học sinh PHẢI nộp tính đến hết kỳ hiện tại
+        let totalExpectedFee = 0;
+        for (let i = 0; i <= currentPeriodIndex; i++) {
+            totalExpectedFee += (periods[i].fee || 0);
+        }
 
+        // 2. Lấy TẤT CẢ các khoản đã đóng cho lớp này (không phân biệt kỳ)
+        const q = window.query(
+            window.collection(window.db, 'payments'),
+            window.where('studentId', '==', studentId),
+            window.where('classId', '==', classId),
+            window.where('type', '==', 'tuition')
+        );
+        const snap = await window.getDocs(q);
+        
+        let totalPaid = 0;
+        snap.forEach(d => { totalPaid += (d.data().amount || 0); });
+
+        const remainingDebt = Math.max(0, totalExpectedFee - totalPaid);
+        
+        return {
+            totalExpected: totalExpectedFee,
+            totalPaid: totalPaid,
+            remainingDebt: remainingDebt,
+            isPaid: remainingDebt <= 0
+        };
+    } catch (e) {
+        console.error("Lỗi tính nợ lũy kế:", e);
+        return { totalExpected: 0, totalPaid: 0, remainingDebt: 0, isPaid: false };
+    }
+};
         // ========== RENDER CHI TIẾT LỚP HỌC (THEO KỲ) ==========
         let currentViewingClassId = null;
 
@@ -3707,6 +3844,7 @@
         let selectedPeriodIndex = 0;
 
   // ========== RENDER CHI TIẾT LỚP HỌC (ĐÃ NỐI DÂY MÁY IN) ==========
+        
         window.loadClassStudentsWithTuition = async function () {
             const classId = document.getElementById('classStudentsSelect')?.value || currentViewingClassId;
             if (!classId) return;
@@ -4646,7 +4784,7 @@
                         }
                     }
                 }
-
+                
                 else if (type === 'finance_report') { // 3. IN BÁO CÁO TÀI CHÍNH (Đã khử cột thao tác)
                     const periodText = document.getElementById('reportPeriodDisplay').textContent;
                     const totalRev = document.getElementById('totalRevenueDisplay').textContent;

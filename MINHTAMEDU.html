@@ -926,7 +926,7 @@
                 <h2>👥 Quản Lý Học Sinh</h2>
                 <div class="action-buttons">
                     <button class="btn btn-success" onclick="showModal('addStudentModal')">➕ Thêm Học Sinh</button>
-                    <button class="btn btn-primary" onclick="loadStudents()">🔄 Làm mới</button>
+                    
                     <button class="btn btn-warning" onclick="exportStudents()">📤 Xuất Excel</button>
                     <button class="btn btn-info" onclick="showImportExcelModal('students')">📥 Import Excel</button>
                 </div>
@@ -963,7 +963,7 @@
             <h2>👨‍🏫 Quản Lý Giáo Viên</h2>
             <div class="action-buttons">
                 <button class="btn btn-success" onclick="showModal('addTeacherModal')">➕ Thêm Giáo Viên</button>
-                <button class="btn btn-primary" onclick="loadTeachers()">🔄 Làm mới</button>
+                
                 <button class="btn btn-info" onclick="showImportExcelModal('teachers')">📥 Import Excel</button>
                 <button class="btn btn-warning" onclick="showCreateTeacherAccountModal()">👤 Tạo tài khoản</button>
                 <button class="btn btn-info" onclick="showSalaryManagementModal()">💰 Tính Lương</button>
@@ -997,7 +997,7 @@
             <h2>📚 Quản Lý Lớp Học</h2>
             <div class="action-buttons">
                 <button class="btn btn-success" onclick="showModal('addClassModal')">➕ Thêm Lớp</button>
-                <button class="btn btn-primary" onclick="loadClasses()">🔄 Làm mới</button>
+                
                 <button class="btn btn-info" onclick="generateClassSessions()">📅 Tạo lịch học</button>
                 <button class="btn btn-warning" onclick="showSkipSessionsModal()">⏸️ Cấu hình nghỉ</button>
             </div>
@@ -1027,7 +1027,7 @@
             <h2>📝 Quản Lý Ghi Danh</h2>
             <div class="action-buttons">
                 <button class="btn btn-success" onclick="showModal('enrollStudentModal')">➕ Ghi danh mới</button>
-                <button class="btn btn-primary" onclick="loadEnrollments()">🔄 Làm mới</button>
+                
             </div>
             <div class="table-container">
                 <table>
@@ -1051,7 +1051,7 @@
             <h2>✅ Điểm Danh Học Sinh</h2>
             <div class="action-buttons">
                 <button class="btn btn-success" onclick="showModal('takeAttendanceModal')">📋 Điểm danh hôm nay</button>
-                <button class="btn btn-primary" onclick="loadAttendance()">🔄 Làm mới</button>
+                
                 <button class="btn btn-warning" onclick="exportAttendance()">📤 Xuất Excel</button>
             </div>
             <div class="table-container">
@@ -1079,7 +1079,7 @@
                 
                 <button class="btn btn-warning" onclick="showPaymentsDueModal()">⚠️ Danh sách nợ</button>
                 <button class="btn btn-info" onclick="showCollectClassTuitionModal()">📊 Thu phí lớp</button>
-                <button class="btn btn-primary" onclick="loadTuitionDashboard()">🔄 Làm mới</button>
+                
                 <button class="btn btn-warning" onclick="exportPayments()">📤 Xuất Excel</button>
             </div>
             <div class="table-container">
@@ -1089,10 +1089,7 @@
                             <th>Lớp</th>
                             <th>Giáo viên</th>
                             <th>Sĩ số</th>
-                            <th>Buổi học</th>
-                            <th>Nghỉ</th>
-                            <th>Thực tế</th>
-                            
+                                                      
                             <th>Phí kỳ</th>
                             <th>Trạng thái</th>
                             <th>Thao tác</th>
@@ -1286,7 +1283,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label><i class="fas fa-user-tie"></i> Họ tên Giám đốc:</label>
+                        <label><i class="fas fa-user-tie"></i> Quản lý TT:</label>
                         <input type="text" id="cfgDirectorName" placeholder="VD: Nguyễn Văn A">
                     </div>
 
@@ -1516,11 +1513,7 @@
                     <div class="form-group"><label>Sĩ số tối đa</label><input type="number" id="classMaxStudents"></div>
                     
                     <div class="form-group"><label>Học phí / Buổi (VNĐ)</label><input type="number" id="classFeePerSession"></div>
-                    <div class="form-group"><label>Tổng Học phí Khóa (VNĐ)</label><input type="number" id="classFee"></div>
-                    
-                    <div class="form-group"><label>Tổng số buổi</label><input type="number" id="classTotalSessions"></div>
-                    <div class="form-group"><label>Số buổi nghỉ/lễ</label><input type="number" id="classSkipSessions"></div>
-                    
+                                        
                     <div class="form-group"><label>Ngày bắt đầu</label><input type="date" id="classStartDate"></div>
                     <div class="form-group"><label>Ngày kết thúc</label><input type="date" id="classEndDate"></div>
                     
@@ -1964,8 +1957,7 @@
                     
                     <div class="form-group"><label>Sĩ số tối đa</label><input type="number" id="editClassMaxStudents"></div>
                     <div class="form-group"><label>Đơn giá / Buổi (VND)</label><input type="number" id="editClassFeePerSession"></div>
-                    <div class="form-group"><label>Tổng số buổi</label><input type="number" id="editClassTotalSessions"></div>
-                    <div class="form-group"><label>Số buổi nghỉ/lễ</label><input type="number" id="editClassSkipSessions"></div>
+                    
                     <div class="form-group"><label>Ngày bắt đầu</label><input type="date" id="editClassStartDate"></div>
                     <div class="form-group"><label>Ngày kết thúc</label><input type="date" id="editClassEndDate"></div>
                     
@@ -2564,27 +2556,15 @@
         };
             // ========== CLASSES ==========
             // ========== HELPER: FORMAT THÔNG SỐ KỲ HỌC ==========
-            function formatClassSessionInfo(classData) {
-                // Lấy giá trị, nếu không có thì mặc định 0 (tương thích ngược với lớp cũ)
-                const feePerSession = classData.feePerSession || 0;
-                const totalSessions = classData.totalSessions || 0;
-                const skipSessions = classData.skipSessions || 0;
-
-                // Tính số buổi thực tế
-                const actualSessions = Math.max(0, totalSessions - skipSessions);
-
-                // Format số tiền
-                const formattedFee = feePerSession.toLocaleString('vi-VN');
-
-                return `
-        <div style="font-size: 0.85rem; line-height: 1.4;">
-            <span style="color: var(--gray);">📅 Tổng:</span> <strong>${totalSessions}</strong> buổi<br>
-            <span style="color: var(--warning);">⏸️ Nghỉ:</span> <strong>${skipSessions}</strong> buổi<br>
-            <span style="color: var(--success);">✅ Thực tế:</span> <strong>${actualSessions}</strong> buổi<br>
-            <span style="color: var(--primary);">💰 Đơn giá:</span> <strong>${formattedFee}đ</strong>/buổi
+          // ========== HELPER: FORMAT THÔNG SỐ KỲ HỌC (ĐÃ CẮT GỌT) ==========
+window.formatClassSessionInfo = function(classData) {
+    const feePerSession = classData.feePerSession || 0;
+    return `
+        <div style="font-size: 1.1rem; line-height: 1.4; color: var(--primary); font-weight: bold;">
+            ${feePerSession.toLocaleString('vi-VN')}đ / buổi
         </div>
     `;
-            }
+};
 
  window.loadClasses = () => {
             window.onSnapshot(window.collection(window.db, 'classes'), (snap) => {
@@ -2778,8 +2758,7 @@
                         teacherRate: parseInt(document.getElementById('editClassTeacherRate').value) || 0,
                         maxStudents: parseInt(document.getElementById('editClassMaxStudents').value) || 0, 
                         feePerSession: parseInt(document.getElementById('editClassFeePerSession').value) || 0,
-                        totalSessions: parseInt(document.getElementById('editClassTotalSessions').value) || 0, 
-                        skipSessions: parseInt(document.getElementById('editClassSkipSessions').value) || 0,
+                        
                         startDate: document.getElementById('editClassStartDate').value ? window.Timestamp.fromDate(new Date(document.getElementById('editClassStartDate').value)) : null,
                         endDate: document.getElementById('editClassEndDate').value ? window.Timestamp.fromDate(new Date(document.getElementById('editClassEndDate').value)) : null,
                         schedule: window.getScheduleData('editScheduleContainer'), 
@@ -2792,52 +2771,6 @@
                     window.hideModal('editClassModal');
                 } catch (err) { window.showToast('Lỗi: ' + err.message, 'error'); }
                 finally { btn.disabled = false; btn.innerHTML = originalText; }
-            };
-            // ========== 3. THÊM LỚP MỚI (CŨNG PHẢI ĐỌC LƯƠNG) ==========
-            document.getElementById('addClassForm').onsubmit = async (e) => {
-                e.preventDefault();
-                const submitBtn = e.target.querySelector('button[type="submit"]');
-                const originalText = submitBtn.innerHTML;
-
-                const className = document.getElementById('className').value.trim();
-                if (!className) return window.showToast('Vui lòng nhập tên lớp học', 'warning');
-
-                const schedule = window.getScheduleData('addScheduleContainer');
-                if (schedule.length === 0) return window.showToast('Vui lòng thêm ít nhất 1 khung giờ học trong TKB', 'warning');
-
-                const feePerSession = parseInt(document.getElementById('classFeePerSession').value) || 0;
-                const totalSessions = parseInt(document.getElementById('classTotalSessions').value) || 0;
-                const skipSessions = parseInt(document.getElementById('classSkipSessions').value) || 0;
-
-                submitBtn.disabled = true; submitBtn.innerHTML = '<span class="loading"></span> Đang lưu...';
-                try {
-                    const classData = {
-                        className: className, 
-                        subject: document.getElementById('classSubject').value.trim() || 'Chưa phân môn',
-                        teacherId: document.getElementById('classTeacherId').value || null,
-                        
-                        // 👉 DÒNG QUAN TRỌNG: Đọc dữ liệu lương khi tạo lớp mới
-                        teacherRate: parseInt(document.getElementById('classTeacherRate').value) || 0,
-                        
-                        fee: parseInt(document.getElementById('classFee').value) || 0,
-                        maxStudents: parseInt(document.getElementById('classMaxStudents').value) || 0,
-                        currentStudents: 0,
-                        startDate: document.getElementById('classStartDate').value ? window.Timestamp.fromDate(new Date(document.getElementById('classStartDate').value)) : null,
-                        endDate: document.getElementById('classEndDate').value ? window.Timestamp.fromDate(new Date(document.getElementById('classEndDate').value)) : null,
-                        schedule: schedule, 
-                        status: 'active', 
-                        feePerSession: feePerSession, 
-                        totalSessions: totalSessions, 
-                        skipSessions: skipSessions,
-                        createdAt: window.serverTimestamp(), 
-                        createdBy: window.auth?.currentUser?.email || 'system'
-                    };
-                    await window.addDoc(window.collection(window.db, 'classes'), classData);
-                    window.showToast(`✅ Đã tạo lớp "${className}" thành công!`, 'success');
-                    e.target.reset(); window.hideModal('addClassModal');
-                    if (typeof window.loadClasses === 'function') window.loadClasses();
-                } catch (error) { window.showToast('❌ Lỗi: ' + error.message, 'error'); }
-                finally { submitBtn.disabled = false; submitBtn.innerHTML = originalText; }
             };
             // ========== THÊM LỚP HỌC MỚI (CHỐNG VĂNG LỖI KHI LƯU) ==========
             document.getElementById('addClassForm').onsubmit = async (e) => {
@@ -2868,9 +2801,7 @@
                         endDate: getStr('classEndDate') ? window.Timestamp.fromDate(new Date(getStr('classEndDate'))) : null,
                         schedule: schedule, 
                         status: 'active', 
-                        feePerSession: getInt('classFeePerSession'), 
-                        totalSessions: getInt('classTotalSessions'), 
-                        skipSessions: getInt('classSkipSessions'),
+                        
                         createdAt: window.serverTimestamp(), 
                         createdBy: window.auth?.currentUser?.email || 'system'
                     };
@@ -3210,15 +3141,12 @@
                         <td><strong>${c.className}</strong><br><small style="color:var(--primary)">${periodNameStr}</small></td>
                         <td>${teacherName}</td>
                         <td style="text-align: center;"><strong>${c.currentStudents || 0}</strong></td>
-                        <td style="text-align: center;">${displaySessions}</td>
-                        <td style="text-align: center; color: var(--danger);">${displaySkips}</td>
-                        <td style="text-align: center; font-weight: bold; color: var(--success);">${actualSessions}</td>
-                      
+                                             
                         <td style="text-align: right; font-weight: bold; color: var(--primary);">${displayFee.toLocaleString('vi-VN')}đ</td>
                         <td style="text-align: center;"><span class="badge badge-warning">Đang vận hành</span></td>
                         <td style="text-align: center; display: flex; gap: 5px; justify-content: center;">
                             <button class="btn btn-sm btn-info" onclick="window.showClassStudentsModal(); setTimeout(() => { document.getElementById('classStudentsSelect').value = '${c.id}'; window.loadClassStudentsWithTuition(); }, 100);" title="Chi tiết">📊 Chi tiết</button>
-                            <button class="btn btn-sm btn-warning" onclick="window.executePrint('notice', {isBatch: true, classId: '${c.id}', className: '${c.className}', periodIndex: ${activePeriod ? activePeriod.index : 0}, periodFee: ${displayFee}, periodName: '${periodNameStr}'})" title="In thông báo nợ của kỳ này">🖨️ In Lớp</button>
+                            <button class="btn btn-sm btn-warning" onclick="window.printTuitionDashboardSummary('${c.id}', ${activePeriod ? activePeriod.index : 0}, '${periodNameStr}')" title="In bảng nợ cả lớp">🖨️ In Lớp</button>
                         </td>
                     </tr>`;
                 }
@@ -3613,66 +3541,167 @@
                 // Tự động điền số dư nợ vào ô nhập tiền
                 document.getElementById('paymentAmount').value = status.remainingDebt;
             };
+    // ⏸️ HÀM HIỂN THỊ MODAL CẤU HÌNH NGHỈ (TẬN DỤNG NÚT BẤM CỦA ANH)
+// ⏸️ HÀM GẮN SỰ KIỆN CHO NÚT "CẤU HÌNH NGHỈ" (ĐÃ SỬA CHUẨN ID)
+window.showSkipSessionsModal = function(classId = null) {
+    // 🎯 LỖI Ở ĐÂY ĐÃ ĐƯỢC SỬA: Dùng đúng ID 'skipSessionsModal' trong HTML của anh
+    const modal = document.getElementById('skipSessionsModal');
+    const content = modal.querySelector('.modal-content');
 
-          
-        window.calculateClassPeriods = function(classData) {
-            if (!classData.startDate || !classData.endDate) return [];
-            const start = classData.startDate.toDate();
-            const end = classData.endDate.toDate();
-            const schedule = classData.schedule || [];
-            const feePerSession = classData.feePerSession || 0;
-            // Dữ liệu ngày nghỉ cấu hình theo kỳ { "0": 1, "1": 0 }
-            const periodSkips = classData.periodSkips || {}; 
+    // 1. Nếu chưa có classId (bấm từ menu ngoài), hiển thị danh sách lớp
+    if (!classId) {
+        let options = window.classes.map(c => `<option value="${c.id}">${c.className} - ${c.subject || ''}</option>`).join('');
+        content.innerHTML = `
+            <div class="modal-header" style="display:flex; justify-content:space-between; margin-bottom:15px;">
+                <h3 style="margin:0;">⏸️ CHỌN LỚP CẤU HÌNH NGHỈ</h3>
+                <span class="close" style="cursor:pointer; font-size:24px; line-height:1;" onclick="window.hideModal('skipSessionsModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label style="font-weight:bold; margin-bottom:10px; display:block;">Chọn lớp học cần khai báo ngày giáo viên vắng:</label>
+                    <select id="selectClassForSkip" class="form-control" style="width:100%; padding:10px; border-radius:8px; border:2px solid #ccc;">
+                        <option value="">-- Chọn lớp học --</option>${options}
+                    </select>
+                </div>
+                <div style="margin-top:20px; text-align:right;">
+                    <button class="btn btn-primary" onclick="window.showSkipSessionsModal(document.getElementById('selectClassForSkip').value)">TIẾP TỤC <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        `;
+        window.showModal('skipSessionsModal');
+        return;
+    }
 
-            let periods = [];
-            let currentStart = new Date(start);
-            let pIndex = 0;
-            const today = new Date();
+    // 2. Giao diện quản lý danh sách ngày nghỉ của lớp cụ thể
+    const cls = window.classes.find(c => c.id === classId);
+    if (!cls) return window.showToast('Không tìm thấy lớp học!', 'error');
 
-            while (currentStart < end) {
-                let currentEnd = new Date(currentStart);
-                currentEnd.setDate(currentStart.getDate() + 27); // 4 tuần = 28 ngày
-                if (currentEnd > end) currentEnd = new Date(end);
+    let absentList = (cls.absentDates || []).sort().reverse().map(date => `
+        <div style="display:flex; justify-content:space-between; align-items:center; background:#f8f9fa; padding:10px; margin-bottom:8px; border-radius:8px; border-left:5px solid #f57f17;">
+            <span><i class="far fa-calendar-times"></i> <b>${new Date(date).toLocaleDateString('vi-VN')}</b></span>
+            <button class="btn-icon btn-danger" style="border:none; background:none; color:red; cursor:pointer;" onclick="window.removeAbsentDate('${classId}', '${date}')" title="Xóa"><i class="fas fa-trash"></i></button>
+        </div>
+    `).join('') || '<p style="text-align:center; color:#999; padding:20px; border:1px dashed #ccc; border-radius:8px;">Lớp chưa có ngày nghỉ nào.</p>';
 
-                // Đếm số buổi dựa vào TKB trong khoảng ngày của kỳ này
-                let sessionCount = 0;
-                const activeDays = schedule.map(s => {
-                    const dayMap = { 'sun': 0, 'mon': 1, 'tue': 2, 'wed': 3, 'thu': 4, 'fri': 5, 'sat': 6 };
-                    return dayMap[s.day];
-                });
+    content.innerHTML = `
+        <div class="modal-header" style="display:flex; justify-content:space-between; margin-bottom:15px;">
+            <h3 style="margin:0;">⏸️ QUẢN LÝ NGÀY NGHỈ: ${cls.className}</h3>
+            <span class="close" style="cursor:pointer; font-size:24px; line-height:1;" onclick="window.hideModal('skipSessionsModal')">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div style="background:#fff3e0; padding:12px; border-radius:8px; margin-bottom:15px; font-size:0.85rem; color:#e65100; border:1px solid #ffe0b2;">
+                <i class="fas fa-info-circle"></i> <b>Lưu ý:</b> Khai báo ngày giáo viên vắng. Hệ thống sẽ tự "nhảy cóc" qua ngày này để đảm bảo đủ 8 buổi thực dạy/kỳ.
+            </div>
+            <div class="form-group" style="background:#f1f8e9; padding:15px; border-radius:10px; border:1px solid #c5e1a5;">
+                <label><b>Thêm ngày nghỉ mới:</b></label>
+                <div style="display:flex; gap:10px; margin-top:8px;">
+                    <input type="date" id="newAbsentDate" class="form-control" style="flex:1; border:2px solid #ccc; border-radius:6px; padding:8px;">
+                    <button class="btn btn-success" onclick="window.addAbsentDate('${classId}')"><i class="fas fa-plus"></i> THÊM</button>
+                </div>
+            </div>
+            <div style="margin-top:20px;">
+                <label><b>Lịch sử các ngày đã nghỉ:</b></label>
+                <div id="absentDatesContainer" style="margin-top:10px; max-height:250px; overflow-y:auto; padding-right:5px;">
+                    ${absentList}
+                </div>
+            </div>
+            <div style="margin-top:20px; display:flex; justify-content:flex-end; gap:10px;">
+                <button class="btn" style="background:#6c757d; color:white;" onclick="window.showSkipSessionsModal()">Quay lại</button>
+                <button class="btn btn-danger" onclick="window.hideModal('skipSessionsModal')">Đóng</button>
+            </div>
+        </div>
+    `;
+    window.showModal('skipSessionsModal');
+};
 
-                let loopDate = new Date(currentStart);
-                while (loopDate <= currentEnd) {
-                    if (activeDays.includes(loopDate.getDay())) sessionCount++;
-                    loopDate.setDate(loopDate.getDate() + 1);
-                }
+// Đảm bảo 2 hàm phụ này vẫn nằm ngay dưới hàm trên
+window.addAbsentDate = async function(classId) {
+    const date = document.getElementById('newAbsentDate').value;
+    if (!date) return window.showToast("Vui lòng chọn ngày!", "warning");
+    const cls = window.classes.find(c => c.id === classId);
+    let dates = cls.absentDates || [];
+    if (dates.includes(date)) return window.showToast("Ngày này đã có!", "warning");
+    dates.push(date);
+    await window.updateDoc(window.doc(window.db, "classes", classId), { absentDates: dates });
+    window.showToast("Đã thêm ngày nghỉ!", "success");
+    window.showSkipSessionsModal(classId); // Refresh giao diện
+};
 
-                const skips = periodSkips[pIndex] || 0;
-                const actual = Math.max(0, sessionCount - skips);
-                const isCurrent = today >= currentStart && today <= currentEnd;
+window.removeAbsentDate = async function(classId, date) {
+    if (!confirm("Xóa ngày nghỉ này?")) return;
+    const cls = window.classes.find(c => c.id === classId);
+    let dates = (cls.absentDates || []).filter(d => d !== date);
+    await window.updateDoc(window.doc(window.db, "classes", classId), { absentDates: dates });
+    window.showSkipSessionsModal(classId);
+};    
+window.calculateClassPeriods = function(classData) {
+    if (!classData.startDate || !classData.endDate) return [];
+    const start = classData.startDate.toDate();
+    const end = classData.endDate.toDate();
+    const schedule = classData.schedule || [];
+    const feePerSession = classData.feePerSession || 0;
+    const absentDates = classData.absentDates || []; // Lấy danh sách ngày nghỉ cụ thể
 
+    const dayMap = { 'sun': 0, 'mon': 1, 'tue': 2, 'wed': 3, 'thu': 4, 'fri': 5, 'sat': 6 };
+    const activeDays = schedule.map(s => dayMap[s.day]);
+    if (activeDays.length === 0) return [];
+
+    const sessionsPerPeriod = 8; // CHIẾN THUẬT: 8 BUỔI THỰC DẠY / KỲ
+    let periods = [];
+    let currentDate = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+    let endDateLimit = new Date(end.getFullYear(), end.getMonth(), end.getDate());
+    
+    let pIndex = 1;
+    let pStartDate = new Date(currentDate);
+    let actualTaught = 0;   // Chỉ đếm khi giáo viên có dạy
+    let skipsInPeriod = 0; // Đếm số buổi nghỉ giáo viên vắng
+    const today = new Date();
+
+    while (currentDate <= endDateLimit) {
+        if (activeDays.includes(currentDate.getDay())) {
+            if (actualTaught === 0 && skipsInPeriod === 0) pStartDate = new Date(currentDate);
+            
+            // 🎯 ĐÃ SỬA LỖI: Cắt chuỗi ngày theo giờ Việt Nam, không dùng toISOString nữa
+            const y = currentDate.getFullYear();
+            const m = String(currentDate.getMonth() + 1).padStart(2, '0');
+            const d = String(currentDate.getDate()).padStart(2, '0');
+            const dateStr = `${y}-${m}-${d}`; 
+
+            if (absentDates.includes(dateStr)) {
+                skipsInPeriod++; // Trùng ngày nghỉ -> Ghi nhận nghỉ, dời lịch dạy
+            } else {
+                actualTaught++; // Ngày dạy bình thường
+            }
+
+            if (actualTaught === sessionsPerPeriod) {
                 periods.push({
-                    index: pIndex,
-                    name: `Kỳ ${pIndex + 1} (${currentStart.toLocaleDateString('vi-VN')} - ${currentEnd.toLocaleDateString('vi-VN')})`,
-                    totalSessions: sessionCount,
-                    skipSessions: skips,
-                    actualSessions: actual,
-                    fee: actual * feePerSession,
-                    isCurrent: isCurrent
+                    index: pIndex - 1,
+                    name: `Kỳ ${pIndex} (${pStartDate.toLocaleDateString('vi-VN')} - ${currentDate.toLocaleDateString('vi-VN')})`,
+                    actualSessions: actualTaught,
+                    skipSessions: skipsInPeriod, // 🎯 Chắc chắn hiển thị đúng số ngày nghỉ
+                    fee: actualTaught * feePerSession,
+                    isCurrent: today >= pStartDate && today <= currentDate
                 });
-
-                currentStart.setDate(currentStart.getDate() + 28);
-                pIndex++;
+                pIndex++; actualTaught = 0; skipsInPeriod = 0;
             }
-            // Nếu hôm nay vượt quá endDate, mặc định chọn kỳ cuối
-            if (periods.length > 0 && !periods.some(p => p.isCurrent)) {
-                periods[periods.length - 1].isCurrent = true;
-            }
-            return periods;
-        };
-
-        // ========== NÂNG CẤP BỘ NÃO KẾ TOÁN (TÍNH THEO KỲ) ==========
-      // ========== NÂNG CẤP BỘ NÃO KẾ TOÁN (TÍNH THEO KỲ - CHỐNG LỖI INDEX FIREBASE) ==========
+        }
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+    
+    // Gom buổi lẻ cuối khóa
+    if (actualTaught > 0) {
+        periods.push({
+            index: pIndex - 1,
+            name: `Kỳ ${pIndex} (${pStartDate.toLocaleDateString('vi-VN')} - ${endDateLimit.toLocaleDateString('vi-VN')})`,
+            actualSessions: actualTaught,
+            skipSessions: skipsInPeriod,
+            fee: actualTaught * feePerSession,
+            isCurrent: today >= pStartDate
+        });
+    }
+    return periods;
+};
+// ========== NÂNG CẤP BỘ NÃO KẾ TOÁN (TÍNH THEO KỲ - CHỐNG LỖI INDEX FIREBASE) ==========
         window.getStudentPaymentStatusByPeriod = async function (studentId, classId, periodIndex, periodFee) {
             try {
                 // Rút gọn truy vấn để hệ thống Firebase không bị tắc nghẽn
@@ -3684,7 +3713,7 @@
                 const snap = await window.getDocs(q);
                 let totalPaid = 0;
                 
-                // Dùng Javascript lọc an toàn phần còn lại
+                // Dùng Javascript lọc an toàn phần còn lại để lấy đúng số tiền đã đóng của kỳ này
                 snap.forEach(d => {
                     const p = d.data();
                     if (p.type === 'tuition' && p.periodIndex == periodIndex) {
@@ -3692,6 +3721,7 @@
                     }
                 });
                 
+                // Trừ ra số nợ còn lại
                 const remainingDebt = Math.max(0, periodFee - totalPaid);
                 return { paid: remainingDebt <= 0, totalPaid, totalDebt: periodFee, remainingDebt };
             } catch (e) { 
@@ -3699,7 +3729,42 @@
                 return { paid: false, totalPaid: 0, totalDebt: periodFee, remainingDebt: periodFee }; 
             }
         };
+        // ========== NÂNG CẤP BỘ NÃO KẾ TOÁN (TÍNH THEO KỲ) ==========
+      // ========== NÂNG CẤP BỘ NÃO KẾ TOÁN (TÍNH THEO KỲ - CHỐNG LỖI INDEX FIREBASE) ==========
+    // HÀM TÍNH NỢ LŨY KẾ (TỪ ĐẦU ĐẾN KỲ HIỆN TẠI)
+window.getStudentCumulativeDebt = async function (studentId, classId, currentPeriodIndex, periods) {
+    try {
+        // 1. Tính tổng tiền học sinh PHẢI nộp tính đến hết kỳ hiện tại
+        let totalExpectedFee = 0;
+        for (let i = 0; i <= currentPeriodIndex; i++) {
+            totalExpectedFee += (periods[i].fee || 0);
+        }
 
+        // 2. Lấy TẤT CẢ các khoản đã đóng cho lớp này (không phân biệt kỳ)
+        const q = window.query(
+            window.collection(window.db, 'payments'),
+            window.where('studentId', '==', studentId),
+            window.where('classId', '==', classId),
+            window.where('type', '==', 'tuition')
+        );
+        const snap = await window.getDocs(q);
+        
+        let totalPaid = 0;
+        snap.forEach(d => { totalPaid += (d.data().amount || 0); });
+
+        const remainingDebt = Math.max(0, totalExpectedFee - totalPaid);
+        
+        return {
+            totalExpected: totalExpectedFee,
+            totalPaid: totalPaid,
+            remainingDebt: remainingDebt,
+            isPaid: remainingDebt <= 0
+        };
+    } catch (e) {
+        console.error("Lỗi tính nợ lũy kế:", e);
+        return { totalExpected: 0, totalPaid: 0, remainingDebt: 0, isPaid: false };
+    }
+};
         // ========== RENDER CHI TIẾT LỚP HỌC (THEO KỲ) ==========
         let currentViewingClassId = null;
 
@@ -4570,10 +4635,12 @@
         };
 
         // ========== ĐỘNG CƠ IN ĐA NĂNG (NOTICE / RECEIPT / CLASS / FINANCE) - BẢN SẠCH CỘT THAO TÁC ==========
-        window.executePrint = async (type, data = {}) => {
+        
+      window.executePrint = async (type, data = {}) => {
             const container = document.getElementById('unifiedPrintSection');
             const center = document.getElementById('cfgCenterName')?.value || 'MINHTAMEDU';
             const hotline = document.getElementById('cfgHotline')?.value || '';
+            const director = document.getElementById('cfgDirectorName')?.value || 'Quản lý Trung tâm';
             const today = new Date().toLocaleDateString('vi-VN');
             const currentUser = window.auth?.currentUser?.email || 'Quản trị viên';
 
@@ -4583,17 +4650,17 @@
                     <div class="print-header"><h1>${center}</h1><p>Hotline: ${hotline}</p></div>
                     <div class="print-title">${title}</div>
                     <div style="font-size: 13pt;">${content}</div>
-                    <div class="print-footer">
+                   <div class="print-footer">
                         ${footerType === 'receipt' ?
-                    '<div><p><strong>Người nộp tiền</strong></p><br><br></div><div><p><strong>Thủ quỹ</strong></p><br><br></div>' :
+                    '<div><p><strong>Người nộp tiền</strong></p><br><br><br><br></div><div><p><strong>Thủ quỹ</strong></p><br><br><br><br></div>' :
                     footerType === 'report' ?
-                        `<div><p><strong>Người lập biểu</strong></p><p><em>${currentUser}</em></p></div><div><p><em>Ngày lập: ${today}</em></p><p><strong>Giám đốc</strong></p></div>` :
-                        `<div><p><strong>Phụ huynh</strong></p><br><br></div><div><p><em>Ngày ${today}</em></p><p><strong>Đại diện Trung tâm</strong></p></div>`}
+                        `<div><p><strong>Người lập biểu</strong></p><p><em>${currentUser}</em></p></div><div><p><em>Ngày lập: ${today}</em></p><p><strong>Giám đốc</strong></p><br><br><br><p><strong>${director}</strong></p></div>` :
+                        `<div><p><strong>Phụ huynh</strong></p><br><br><br><br></div><div><p><em>Ngày ${today}</em></p><p><strong>Đại diện Trung tâm</strong></p><br><br><br><p><strong>${director}</strong></p></div>`}
                     </div>
                 </div>`;
 
             try {
-                if (type === 'receipt') { // 1. IN BIÊN LAI (Bổ sung Ngày tháng)
+                if (type === 'receipt') { // 1. IN BIÊN LAI
                     const paymentDate = data.date || today;
                     const content = `
                         <div style="text-align: right; margin-bottom: 20px; font-style: italic;">Ngày thu: ${paymentDate}</div>
@@ -4602,10 +4669,9 @@
                         <p>Lý do: Đóng học phí ${data.category || ''}</p>
                         <div class="print-box"><h2 style="margin:0; text-align:center;">SỐ TIỀN: ${data.amount.toLocaleString()} VNĐ</h2></div>
                     `;
-                    // Đổi footerType thành 'receipt_with_date' để hiện ngày dưới chữ ký nếu cần
                     html = buildPage('BIÊN LAI THU TIỀN', content, 'receipt');
                 }
-              else if (type === 'notice') { // 2. IN THÔNG BÁO NỢ (Đã đồng bộ in theo Kỳ)
+                else if (type === 'notice') { // 2. IN THÔNG BÁO NỢ TỪNG PHIẾU
                     let list = [];
                     if (data.isBatch) {
                         try {
@@ -4623,12 +4689,11 @@
                     for (const item of list) {
                         if (!item.studentId || !item.classId || item.classId === 'undefined') continue;
                         
-                        // DÙNG HÀM CHECK NỢ THEO KỲ ĐỂ IN
                         let status;
                         if (data.periodFee !== undefined) {
                             status = await window.getStudentPaymentStatusByPeriod(item.studentId, item.classId, data.periodIndex, data.periodFee);
                         } else {
-                            status = await window.getStudentPaymentStatus(item.studentId, item.classId); // Fallback an toàn
+                            status = await window.getStudentPaymentStatus(item.studentId, item.classId);
                         }
 
                         if (status.remainingDebt > 0) {
@@ -4647,18 +4712,13 @@
                         }
                     }
                 }
-
-                else if (type === 'finance_report') { // 3. IN BÁO CÁO TÀI CHÍNH (Đã khử cột thao tác)
+                else if (type === 'finance_report') { // 3. IN BÁO CÁO TÀI CHÍNH
                     const periodText = document.getElementById('reportPeriodDisplay').textContent;
                     const totalRev = document.getElementById('totalRevenueDisplay').textContent;
                     const totalExp = document.getElementById('totalExpenseDisplay').textContent;
                     const totalProf = document.getElementById('totalProfitDisplay').textContent;
 
-                    // --- BỘ LỌC THÔNG MINH ---
-                    // Tạo bản sao bảng hiện tại để xử lý riêng cho bản in
                     const tableClone = document.getElementById('financeDetailTable').cloneNode(true);
-
-                    // Loại bỏ cột cuối cùng (Thao tác/Trạng thái) và mọi nút bấm, link điều hướng
                     tableClone.querySelectorAll('th:last-child, td:last-child').forEach(el => el.remove());
                     tableClone.querySelectorAll('button, .btn, a').forEach(el => el.remove());
 
@@ -4675,6 +4735,34 @@
                     `;
                     html = buildPage('BÁO CÁO TÀI CHÍNH', content, 'report');
                 }
+                else if (type === 'class_summary_table') { // 4. IN BẢNG TỔNG HỢP CẢ LỚP (ZALO)
+                    let rows = ""; let totalDebt = 0;
+                    data.list.forEach((item, idx) => {
+                        const style = item.debt > 0 ? 'color:#c62828; font-weight:bold;' : 'color:#2e7d32;';
+                        rows += `<tr><td align="center">${idx + 1}</td><td>${item.fullName}</td><td align="right" style="${style}">${item.debt.toLocaleString()}đ</td><td align="center">${item.status}</td></tr>`;
+                        totalDebt += item.debt;
+                    });
+                    
+                    const content = `
+                        <div style="margin-bottom:15px; border-left: 5px solid #1a237e; padding-left:10px;">
+                            <h3 style="margin:0;">Lớp: ${data.className}</h3>
+                            <p style="margin:5px 0; color:#666;"><b>Nội dung:</b> Đối chiếu học phí chốt đến <b>${data.periodName}</b></p>
+                        </div>
+                        <table border="1" width="100%" cellspacing="0" cellpadding="10" style="border-collapse:collapse; font-size:12pt;">
+                            <tr style="background:#f2f2f2;">
+                                <th width="50">STT</th>
+                                <th>Họ và Tên Học Sinh</th>
+                                <th width="150">Học phí tồn (VNĐ)</th>
+                                <th width="120">Trạng thái</th>
+                            </tr>
+                            ${rows} 
+                        </table>
+                        <div style="margin-top:20px; text-align:right;">
+                            <p style="font-size:14pt;">Tổng cộng nợ lớp: <b style="color:#c62828;">${totalDebt.toLocaleString()}đ</b></p>
+                        </div>
+                    `;
+                    html = buildPage('BẢNG TỔNG HỢP HỌC PHÍ', content, 'notice');
+                }
 
                 if (!html) return window.showToast('Không có dữ liệu phù hợp để in!', 'warning');
                 container.innerHTML = html;
@@ -4684,6 +4772,40 @@
                 window.showToast('Lỗi hệ thống in!', 'error');
             }
         };
+      
+        
+        window.printTuitionDashboardSummary = async function(classId, pIndex, pName) {
+    window.showToast("⏳ Đang tổng hợp danh sách lớp...", "info");
+    const classData = window.classes.find(c => c.id === classId);
+    const periods = window.calculateClassPeriods(classData);
+    
+    // Lấy toàn bộ học sinh active của lớp
+    const enrollSnap = await window.getDocs(window.query(window.collection(window.db, 'enrollments'), window.where('classId', '==', classId), window.where('status', '==', 'active')));
+    
+    let summaryList = [];
+    for (const docSnap of enrollSnap.docs) {
+        const sid = docSnap.data().studentId;
+        const st = window.students?.find(s => s.id === sid);
+        if (st) {
+            // Tính nợ lũy kế tính đến HẾT kỳ pIndex
+            const status = await window.getStudentCumulativeDebt(sid, classId, pIndex, periods);
+            summaryList.push({ 
+                fullName: st.fullName, 
+                debt: status.remainingDebt, 
+                status: status.isPaid ? "✅ Đã xong" : "⚠️ Chưa đóng" 
+            });
+        }
+    }
+    
+    if (summaryList.length === 0) return window.showToast('Lớp trống!', 'warning');
+
+    // Chuyển sang lệnh in với tiêu đề ghi rõ Kỳ học
+    window.executePrint('class_summary_table', { 
+        className: classData.className, 
+        periodName: pName, 
+        list: summaryList 
+    });
+};
     </script>
     <div id="unifiedPrintSection" class="print-only-container"></div>
 </body>
