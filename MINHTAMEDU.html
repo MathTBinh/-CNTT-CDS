@@ -1987,6 +1987,8 @@
         // ============================================
         // TOÀN BỘ LOGIC JS ĐÃ ĐƯỢC SỬA LỖI VÀ HOÀN CHỈNH
         // ============================================
+        // Bộ nhớ lưu trữ kỳ học đã chọn thủ công cho từng lớp
+        window.manualPeriodSelection = {};
         (function () {
             // GLOBAL STATE
             let currentUser = null, currentUserRole = null;
@@ -2253,11 +2255,16 @@
                 document.getElementById('studentsPrevBtn').disabled = currentStudentsPage <= 1;
                 document.getElementById('studentsNextBtn').disabled = currentStudentsPage >= totalPages;
             }
+// XUẤT HÀM RA WINDOW ĐỂ NÚT BẤM HTML CÓ THỂ GỌI
+        window.changeStudentsPage = function(direction) {
+            currentStudentsPage += direction;
+            updateStudentsPagination();
+        };
 
-            function changeStudentsPage(direction) {
-                currentStudentsPage += direction;
-                updateStudentsPagination();
-            }
+        window.changeTeachersPage = function(direction) {
+            currentTeachersPage += direction;
+            updateTeachersPagination();
+        };
 
             function filterStudents() {
                 currentStudentsPage = 1; // Reset về trang 1 khi tìm kiếm
@@ -2700,78 +2707,79 @@ window.formatClassSessionInfo = function(classData) {
                 document.getElementById('editTeacherStatus').value = t.status || 'active';
                 window.showModal('editTeacherModal');
             };
-// ========== SỬA LỚP HỌC (NẠP DỮ LIỆU AN TOÀN & ĐẦY ĐỦ) // ========== 1. SỬA LỚP HỌC (NẠP ĐỦ DỮ LIỆU LƯƠNG) ==========
+
+
  // ========== 1. NẠP DỮ LIỆU SỬA LỚP (BỔ SUNG CHỌN GV) ==========
-            window.editClass = (id) => {
-                const c = window.classes.find(x => x.id === id);
-                if (!c) return;
-                
-                // Điền các thông tin cơ bản
-                document.getElementById('editClassId').value = c.id;
-                document.getElementById('editClassName').value = c.className || '';
-                document.getElementById('editClassSubject').value = c.subject || '';
-                document.getElementById('editClassTeacherRate').value = c.teacherRate ?? 0;
-                
-                // ĐÃ BỔ SUNG: Nạp danh sách giáo viên vào ô chọn
-                const teacherSelect = document.getElementById('editClassTeacherId');
-                if (teacherSelect) {
-                    teacherSelect.innerHTML = '<option value="">-- Chọn giáo viên --</option>';
-                    window.teachers.forEach(t => {
-                        const opt = document.createElement('option');
-                        opt.value = t.id;
-                        opt.textContent = t.fullName;
-                        if (t.id === c.teacherId) opt.selected = true; // Tự động chọn giáo viên đang dạy
-                        teacherSelect.appendChild(opt);
-                    });
-                }
+ window.editClass = (id) => {
+    const c = window.classes.find(x => x.id === id);
+    if (!c) return;
+    
+    // Nạp thông tin cơ bản
+    document.getElementById('editClassId').value = c.id;
+    document.getElementById('editClassName').value = c.className || '';
+    document.getElementById('editClassSubject').value = c.subject || '';
+    document.getElementById('editClassTeacherRate').value = c.teacherRate ?? 0;
+    
+    // Nạp giáo viên (Đã bọc thép)
+    const teacherSelect = document.getElementById('editClassTeacherId');
+    if (teacherSelect) {
+        teacherSelect.innerHTML = '<option value="">-- Chọn giáo viên --</option>';
+        (window.teachers || []).forEach(t => {
+            const opt = document.createElement('option');
+            opt.value = t.id;
+            opt.textContent = t.fullName;
+            if (t.id === c.teacherId) opt.selected = true;
+            teacherSelect.appendChild(opt);
+        });
+    }
 
-                document.getElementById('editClassMaxStudents').value = c.maxStudents || 0;
-                document.getElementById('editClassFeePerSession').value = c.feePerSession || 0;
-                document.getElementById('editClassTotalSessions').value = c.totalSessions || 0;
-                document.getElementById('editClassSkipSessions').value = c.skipSessions || 0;
-                document.getElementById('editClassStartDate').value = c.startDate?.toDate ? c.startDate.toDate().toISOString().split('T')[0] : '';
-                document.getElementById('editClassEndDate').value = c.endDate?.toDate ? c.endDate.toDate().toISOString().split('T')[0] : '';
-                document.getElementById('editClassStatus').value = c.status || 'active';
-                
-                const scheduleContainer = document.getElementById('editScheduleContainer');
-                scheduleContainer.innerHTML = ''; 
-                if (Array.isArray(c.schedule)) {
-                    c.schedule.forEach(slot => { window.addScheduleRow('editScheduleContainer', slot.day, slot.startTime, slot.endTime); });
-                }
-                window.showModal('editClassModal');
-            };
-
+    document.getElementById('editClassMaxStudents').value = c.maxStudents || 0;
+    document.getElementById('editClassFeePerSession').value = c.feePerSession || 0;
+    document.getElementById('editClassStartDate').value = c.startDate?.toDate ? c.startDate.toDate().toISOString().split('T')[0] : '';
+    document.getElementById('editClassEndDate').value = c.endDate?.toDate ? c.endDate.toDate().toISOString().split('T')[0] : '';
+    document.getElementById('editClassStatus').value = c.status || 'active';
+    
+    const scheduleContainer = document.getElementById('editScheduleContainer');
+    scheduleContainer.innerHTML = ''; 
+    if (Array.isArray(c.schedule)) {
+        c.schedule.forEach(slot => { window.addScheduleRow('editScheduleContainer', slot.day, slot.startTime, slot.endTime); });
+    }
+    window.showModal('editClassModal');
+}; 
             // ========== 2. LƯU DỮ LIỆU SỬA LỚP (BỔ SUNG LƯU GV) ==========
             window.submitEditClass = async (e) => {
-                e.preventDefault();
-                const id = document.getElementById('editClassId').value;
-                const btn = e.target.querySelector('button[type=\"submit\"]');
-                const originalText = btn.innerHTML;
-                btn.disabled = true; btn.innerHTML = '<span class=\"loading\"></span>...';
-                
-                try {
-                    const teacherId = document.getElementById('editClassTeacherId').value || null;
-                    const updateData = {
-                        className: document.getElementById('editClassName').value, 
-                        subject: document.getElementById('editClassSubject').value,
-                        teacherId: teacherId, // ĐÃ BỔ SUNG: Lưu ID giáo viên mới
-                        teacherRate: parseInt(document.getElementById('editClassTeacherRate').value) || 0,
-                        maxStudents: parseInt(document.getElementById('editClassMaxStudents').value) || 0, 
-                        feePerSession: parseInt(document.getElementById('editClassFeePerSession').value) || 0,
-                        
-                        startDate: document.getElementById('editClassStartDate').value ? window.Timestamp.fromDate(new Date(document.getElementById('editClassStartDate').value)) : null,
-                        endDate: document.getElementById('editClassEndDate').value ? window.Timestamp.fromDate(new Date(document.getElementById('editClassEndDate').value)) : null,
-                        schedule: window.getScheduleData('editScheduleContainer'), 
-                        status: document.getElementById('editClassStatus').value,
-                        updatedAt: window.serverTimestamp()
-                    };
+            e.preventDefault();
+            const id = document.getElementById('editClassId').value;
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.disabled = true; btn.innerHTML = '<span class="loading"></span> Đang lưu...';
+            
+            try {
+                const teacherId = document.getElementById('editClassTeacherId').value || null;
+                const updateData = {
+                    className: document.getElementById('editClassName').value, 
+                    subject: document.getElementById('editClassSubject').value,
+                    teacherId: teacherId,
+                    teacherRate: parseInt(document.getElementById('editClassTeacherRate').value) || 0,
+                    maxStudents: parseInt(document.getElementById('editClassMaxStudents').value) || 0, 
+                    feePerSession: parseInt(document.getElementById('editClassFeePerSession').value) || 0,
+                    startDate: document.getElementById('editClassStartDate').value ? window.Timestamp.fromDate(new Date(document.getElementById('editClassStartDate').value)) : null,
+                    endDate: document.getElementById('editClassEndDate').value ? window.Timestamp.fromDate(new Date(document.getElementById('editClassEndDate').value)) : null,
+                    schedule: window.getScheduleData('editScheduleContainer'), 
+                    status: document.getElementById('editClassStatus').value,
+                    updatedAt: window.serverTimestamp()
+                };
 
-                    await window.updateDoc(window.doc(window.db, 'classes', id), updateData);
-                    window.showToast('✅ Đã cập nhật lớp học & Giáo viên!', 'success'); 
-                    window.hideModal('editClassModal');
-                } catch (err) { window.showToast('Lỗi: ' + err.message, 'error'); }
-                finally { btn.disabled = false; btn.innerHTML = originalText; }
-            };
+                await window.updateDoc(window.doc(window.db, 'classes', id), updateData);
+                window.showToast('✅ Đã cập nhật lớp học thành công!', 'success'); 
+                window.hideModal('editClassModal');
+            } catch (err) { 
+                console.error(err);
+                window.showToast('Lỗi: ' + err.message, 'error'); 
+            } finally { 
+                btn.disabled = false; btn.innerHTML = originalText; 
+            }
+        };
             // ========== THÊM LỚP HỌC MỚI (CHỐNG VĂNG LỖI KHI LƯU) ==========
             document.getElementById('addClassForm').onsubmit = async (e) => {
                 e.preventDefault();
@@ -3099,62 +3107,48 @@ window.formatClassSessionInfo = function(classData) {
             // ========== PAYMENTS & TUITION ==========
             // ========== PAYMENTS & TUITION (BẢNG TỔNG QUAN HỌC PHÍ) ==========
  // ========== PAYMENTS & TUITION (BẢNG TỔNG QUAN HỌC PHÍ - ĐÃ ĐỒNG BỘ KỲ) ==========
-        window.loadTuitionDashboard = async () => {
-            const tbody = document.getElementById('tuitionDashboardTable');
-            tbody.innerHTML = '<tr><td colspan="11" style="text-align: center; padding: 20px;"><span class="loading"></span> Đang đồng bộ dữ liệu kỳ học...</td></tr>';
+window.loadTuitionDashboard = async () => {
+    const tbody = document.getElementById('tuitionDashboardTable');
+    tbody.innerHTML = '<tr><td colspan="11" style="text-align: center; padding: 20px;"><span class="loading"></span> Đang đồng bộ dữ liệu...</td></tr>';
 
-            try {
-                const classesList = window.classes || [];
-                const teachersList = window.teachers || [];
-                let html = '';
+    try {
+        const classesList = window.classes || [];
+        let html = '';
 
-                for (const c of classesList) {
-                    if (!c.className || c.id === 'undefined') continue;
+        for (const c of classesList) {
+            if (!c.className || c.id === 'undefined') continue;
 
-                    const teacher = teachersList.find(t => t.id === c.teacherId);
-                    const teacherName = teacher ? teacher.fullName : '<span style="color:var(--gray)">Chưa phân công</span>';
-
-                    // DÙNG BỘ NÃO CHIA KỲ ĐỂ LẤY THÔNG SỐ KỲ HIỆN TẠI
-                    const periods = window.calculateClassPeriods(c);
-                    let activePeriod = null;
-                    let displayFee = 0; let displaySessions = 0; let displaySkips = 0;
-                    let periodNameStr = 'Chưa cài đặt ngày';
-
-                    if (periods.length > 0) {
-                        activePeriod = periods.find(p => p.isCurrent) || periods[periods.length - 1];
-                        displayFee = activePeriod.fee;
-                        displaySessions = activePeriod.totalSessions;
-                        displaySkips = activePeriod.skipSessions;
-                        periodNameStr = activePeriod.name;
-                    } else {
-                        // Fallback nếu lớp cũ chưa cài ngày
-                        displayFee = window.calculateTuition(c.id);
-                        displaySessions = c.totalSessions || 0;
-                        displaySkips = c.skipSessions || 0;
-                    }
-
-                    const actualSessions = Math.max(0, displaySessions - displaySkips);
-
-                    // Nút In Lớp: Truyền thẳng thông số của KỲ HIỆN TẠI vào máy in
-                    html += `
-                    <tr style="border-bottom: 1px solid #eee;">
-                        <td><strong>${c.className}</strong><br><small style="color:var(--primary)">${periodNameStr}</small></td>
-                        <td>${teacherName}</td>
-                        <td style="text-align: center;"><strong>${c.currentStudents || 0}</strong></td>
-                                             
-                        <td style="text-align: right; font-weight: bold; color: var(--primary);">${displayFee.toLocaleString('vi-VN')}đ</td>
-                        <td style="text-align: center;"><span class="badge badge-warning">Đang vận hành</span></td>
-                        <td style="text-align: center; display: flex; gap: 5px; justify-content: center;">
-                            <button class="btn btn-sm btn-info" onclick="window.showClassStudentsModal(); setTimeout(() => { document.getElementById('classStudentsSelect').value = '${c.id}'; window.loadClassStudentsWithTuition(); }, 100);" title="Chi tiết">📊 Chi tiết</button>
-                            <button class="btn btn-sm btn-warning" onclick="window.printTuitionDashboardSummary('${c.id}', ${activePeriod ? activePeriod.index : 0}, '${periodNameStr}')" title="In bảng nợ cả lớp">🖨️ In Lớp</button>
-                        </td>
-                    </tr>`;
-                }
-                tbody.innerHTML = html || '<tr><td colspan="11" style="text-align: center; padding: 20px;">Chưa có lớp học nào đang vận hành</td></tr>';
-            } catch (error) {
-                console.error(error); tbody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: red;">Lỗi: ${error.message}</td></tr>`;
+            const teacher = (window.teachers || []).find(t => t.id === c.teacherId);
+            const periods = window.calculateClassPeriods(c);
+            
+            let activePeriod = null;
+            if (periods.length > 0) {
+                // ĐỒNG BỘ: Ưu tiên lấy kỳ đã chọn thủ công, nếu không có mới lấy kỳ hiện tại
+                const manualIndex = window.manualPeriodSelection[c.id];
+                activePeriod = (manualIndex !== undefined) 
+                    ? periods.find(p => p.index === manualIndex) 
+                    : (periods.find(p => p.isCurrent) || periods[0]);
             }
-        };
+
+            const periodNameStr = activePeriod ? activePeriod.name : 'Chưa cài đặt ngày';
+            const displayFee = activePeriod ? activePeriod.fee : 0;
+
+            html += `
+            <tr style="border-bottom: 1px solid #eee;">
+                <td><strong>${c.className}</strong><br><small style="color:var(--primary); font-weight:bold;">${periodNameStr}</small></td>
+                <td>${teacher?.fullName || 'Chưa phân công'}</td>
+                <td style="text-align: center;"><strong>${c.currentStudents || 0}</strong></td>
+                <td style="text-align: right; font-weight: bold; color: var(--primary);">${displayFee.toLocaleString('vi-VN')}đ</td>
+                <td style="text-align: center;"><span class="badge badge-warning">Đang vận hành</span></td>
+                <td style="text-align: center; display: flex; gap: 5px; justify-content: center;">
+                    <button class="btn btn-sm btn-info" onclick="window.viewClassStudents('${c.id}')" title="Chi tiết">📊 Chi tiết</button>
+                    <button class="btn btn-sm btn-warning" onclick="window.printTuitionDashboardSummary('${c.id}', ${activePeriod ? activePeriod.index : 0}, '${periodNameStr}')" title="In nợ cả lớp">🖨️ In Lớp</button>
+                </td>
+            </tr>`;
+        }
+        tbody.innerHTML = html || '<tr><td colspan="6" style="text-align: center;">Trống</td></tr>';
+    } catch (error) { console.error(error); }
+}; 
         // ========== XUẤT EXCEL LỊCH SỬ THU HỌC PHÍ ==========
         window.exportPayments = async () => {
             try {
@@ -3870,10 +3864,23 @@ window.getStudentCumulativeDebt = async function (studentId, classId, currentPer
                 tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: red;">Lỗi: ${error.message}</td></tr>`;
             }
         };
-        window.changeTuitionPeriod = function(indexStr) {
-            selectedPeriodIndex = parseInt(indexStr);
-            window.loadClassStudentsWithTuition();
-        };
+       window.changeTuitionPeriod = function(indexStr) {
+    const pIndex = parseInt(indexStr);
+    selectedPeriodIndex = pIndex;
+    
+    // LƯU VÀO BỘ NHỚ ĐỒNG BỘ
+    if (currentViewingClassId) {
+        window.manualPeriodSelection[currentViewingClassId] = pIndex;
+    }
+
+    // Tải lại nội dung bên trong Modal
+    window.loadClassStudentsWithTuition();
+    
+    // TỰ ĐỘNG CẬP NHẬT GIAO DIỆN BÊN NGOÀI
+    window.loadTuitionDashboard();
+    
+    window.showToast("🔄 Đã đồng bộ Kỳ học ra danh sách ngoài!", "info");
+};
 
         // ========== XỬ LÝ THU TIỀN VÀ GẮN NHÃN KỲ HỌC ==========
         window.collectTuitionSingle = async function (studentId, classId, amount, pIndex, pName) {
